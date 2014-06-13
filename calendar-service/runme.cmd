@@ -1,0 +1,1 @@
+java -cp target/dio-calendar-1.0-SNAPSHOT.jar com.dio.calendar.CalendarApp

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+    <title>JSF welcome 2</title>
+</head>
+
+<h:body>
+
+    <div id="content">
+        <ui:insert name="content">
+        </ui:insert>
+    </div>
+
+    <h:outputText value="#{welcome2.message}" />
+    <hr />
+    <h:dataTable value="#{myBean.list}" rendered="#{welcome2.showEntry}">
+    </h:dataTable>
+
+    <ui:repeat value="#{welcome2.entries}" var="item">
+        <div><h:link value="#{item.subject}" action="welcome2">
+                <f:param name="id" value="#{item.id}" />
+            </h:link>
+        </div>
+    </ui:repeat>
+
+    <ui:repeat value="#{calendarService.entries}" var="item">
+        <div><h:link value="#{item.subject}" action="welcome2">
+                <f:param name="id" value="#{item.id}" />
+            </h:link>
+        </div>
+    </ui:repeat>
+
+    <h:outputText value="#{welcome2.entriesCount}" />
+
+</h:body>
+</html>
