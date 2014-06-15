@@ -9,6 +9,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <jettyVersion>9.0.5.v20130815</jettyVersion>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -32,6 +36,17 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-http</artifactId>
+            <version>9.0.5.v20130815</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>${jettyVersion}</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -46,6 +61,18 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jettyVersion}</version>
+                <configuration>
+                    <!--<jettyXml>jetty-http.xml</jettyXml>-->
+                    <stopKey>STOP</stopKey>
+                    <stopPort>9999</stopPort>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
 </project>

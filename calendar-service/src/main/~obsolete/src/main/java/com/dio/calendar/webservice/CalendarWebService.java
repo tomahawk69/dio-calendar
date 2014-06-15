@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 /**
  * Created by yur on 04.06.2014.
  */
+
 public class CalendarWebService implements HttpRequestHandler {
     @Override
     public void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -25,20 +26,5 @@ public class CalendarWebService implements HttpRequestHandler {
             }
         }
     }
-
-//
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        System.out.println("sfdas");
-//        response.setContentType("text/html");
-//        response.setStatus(HttpServletResponse.SC_OK);
-//        try (PrintWriter out = response.getWriter()) {
-//            if (out != null) {
-//                out.println("<h1>Calendar Service</h1>");
-//                out.println("<p>test</p>");
-//            }
-//        }
-//    }
-
 }
 

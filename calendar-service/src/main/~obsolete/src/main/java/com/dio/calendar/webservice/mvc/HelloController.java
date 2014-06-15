@@ -16,7 +16,7 @@ import java.util.UUID;
 /**
  * Created by yur on 09.06.2014.
  */
-@Controller
+//@Controller
 @Scope("request")
 public class HelloController {
     private final UUID id = UUID.randomUUID();

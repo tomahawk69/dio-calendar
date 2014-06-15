@@ -55,6 +55,7 @@ public class CalendarServiceImpl implements CalendarService {
         data.clearData();
     }
 
+
     @Override
     public Entry newEntry(String subject, String description, Date startDate, Date endDate,
                      List<String> attenders, List<Notification> notifications) {

@@ -28,7 +28,8 @@
     </bean>
 
 
-    <bean class="org.springframework.remoting.rmi.RmiServiceExporter" scope="singleton">
+
+    <bean class="org.springframework.remoting.rmi.RmiServiceExporter">
         <!-- does not necessarily have to be the same name as the bean to be exported -->
         <property name="serviceName" value="CalendarService"/>
         <property name="service" ref="calendarService"/>

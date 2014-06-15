@@ -29,9 +29,9 @@ public class CalendarServer {
     }
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("src/main/webapp/WEB-INF/applicationContext.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
         CalendarDataStore data = context.getBean("dataStore", CalendarDataStore.class);
-        CalendarServiceImpl service = context.getBean("calendarService", CalendarServiceImpl.class);
+        CalendarService service = context.getBean("calendarService", CalendarService.class);
 
 //        try {
 //            data.init();
