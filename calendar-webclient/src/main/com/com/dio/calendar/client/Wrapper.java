@@ -9,6 +9,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+// TODO: try/catch to unchecked exception
+// TODO: exceptions handlers in controller
+// TODO: Rewrite to bean
+
 /**
  * Created by yur on 15.06.2014.
  */

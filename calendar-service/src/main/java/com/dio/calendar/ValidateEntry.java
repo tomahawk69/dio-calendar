@@ -8,7 +8,8 @@ import java.util.Date;
  */
 
 public class ValidateEntry {
-    public static void validateEntry(Entry entry) {
+
+    public void validateEntry(Entry entry) {
 
 
     }

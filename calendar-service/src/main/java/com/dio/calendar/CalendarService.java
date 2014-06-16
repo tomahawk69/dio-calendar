@@ -10,6 +10,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+// TODO: interface without remote
+// TODO: remove dataFS exceptons from remote (convert to runtime exceptions
+
+
 /**
  * RMI:
  * - serializable objects

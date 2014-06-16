@@ -220,9 +220,7 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
             exec.shutdown();
 
-            // Reentrance
-            // tryAcquire
-            // tryRelease
+            // TODO: Reentrance: tryAcquire, tryRelease,
             // Collection hold value
             // Blocking operations
 
