@@ -15,11 +15,11 @@ import static com.dio.calendar.ValidateEntry.validateDateRange;
  *
  * Created by iovchynnikov on 4/30/14.
  */
-public class CalendarServiceImpl implements CalendarService {
+public class CalendarServiceRemoteImpl implements CalendarService {
     private final CalendarDataStore data;
-    private static Logger logger = Logger.getLogger(CalendarServiceImpl.class);
+    private static Logger logger = Logger.getLogger(CalendarServiceRemoteImpl.class);
 
-    public CalendarServiceImpl(CalendarDataStore data) {
+    public CalendarServiceRemoteImpl(CalendarDataStore data) {
         this.data = data;
     }
 

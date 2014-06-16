@@ -1,7 +1,6 @@
 package com.dio.calendar.webservice;
 
-import com.dio.calendar.CalendarService;
-import com.dio.calendar.CalendarServiceImpl;
+import com.dio.calendar.CalendarServiceRemoteImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +14,10 @@ import javax.inject.Inject;
 @Controller
 @RequestMapping("/calendar-service-status")
 public class CalendarServiceWeb {
-    private final CalendarServiceImpl calendarService;
+    private final CalendarServiceRemoteImpl calendarService;
 
     @Inject
-    public CalendarServiceWeb(CalendarServiceImpl calendarService) {
+    public CalendarServiceWeb(CalendarServiceRemoteImpl calendarService) {
         this.calendarService = calendarService;
     }
 

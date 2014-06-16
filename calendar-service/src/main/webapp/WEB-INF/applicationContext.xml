@@ -10,7 +10,7 @@
         <property name="locations" value="classpath:calendar.properties"/>
     </bean>
 
-    <bean id="calendarService" class="com.dio.calendar.CalendarServiceImpl">
+    <bean id="calendarService" class="com.dio.calendar.CalendarServiceRemoteImpl">
         <constructor-arg ref="dataStore" />
     </bean>
 

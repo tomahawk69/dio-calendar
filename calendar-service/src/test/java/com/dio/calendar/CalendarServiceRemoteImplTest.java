@@ -20,7 +20,7 @@ import static org.junit.matchers.JUnitMatchers.both;
 import static org.junit.matchers.JUnitMatchers.containsString;
 import static org.mockito.Mockito.*;
 
-public class CalendarServiceImplTest {
+public class CalendarServiceRemoteImplTest {
     private CalendarDataStoreImpl data;
     private CalendarService service;
 
@@ -53,7 +53,7 @@ public class CalendarServiceImplTest {
     @Before
     public void setUp() {
         data = mock(CalendarDataStoreImpl.class);
-        service = new CalendarServiceImpl(data);
+        service = new CalendarServiceRemoteImpl(data);
     }
 
     @Test
@@ -507,7 +507,7 @@ public class CalendarServiceImplTest {
     public void testSaveAddData() throws Exception {
         // initialize variable inputs
         CalendarDataStoreImpl dataMock = mock(CalendarDataStoreImpl.class);
-        CalendarService serviceMock = new CalendarServiceImpl(dataMock);
+        CalendarService serviceMock = new CalendarServiceRemoteImpl(dataMock);
 
         Entry testInput = getTestEntry(service);
 

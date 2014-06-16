@@ -2,7 +2,6 @@ package com.dio.calendar.client;
 
 import com.dio.calendar.CalendarEntryBadAttribute;
 import com.dio.calendar.CalendarKeyViolation;
-import com.dio.calendar.CalendarService;
 import com.dio.calendar.Entry;
 import com.dio.calendar.datastore.DataStoreFSException;
 import org.springframework.context.ApplicationContext;
@@ -21,21 +20,29 @@ public class ClientMain {
     *
     * */
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("clientApplicationContext.xml");
-        Wrapper calendarServiceInterfaceWrapper = context.getBean("calendarServiceInterfaceWrapper", Wrapper.class);
-        calendarServiceInterfaceWrapper.init();
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
+        ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceWrapper", ClientWrapper.class);
 
 //        CalendarService service = context.getBean("calendarService", CalendarService.class);
 
-        Entry testInput = calendarServiceInterfaceWrapper.newEntry("test", null, null, null, null, null);
-
-        Entry entry = calendarServiceInterfaceWrapper.getEntry(testInput.getId());
+        Entry testInput = calendarServiceWrapper.newEntry("test", null, null, null, null, null);
+        Entry entry = calendarServiceWrapper.getEntry(testInput.getId());
         if (entry == null) {
-            entry = calendarServiceInterfaceWrapper.addEntry(testInput);
+            try {
+                entry = calendarServiceWrapper.addEntry(testInput);
+            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+                calendarEntryBadAttribute.printStackTrace();
+            } catch (CalendarKeyViolation calendarKeyViolation) {
+                calendarKeyViolation.printStackTrace();
+            }
         } else {
-            entry = calendarServiceInterfaceWrapper.saveEntry(testInput);
+            try {
+                entry = calendarServiceWrapper.updateEntry(testInput);
+            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+                calendarEntryBadAttribute.printStackTrace();
+            }
         }
-        calendarServiceInterfaceWrapper.removeEntry(entry);
+         calendarServiceWrapper.removeEntry(entry);
 
     }
 }
