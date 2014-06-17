@@ -1,0 +1,119 @@
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+WARN main com.dio.calendar.GmailHelper - Null entry parameter passed
+WARN main com.dio.calendar.GmailHelper - Null domain parameter passed
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Updated entry. Old value: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=39633564-a6de-4a48-8931-469f971af08a}; new value: Entry{subject='New subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=39633564-a6de-4a48-8931-469f971af08a}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Adding entry: Entry{subject='null', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=960dc2b5-3a2f-4c09-be46-22a53fe5db93}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Adding entry: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=6692d527-b7e2-49df-9440-d0037dafa683}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Removing entry: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=77cf1589-0b1d-44be-bbd1-397e7dce0c33}
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - New Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - New Entry is null
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=583d909f-6b80-4a90-9511-0b7d25b841f8
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=583d909f-6b80-4a90-9511-0b7d25b841f8
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=2e2c4f9f-cb35-4027-93d3-3dd6d1d65a76 not found
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=2e2c4f9f-cb35-4027-93d3-3dd6d1d65a76 not found
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Passed null ID
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Passed null ID
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=b1243bfc-d25b-4ad4-8d13-7dd9a43f2a5d
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=b1243bfc-d25b-4ad4-8d13-7dd9a43f2a5d
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Empty entry passed
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Empty entry passed
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=ee724a0c-d7de-48d3-8dab-51d3be923fba not found
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=ee724a0c-d7de-48d3-8dab-51d3be923fba not found
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 6915491
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 6461943
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 23217332
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 32077565
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+WARN main com.dio.calendar.GmailHelper - Null entry parameter passed
+WARN main com.dio.calendar.GmailHelper - Null domain parameter passed
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Updated entry. Old value: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=6fc33da7-54b5-4911-8234-884acbb044c2}; new value: Entry{subject='New subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=6fc33da7-54b5-4911-8234-884acbb044c2}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Adding entry: Entry{subject='null', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=50637411-7502-439a-aaf0-ad23eaf32b5e}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Adding entry: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=a4e830db-76e0-413a-a02a-fa9249166a2d}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Removing entry: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=f779921f-c19f-4fc7-9819-842b041796c5}
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - New Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - New Entry is null
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=bd13af2b-c7d7-4bbf-8f2f-9fbc1176f80e
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=bd13af2b-c7d7-4bbf-8f2f-9fbc1176f80e
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=df72e37d-9d22-42df-b3a4-105853b740fd not found
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=df72e37d-9d22-42df-b3a4-105853b740fd not found
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Passed null ID
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Passed null ID
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=8bbc437b-c176-460d-b274-1fbd024d81f4
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=8bbc437b-c176-460d-b274-1fbd024d81f4
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Empty entry passed
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Empty entry passed
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=8325d4cf-3409-4ca7-9141-292f95f5f7ab not found
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=8325d4cf-3409-4ca7-9141-292f95f5f7ab not found
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 2806161
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 8345058
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 14817815
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 20506215
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Updated entry. Old value: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=3f142917-7b13-410b-9fe6-ea12e3d8d461}; new value: Entry{subject='New subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=3f142917-7b13-410b-9fe6-ea12e3d8d461}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Adding entry: Entry{subject='null', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=0495ebc8-e88d-4201-b35c-d7a00a4a0b19}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Adding entry: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=07d27ee4-92cb-420f-b513-ac8309eb44f5}
+INFO main com.dio.calendar.CalendarServiceRemoteImpl - Removing entry: Entry{subject='Subject', description='Description', startDate=Fri Nov 01 10:00:00 EET 2013, endDate=Sun Nov 10 10:00:00 EET 2013, attenders=[], notifications=[], id=a36e064a-82ab-4d16-a135-d6159521d655}
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - New Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - New Entry is null
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=c98e77aa-e01e-43bd-9af9-a73a4367098c
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=c98e77aa-e01e-43bd-9af9-a73a4367098c
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=60f72702-7ed9-4b8c-b3e1-97968d6fbf2b not found
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=60f72702-7ed9-4b8c-b3e1-97968d6fbf2b not found
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Passed null ID
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Passed null ID
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=9e7a4da2-71c9-4295-8ded-5564935c24cf
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Current entry not found for passed entry with ID=9e7a4da2-71c9-4295-8ded-5564935c24cf
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Entry is null
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Empty entry passed
+WARN main com.dio.calendar.datastore.CalendarDataStoreImpl - Empty entry passed
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=6f4ea00f-65ce-417c-9542-84efd2ddd7c5 not found
+INFO main com.dio.calendar.datastore.CalendarDataStoreImpl - Object with ID=6f4ea00f-65ce-417c-9542-84efd2ddd7c5 not found
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 32944130
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 22105682
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 23175637
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path Mock for Path, hashCode: 14040725
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path db_test
+INFO main com.dio.calendar.datastore.DataStoreFSImpl - dataStoreFS created with path null

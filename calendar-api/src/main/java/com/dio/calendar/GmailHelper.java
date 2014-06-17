@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import static org.springframework.util.CollectionUtils.isEmpty;
 
 /**
  * Created by iovchynnikov on 5/8/14.
@@ -43,17 +42,17 @@ public class GmailHelper {
             patterns.put(domain.toLowerCase(), domainPattern);
         }
         inputEntry.getAttenders();
-        if (!isEmpty(inputEntry.getAttenders())) {
-            Matcher m;
-            for (String item : inputEntry.getAttenders()) {
-                m = domainPattern.matcher(item);
-                if (m.find()) {
-                    if (m.group(1).toString().equalsIgnoreCase(domain)) {
-                        result.add(item);
-                    }
-                }
-            }
-        }
+//        if (!isEmpty(inputEntry.getAttenders())) {
+//            Matcher m;
+//            for (String item : inputEntry.getAttenders()) {
+//                m = domainPattern.matcher(item);
+//                if (m.find()) {
+//                    if (m.group(1).toString().equalsIgnoreCase(domain)) {
+//                        result.add(item);
+//                    }
+//                }
+//            }
+//        }
         if (logger.isDebugEnabled()) {
             logger.debug(String.format("getDomainAttenders: passed %s, received %s", inputEntry.getAttenders(), result));
         }
