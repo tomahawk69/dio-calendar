@@ -14,11 +14,13 @@ import java.util.UUID;
  * Created by yur on 17.06.2014.
  */
 public interface ClientWrapper extends CalendarService {
+
+
     @Override
     com.dio.calendar.Entry newEntry(String subject, String description, Date startDate, Date endDate, List<String> attenders, List<com.dio.calendar.Notification> notifications);
 
     @Override
-    com.dio.calendar.Entry editSubject(com.dio.calendar.Entry oldEntry, String subject);
+    com.dio.calendar.Entry editSubject(com.dio.calendar.Entry oldEntry, String subject) ;
 
     @Override
     com.dio.calendar.Entry editDescription(com.dio.calendar.Entry oldEntry, String description);

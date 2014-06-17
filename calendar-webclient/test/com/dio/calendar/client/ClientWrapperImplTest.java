@@ -1,6 +1,7 @@
 package com.dio.calendar.client;
 
 import com.dio.calendar.CalendarService;
+import com.dio.calendar.Entry;
 import com.dio.calendar.Notification;
 import org.junit.Test;
 
@@ -11,6 +12,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class ClientWrapperImplTest {
 
@@ -24,12 +26,14 @@ public class ClientWrapperImplTest {
         List<Notification> notifications = new ArrayList<>();
 
         CalendarService service = mock(CalendarService.class);
-
+        Entry mockEntry = mock(Entry.class);
+        when(service.newEntry(subject, description, startDate, endDate, attenders, notifications)).thenReturn(mockEntry);
         ClientWrapper wrapper = new ClientWrapperImpl(service);
 
-        wrapper.newEntry(subject, description, startDate, endDate, attenders, notifications);
+        Entry resultEntry = wrapper.newEntry(subject, description, startDate, endDate, attenders, notifications);
+        assertEquals(mockEntry, resultEntry);
 
-        verify(service).newEntry(subject, description, startDate, endDate, attenders, notifications);
+        //verify(service).newEntry(subject, description, startDate, endDate, attenders, notifications);
     }
 
     @Test

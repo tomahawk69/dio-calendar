@@ -9,6 +9,9 @@
     <version>1.0-SNAPSHOT</version>
     <!--<packaging>jar</packaging>-->
     <packaging>war</packaging>
+    <modules>
+        <module>../calendar-webclient</module>
+    </modules>
 
     <repositories>
         <repository>
