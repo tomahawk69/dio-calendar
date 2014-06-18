@@ -8,20 +8,14 @@
     <parent>
         <groupId>com.dio.calendar</groupId>
         <artifactId>dio-calendar</artifactId>
-        <version>${parentVersion}</version>
+        <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>dio-calendar-service</artifactId>
-    <packaging>jar</packaging>
+    <version>${parentVersion}</version>
+    <packaging>war</packaging>
 
-    <repositories>
-        <repository>
-            <id>java.net2</id>
-            <name>Repository hosting the jee6 artifacts</name>
-            <url>http://download.java.net/maven/2</url>
-        </repository>
-    </repositories>
     <!--
         packaging war
         WEB-INF
@@ -31,43 +25,29 @@
 
     -->
 
-    <properties>
-        <jettyVersion>9.0.5.v20130815</jettyVersion>
-    </properties>
-
     <dependencies>
+
         <dependency>
             <groupId>com.dio.calendar</groupId>
             <artifactId>dio-calendar-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.8.5</version>
-            <scope>test</scope>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>${springVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>${springVersion}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>4.0.4.RELEASE</version>
+            <version>${springVersion}</version>
         </dependency>
 
         <dependency>
@@ -87,17 +67,6 @@
             <version>5.0</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.eclipse.jetty</groupId>-->
-            <!--<artifactId>jetty-maven-plugin</artifactId>-->
-            <!--<version>${jettyVersion}</version>-->
-        <!--</dependency>-->
 
         <dependency>
             <groupId>javax.servlet</groupId>

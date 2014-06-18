@@ -2,19 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
         <groupId>com.dio.calendar</groupId>
         <artifactId>dio-calendar</artifactId>
-        <!--<version>${parentVersion}</version>-->
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>dio-calendar-api</artifactId>
+    <artifactId>calendar-combined</artifactId>
+    <packaging>pom</packaging>
     <version>${parentVersion}</version>
+
+    <modules>
+        <module>../calendar-api</module>
+        <module>../calendar-service</module>
+        <module>../calendar-webclient</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty</artifactId>
+            <version>6.1.25</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
@@ -27,8 +41,18 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>${jettyVersion}</version>
+                <configuration>
+                    <!--<jettyXml>jetty-http.xml</jettyXml>-->
+                    <stopKey>STOP</stopKey>
+                    <stopPort>9999</stopPort>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
 
 </project>

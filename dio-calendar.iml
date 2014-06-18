@@ -5,12 +5,6 @@
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.idea" />
-      <excludeFolder url="file://$MODULE_DIR$/calendar-api/logs" />
-      <excludeFolder url="file://$MODULE_DIR$/calendar-api/target" />
-      <excludeFolder url="file://$MODULE_DIR$/calendar-service/db" />
-      <excludeFolder url="file://$MODULE_DIR$/calendar-service/logs" />
-      <excludeFolder url="file://$MODULE_DIR$/calendar-service/target" />
-      <excludeFolder url="file://$MODULE_DIR$/calendar-webclient/target" />
       <excludeFolder url="file://$MODULE_DIR$/logs" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
