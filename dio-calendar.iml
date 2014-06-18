@@ -4,10 +4,23 @@
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/calendar-api/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/calendar-api/target" />
+      <excludeFolder url="file://$MODULE_DIR$/calendar-service/db" />
+      <excludeFolder url="file://$MODULE_DIR$/calendar-service/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/calendar-service/target" />
+      <excludeFolder url="file://$MODULE_DIR$/calendar-webclient/target" />
+      <excludeFolder url="file://$MODULE_DIR$/logs" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: log4j:log4j:1.2.17" level="project" />
+    <orderEntry type="library" name="Maven: junit:junit:4.11" level="project" />
+    <orderEntry type="library" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
+    <orderEntry type="library" name="Maven: org.mockito:mockito-core:1.8.5" level="project" />
+    <orderEntry type="library" name="Maven: org.objenesis:objenesis:1.0" level="project" />
   </component>
 </module>
 
