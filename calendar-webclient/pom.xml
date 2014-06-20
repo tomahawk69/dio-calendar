@@ -21,7 +21,7 @@
             <groupId>com.dio.calendar</groupId>
             <artifactId>dio-calendar-api</artifactId>
             <version>1.0</version>
-            <scope>provided</scope>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

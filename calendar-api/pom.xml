@@ -15,6 +15,7 @@
 
     <artifactId>dio-calendar-api</artifactId>
     <version>${parentVersion}</version>
+    <packaging>jar</packaging>
 
     <build>
         <plugins>

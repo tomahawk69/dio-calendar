@@ -4,16 +4,19 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <artifactId>calendar-combined</artifactId>
+    <packaging>pom</packaging>
+    <!--<version>${parentVersion}</version>-->
+    <version>1.0</version>
+
     <parent>
         <groupId>com.dio.calendar</groupId>
         <artifactId>dio-calendar</artifactId>
+        <!--<version>${parentVersion}</version>-->
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>calendar-combined</artifactId>
-    <packaging>pom</packaging>
-    <version>${parentVersion}</version>
 
     <modules>
         <module>../calendar-api</module>
