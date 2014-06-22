@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 public class CalendarDataStoreImpl implements CalendarDataStore {
     private final DataStoreFS fileStore;
-    private Map<UUID, Entry> entries;
+    private HashMap<UUID, Entry> entries;
     private Map<String, HashSet<UUID>> indexEntryAttenders, indexEntrySubjects;
     private Map<String, Notification> notifications;
     private static Logger logger = Logger.getLogger(CalendarDataStoreImpl.class);
@@ -170,8 +170,8 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     }
 
     @Override
-    public Collection<Entry> getEntries() {
-        return entries.values();
+    public ArrayList<Entry> getEntries() {
+        return new ArrayList(entries.values());
     }
 
     @Override
@@ -268,6 +268,7 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
     @Override
     public List<Entry> getEntryBySubject(String subject) {
+        logger.info("getEntryBySubject " + subject);
         List<Entry> result = new LinkedList();
         if (subject != null) {
             HashSet<UUID> entries = new HashSet<>();

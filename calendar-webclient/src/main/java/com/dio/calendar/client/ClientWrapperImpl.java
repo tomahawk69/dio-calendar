@@ -4,12 +4,13 @@ import com.dio.calendar.*;
 import com.dio.calendar.datastore.DataStoreFSException;
 import org.apache.log4j.Logger;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by yur on 17.06.2014.
@@ -17,6 +18,18 @@ import java.util.UUID;
 public class ClientWrapperImpl implements ClientWrapper {
     private final CalendarService remoteService;
     private final Logger logger = Logger.getLogger(ClientWrapperImpl.class);
+
+    private List<Entry> searchResults;
+
+    private String searchSubject;
+
+    public void setSearchSubject(String searchTerms) {
+        this.searchSubject = searchTerms;
+    }
+
+    public String getSearchSubject() {
+        return searchSubject;
+    }
 
     public ClientWrapperImpl(CalendarService remoteService) {
         this.remoteService = remoteService;
@@ -81,6 +94,7 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public Entry removeEntry(UUID id) {
+        logger.info("remove entry UUID " + id);
         Entry result;
         try {
             result = remoteService.removeEntry(id);
@@ -156,7 +170,19 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public List<Entry> getEntriesBySubject(String subject) {
+        logger.info("getEntriesBySubject: " + subject);
         return null;
+    }
+
+    public List<Entry> getEntriesBySubject() {
+        logger.info("getEntriesBySubject wrapper");
+        List<Entry> result = null;
+        try {
+            result = remoteService.getEntriesBySubject(searchSubject);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -165,12 +191,33 @@ public class ClientWrapperImpl implements ClientWrapper {
     }
 
     @Override
-    public Collection<Entry> getEntries() {
-        return null;
+    public ArrayList<Entry> getEntries() {
+        ArrayList<Entry> result = null;
+        try {
+            result = remoteService.getEntries();
+        } catch (RemoteException e) {
+            logger.error(e);
+        }
+        return result;
     }
 
     @Override
     public void clearData() {
 
+    }
+
+    public void displayId(UUID id) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, id.toString(),  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void removeEntry1(ActionEvent actionEvent) {
+        logger.info("remove entry string");
+        addMessage("Welcome to Primefaces!!");
+    }
+
+    public void addMessage(String summary) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 }

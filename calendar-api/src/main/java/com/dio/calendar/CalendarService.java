@@ -5,10 +5,7 @@ import com.dio.calendar.datastore.DataStoreFSException;
 import java.io.IOException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 // TODO: interface without remote
 // TODO: remove dataFS exceptons from remote (convert to runtime exceptions
@@ -53,7 +50,7 @@ public interface CalendarService extends Remote {
     List<Entry> getEntriesBySubject(String subject) throws RemoteException;
     List<Entry> getEntriesByAttender(String attender) throws RemoteException;
 
-    Collection<Entry> getEntries() throws RemoteException;
+    ArrayList<Entry> getEntries() throws RemoteException;
 
     void clearData() throws DataStoreFSException, IOException;
 

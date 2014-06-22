@@ -4,19 +4,37 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-<!-- TODO: panginated (?) entries table -->
-<!-- TODO: delete entry -->
-<!-- TODO: search by subject -->
-<!-- TODO: run both web modules -->
-<!-- TODO: entry edit -->
-<!-- TODO: new entry -->
-<!-- TODO: login service -->
+    <!-- TODO: + panginated entries table -->
+    <!-- TODO: + delete entry -->
+    <!-- TODO: + search by subject -->
+    <!-- TODO: run both web modules -->
+    <!-- TODO: entry edit -->
+    <!-- TODO: new entry -->
+    <!-- TODO: login service -->
 
 
     <display-name>calendar-client</display-name>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:clientApplicationContext.xml</param-value>
+    </context-param>
+
+
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
+
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
@@ -27,7 +45,5 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
-
-
 
 </web-app>

@@ -34,7 +34,7 @@
         <property name="service" ref="calendarService"/>
         <property name="serviceInterface" value="com.dio.calendar.CalendarService"/>
         <!-- defaults to 1099 -->
-        <property name="registryPort" value="1199"/>
+        <property name="registryPort" value="1099"/>
     </bean>
 
 

@@ -37,6 +37,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
 
     @Override
     public List<Entry> getEntriesBySubject(String subject) {
+        logger.info("getEntriesBySubject " + subject);
         return data.getEntryBySubject(subject);
     }
 
@@ -46,7 +47,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
     }
 
     @Override
-    public Collection<Entry> getEntries() {
+    public ArrayList<Entry> getEntries() {
         return data.getEntries();
     }
 

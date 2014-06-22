@@ -5,6 +5,7 @@ import com.dio.calendar.Entry;
 import com.dio.calendar.Notification;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.UUID;
 public interface CalendarDataStore {
 
     public Entry removeEntry(UUID id) throws DataStoreFSException;
-    Collection<Entry> getEntries();
+    ArrayList<Entry> getEntries();
     Collection<Notification> getNotifications();
     boolean entryExists(UUID id);
     Entry getEntry(UUID id);

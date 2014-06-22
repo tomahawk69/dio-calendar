@@ -10,32 +10,29 @@
 <h:head>
 </h:head>
 <h:body>
-    <h1>Calendar client app</h1>
+    <h1>Calendar search</h1>
 
-    <h:form rendered="false">
-        <h:inputText value="#{param.id}"></h:inputText>
-    </h:form>
-
-    <p:confirmDialog global="true" showEffect="fade">
-        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-    </p:confirmDialog>
+    <h:outputText value="#{param.subject}"/>
 
     <p:toolbar>
         <f:facet name="left">
-
+            <h:link value="Home page" outcome="index"/>
         </f:facet>
 
         <f:facet name="right">
-            <h:link value="Search" action="/search" outcome="search"/>
+            <h:form id="searchSubject">
+                <h:inputText id="subject" label="Enter one or more words" value="#{calendarServiceWrapper.searchSubject}" />
+                <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
+                <h:commandButton value="Search" update="entries"/>
+            </h:form>
         </f:facet>
 
     </p:toolbar>
 
-    <h1>All calendar entries</h1>
+    <h1>Found entries</h1>
 
     <h:form>
-        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entries}" rows="20" paginator="true" lazy="true">
+        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesBySubject}" rows="20" paginator="true">
             <p:column headerText="Id">
                 <p:commandLink outcome="index" value="#{entry.id}" actionListener="#{calendarServiceWrapper.displayId}">
                     <f:param name="id" value="#{entry.id}" />
@@ -43,7 +40,7 @@
                 </p:commandLink>
             </p:column>
 
-            <p:column headerText="Subject" sortBy="#{entry.subject}" filterBy="#{entry.subject}">
+            <p:column headerText="Subject">
                 <h:outputText value="#{entry.subject}" />
             </p:column>
 

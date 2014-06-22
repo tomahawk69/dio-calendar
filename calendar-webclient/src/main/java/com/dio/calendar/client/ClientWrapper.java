@@ -5,10 +5,7 @@ import com.dio.calendar.Entry;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Created by yur on 17.06.2014.
@@ -68,7 +65,7 @@ public interface ClientWrapper extends CalendarService {
     List<com.dio.calendar.Entry> getEntriesByAttender(String attender);
 
     @Override
-    Collection<Entry> getEntries();
+    ArrayList<Entry> getEntries();
 
     @Override
     void clearData();

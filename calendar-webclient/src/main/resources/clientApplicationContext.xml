@@ -4,12 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--
-    Move web part to here
-    Wrapper for CalendarService to avoid exceptions
     JSF (primefaces ?)
-
     + add week view
-
     -->
 
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -23,7 +19,7 @@
     <!--<bean id="calendarServiceInterfaceWrapper" class="com.dio.calendar.client.Wrapper">-->
         <!--<constructor-arg name="service" ref="calendarService" />-->
     <!--</bean>-->
-    <bean id="calendarServiceWrapper" class="com.dio.calendar.client.ClientWrapperImpl">
+    <bean id="calendarServiceWrapper" class="com.dio.calendar.client.ClientWrapperImpl" scope="session">
         <constructor-arg name="remoteService" ref="calendarService" />
     </bean>
 
