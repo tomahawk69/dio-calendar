@@ -10,6 +10,8 @@ import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
+//import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
@@ -24,6 +26,8 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     private ConcurrentHashMap<String, Object> locks = new ConcurrentHashMap<>();
     private AtomicBoolean isLoadData = new AtomicBoolean(false);
     private final Object lockLocks = new Object();
+
+    private final ReentrantLock lockEntryWord = new ReentrantLock(false);
 
     public CalendarDataStoreImpl(DataStoreFS fs) {
         fileStore = fs;
@@ -63,14 +67,36 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     }
 
     private void indexEntryWord(UUID id, String word, Map<String, HashSet<UUID>> index) {
-        createLock(word);
-        Object lock = locks.get(word);
-        synchronized(lock) {
+        logger.info("Locks count:" + lockEntryWord.getHoldCount());
+        if (lockEntryWord.tryLock()) {
+            try {
+                HashSet<UUID> values = index.get(word);
+                if (values == null)
+                    values = new HashSet<>();
+                values.add(id);
+                index.put(word, values);
+            } finally {
+                lockEntryWord.unlock();
+            }
+        }
+        else {
+            logger.error("couldn't acquire lock");
+        }
+    }
+
+
+    private void indexEntryWordSyn(UUID id, String word, Map<String, HashSet<UUID>> index) {
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try {
             HashSet<UUID> values = index.get(word);
             if (values == null)
                 values = new HashSet<>();
             values.add(id);
             index.put(word, values);
+        }
+        finally {
+            lock.unlock();
         }
     }
 
@@ -117,6 +143,25 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     }
 
     private void unIndexEntryWord(UUID id, String word, Map<String, HashSet<UUID>> index) {
+        ReentrantLock lock = new ReentrantLock();
+        lock.lock();
+        try {
+            HashSet<UUID> values = indexEntrySubjects.get(word);
+            if (values != null) {
+                values.remove(id);
+                if (values.size() == 0) {
+                    index.remove(word);
+                } else {
+                    index.put(word, values);
+                }
+            }
+        }
+        finally {
+            lock.unlock();
+        }
+    }
+
+    private void unIndexEntryWordSyn(UUID id, String word, Map<String, HashSet<UUID>> index) {
         createLock(word);
         Object lock = locks.get(word);
         synchronized(lock) {
@@ -220,7 +265,8 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
             exec.shutdown();
 
-            // TODO: Reentrance: tryAcquire, tryRelease,
+            // TODO: + Reentrance: tryAcquire, tryRelease
+            // unstructured, lock polling, lock waits, interrupting locks, optional fairness policy
             // Collection hold value
             // Blocking operations
 

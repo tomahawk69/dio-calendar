@@ -8,11 +8,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ClientWrapperImplTest {
 
@@ -68,17 +67,63 @@ public class ClientWrapperImplTest {
 
     @Test
     public void testAddEntry() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        Entry mockEntry = mock(Entry.class);
+        Entry mockEntryReturn = mock(Entry.class);
+        when(service.addEntry(mockEntry)).thenReturn(mockEntryReturn);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
 
+        Entry resultEntry = wrapper.addEntry(mockEntry);
+        assertEquals(mockEntryReturn, resultEntry);
     }
 
     @Test
     public void testRemoveEntry() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        Entry mockEntry = mock(Entry.class);
+        Entry mockEntryReturn = mock(Entry.class);
+        when(service.removeEntry(mockEntry)).thenReturn(mockEntryReturn);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
 
+        Entry resultEntry = wrapper.removeEntry(mockEntry);
+        assertEquals(mockEntryReturn, resultEntry);
+    }
+
+    @Test
+    public void testRemoveEntryUuid() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        UUID uuid = UUID.randomUUID();
+        Entry mockEntryReturn = mock(Entry.class);
+        when(service.removeEntry(uuid)).thenReturn(mockEntryReturn);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
+
+        Entry resultEntry = wrapper.removeEntry(uuid);
+        assertEquals(mockEntryReturn, resultEntry);
     }
 
     @Test
     public void testUpdateEntry() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        Entry mockEntry = mock(Entry.class);
+        Entry mockEntryReturn = mock(Entry.class);
+        when(service.updateEntry(mockEntry)).thenReturn(mockEntryReturn);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
 
+        Entry resultEntry = wrapper.updateEntry(mockEntry);
+        assertEquals(mockEntryReturn, resultEntry);
+    }
+
+    @Test
+    public void testUpdateEntryEntry() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        Entry mockEntryOld = mock(Entry.class);
+        Entry mockEntryNew = mock(Entry.class);
+        Entry mockEntryReturn = mock(Entry.class);
+        when(service.updateEntry(mockEntryNew, mockEntryOld)).thenReturn(mockEntryReturn);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
+
+        Entry resultEntry = wrapper.updateEntry(mockEntryNew, mockEntryOld);
+        assertEquals(mockEntryReturn, resultEntry);
     }
 
     @Test
@@ -107,8 +152,27 @@ public class ClientWrapperImplTest {
     }
 
     @Test
-    public void testGetEntriesBySubject() throws Exception {
+    public void testGetEntriesBySubjectSubject() throws Exception {
+        String searchSubject = "mass test";
+        CalendarService service = mock(CalendarService.class);
+        List<Entry> mockEntries = new ArrayList<>();
+        when(service.getEntriesBySubject(searchSubject)).thenReturn(mockEntries);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
 
+        List<Entry> results = wrapper.getEntriesBySubject(searchSubject);
+        assertEquals(mockEntries, results);
+    }
+
+    @Test
+    public void testGetEntriesBySubject() throws Exception {
+        String searchSubject = "mass test";
+        CalendarService service = mock(CalendarService.class);
+        List<Entry> mockEntries = new ArrayList<>();
+        ClientWrapperImpl wrapper = spy(new ClientWrapperImpl(service));
+        doReturn(mockEntries).when(wrapper).getEntriesBySubject(searchSubject);
+
+        List<Entry> results = wrapper.getEntriesBySubject();
+        assertEquals(mockEntries, results);
     }
 
     @Test
@@ -118,11 +182,22 @@ public class ClientWrapperImplTest {
 
     @Test
     public void testGetEntries() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        ArrayList<Entry> mockEntries = new ArrayList<>();
+        when(service.getEntries()).thenReturn(mockEntries);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
 
-    }
+        List<Entry> results = wrapper.getEntries();
+        assertEquals(mockEntries, results);
+   }
 
     @Test
     public void testClearData() throws Exception {
+        CalendarService service = mock(CalendarService.class);
+        ClientWrapper wrapper = new ClientWrapperImpl(service);
 
+        wrapper.clearData();
+
+        verify(service).clearData();
     }
 }

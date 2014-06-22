@@ -170,19 +170,19 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public List<Entry> getEntriesBySubject(String subject) {
-        logger.info("getEntriesBySubject: " + subject);
-        return null;
-    }
-
-    public List<Entry> getEntriesBySubject() {
-        logger.info("getEntriesBySubject wrapper");
+        logger.info("getEntriesBySubject");
         List<Entry> result = null;
         try {
-            result = remoteService.getEntriesBySubject(searchSubject);
+            result = remoteService.getEntriesBySubject(subject);
         } catch (RemoteException e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<Entry> getEntriesBySubject() {
+        logger.info("getEntriesBySubject wrapper");
+        return getEntriesBySubject(searchSubject);
     }
 
     @Override
@@ -203,21 +203,13 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public void clearData() {
+        try {
+            remoteService.clearData();
+        } catch (DataStoreFSException | IOException e) {
+            logger.error(e);
+            throw new RuntimeException(e);
+        }
 
     }
 
-    public void displayId(UUID id) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, id.toString(),  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    public void removeEntry1(ActionEvent actionEvent) {
-        logger.info("remove entry string");
-        addMessage("Welcome to Primefaces!!");
-    }
-
-    public void addMessage(String summary) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
 }
