@@ -45,8 +45,8 @@
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-api:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: com.sun.faces:jsf-impl:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: org.primefaces:primefaces:5.0" level="project" />
-    <orderEntry type="library" name="Maven: org.jacoco:org.jacoco.core:0.7.1.201405082137" level="project" />
-    <orderEntry type="library" name="Maven: org.ow2.asm:asm-debug-all:5.0.1" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.jacoco:org.jacoco.core:0.7.1.201405082137" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.ow2.asm:asm-debug-all:5.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.inject:javax.inject:1" level="project" />
   </component>
