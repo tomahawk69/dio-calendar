@@ -15,6 +15,8 @@ import static org.mockito.Mockito.*;
 
 public class ClientWrapperImplTest {
 
+//    TODO: Entry not mock!
+
     @Test
     public void testNewEntry() throws Exception {
         String subject = "subject";

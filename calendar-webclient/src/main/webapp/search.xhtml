@@ -21,7 +21,9 @@
 
         <f:facet name="right">
             <h:form id="searchSubject">
-                <h:inputText id="subject" label="Enter one or more words" value="#{calendarServiceWrapper.searchSubject}" />
+                <h:inputText id="subject" label="Enter one or more words"
+                             <!--value="#{calendarServiceWrapper.searchSubject}" -->
+                        />
                 <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
                 <h:commandButton value="Search" update="entries"/>
             </h:form>
@@ -32,7 +34,7 @@
     <h1>Found entries</h1>
 
     <h:form>
-        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesBySubject}" rows="20" paginator="true">
+        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesBySubject(subject.value)}" rows="20" paginator="true">
             <p:column headerText="Id">
                 <p:commandLink outcome="index" value="#{entry.id}" actionListener="#{calendarServiceWrapper.displayId}">
                     <f:param name="id" value="#{entry.id}" />

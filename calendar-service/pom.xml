@@ -39,7 +39,7 @@
             <groupId>com.dio.calendar</groupId>
             <artifactId>dio-calendar-api</artifactId>
             <version>1.0</version>
-            <scope>compile</scope>
+            <!--<scope>compile</scope>-->
         </dependency>
 
         <dependency>

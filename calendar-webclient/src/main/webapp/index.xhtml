@@ -35,7 +35,9 @@
     <h1>All calendar entries</h1>
 
     <h:form>
-        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entries}" rows="20" paginator="true" lazy="true">
+        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entries}" rows="20" paginator="true"
+                     <!--lazy="true"-->
+                >
             <p:column headerText="Id">
                 <p:commandLink outcome="index" value="#{entry.id}" actionListener="#{calendarServiceWrapper.displayId}">
                     <f:param name="id" value="#{entry.id}" />
@@ -60,7 +62,7 @@
             </p:column>
 
             <p:column headerText="#" width="100">
-                <p:commandButton outcome="index" actionListener="#{calendarServiceWrapper.removeEntry(entry.id)}" icon="ui-icon-closethick" update="entries" title="Remove entry">
+                <p:commandButton actionListener="#{calendarServiceWrapper.removeEntry(entry.id)}" icon="ui-icon-closethick" update="entries" title="Remove entry">
                     <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert" />
                 </p:commandButton>
             </p:column>

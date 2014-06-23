@@ -23,11 +23,16 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     private Map<String, HashSet<UUID>> indexEntryAttenders, indexEntrySubjects;
     private Map<String, Notification> notifications;
     private static Logger logger = Logger.getLogger(CalendarDataStoreImpl.class);
+
+    // locks here
     private ConcurrentHashMap<String, Object> locks = new ConcurrentHashMap<>();
+
     private AtomicBoolean isLoadData = new AtomicBoolean(false);
     private final Object lockLocks = new Object();
 
     private final ReentrantLock lockEntryWord = new ReentrantLock(false);
+
+    // TODO: Lock Registry
 
     public CalendarDataStoreImpl(DataStoreFS fs) {
         fileStore = fs;
@@ -265,7 +270,7 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
             exec.shutdown();
 
-            // TODO: + Reentrance: tryAcquire, tryRelease
+            // TODO: + Reentrance: Registry
             // unstructured, lock polling, lock waits, interrupting locks, optional fairness policy
             // Collection hold value
             // Blocking operations
