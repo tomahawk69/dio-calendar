@@ -14,7 +14,7 @@
     </parent>
 
     <artifactId>dio-calendar-api</artifactId>
-    <version>${parentVersion}</version>
+    <!--<version>${parentVersion}</version>-->
     <packaging>jar</packaging>
 
     <build>

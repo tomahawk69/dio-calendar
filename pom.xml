@@ -23,11 +23,11 @@
     <version>1.0</version>
     <!--<version>${parentVersion}</version>-->
 
-    <!--<modules>-->
-        <!--<module>calendar-api</module>-->
+    <modules>
+        <module>calendar-combined</module>
         <!--<module>calendar-service</module>-->
         <!--<module>calendar-webclient</module>-->
-    <!--</modules>-->
+    </modules>
 
     <packaging>pom</packaging>
 

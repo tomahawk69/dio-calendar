@@ -23,7 +23,7 @@
 
     <p:toolbar>
         <f:facet name="left">
-
+            <h:link value="New item" outcome="edit"/>
         </f:facet>
 
         <f:facet name="right">
@@ -35,9 +35,7 @@
     <h1>All calendar entries</h1>
 
     <h:form>
-        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entries}" rows="20" paginator="true"
-                     <!--lazy="true"-->
-                >
+        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entries}" rows="20" paginator="true">
             <p:column headerText="Id">
                 <p:commandLink outcome="index" value="#{entry.id}" actionListener="#{calendarServiceWrapper.displayId}">
                     <f:param name="id" value="#{entry.id}" />

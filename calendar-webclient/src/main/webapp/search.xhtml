@@ -14,27 +14,28 @@
 
     <h:outputText value="#{param.subject}"/>
 
+    <h:form id="searchSubject">
+
     <p:toolbar>
         <f:facet name="left">
             <h:link value="Home page" outcome="index"/>
         </f:facet>
 
         <f:facet name="right">
-            <h:form id="searchSubject">
-                <h:inputText id="subject" label="Enter one or more words"
+                <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1" />
                              <!--value="#{calendarServiceWrapper.searchSubject}" -->
-                        />
+                        <!--/>-->
                 <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
                 <h:commandButton value="Search" update="entries"/>
-            </h:form>
+            <!--</h:form>-->
         </f:facet>
 
     </p:toolbar>
 
     <h1>Found entries</h1>
 
-    <h:form>
-        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesBySubject(subject.value)}" rows="20" paginator="true">
+    <!--<h:form>-->
+        <p:dataTable id="entries" var="entry" process="@(subject)" value="#{calendarServiceWrapper.getEntriesBySubject}" rows="20" paginator="true">
             <p:column headerText="Id">
                 <p:commandLink outcome="index" value="#{entry.id}" actionListener="#{calendarServiceWrapper.displayId}">
                     <f:param name="id" value="#{entry.id}" />

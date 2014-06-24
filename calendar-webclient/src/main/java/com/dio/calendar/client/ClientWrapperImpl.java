@@ -170,7 +170,7 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public List<Entry> getEntriesBySubject(String subject) {
-        logger.info("getEntriesBySubject");
+        logger.info("getEntriesBySubject: " + subject);
         List<Entry> result = null;
         try {
             result = remoteService.getEntriesBySubject(subject);
