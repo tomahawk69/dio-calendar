@@ -3,13 +3,18 @@ package com.dio.calendar.client;
 import com.dio.calendar.*;
 import com.dio.calendar.datastore.DataStoreFSException;
 import org.apache.log4j.Logger;
+import org.codehaus.plexus.util.StringUtils;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -92,6 +97,61 @@ public class ClientWrapperImpl implements ClientWrapper {
         return result;
     }
 
+    public String addEntry() {
+        Entry result;
+        logger.info("add entry");
+        Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        logger.info(params);
+        String subject = params.get("addForm:subject");
+        String description = params.get("addForm:description");
+
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+        Date dateFrom = null;
+        String date = params.get("addForm:dateFrom_input");
+        if (StringUtils.isNotBlank(date)) {
+            try {
+                dateFrom = dateFormat.parse(date);
+            } catch (ParseException e) {
+                logger.error(e);
+            }
+        }
+
+        Date dateTo = null;
+        date = params.get("addForm:dateTo_input");
+        if (StringUtils.isNotBlank(date)) {
+            try {
+                dateTo = dateFormat.parse(date);
+            } catch (ParseException e) {
+                logger.error(e);
+            }
+        }
+
+//        logger.info("subject:" + subject);
+//        logger.info("description:" + description);
+//        logger.info("dateFrom:" + dateFrom);
+//        logger.info("dateTo:" + dateTo);
+
+        try {
+            result = addEntry(newEntry(subject, description, dateFrom, dateTo, null, null));
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Successfully added entry", "Entry was successfully added. New id is " + result.getId());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
+            logger.error(e);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error", "Entry was not added: " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+
+
+//        HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//        String subject = request.getParameter("addForm:subject");
+//        System.out.println(subject);
+
+        return "add";
+    }
+
     @Override
     public Entry removeEntry(UUID id) {
         logger.info("remove entry UUID " + id);
@@ -165,6 +225,17 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public Entry getEntry(UUID id) {
+        logger.info("Get entry by id: " + id);
+        return null;
+    }
+
+    public Entry getEntry(String id) {
+        logger.info("Get entry: " + id);
+        return getEntry(UUID.fromString(id));
+    }
+
+    public Entry getEntry() {
+        logger.info("Get entry");
         return null;
     }
 

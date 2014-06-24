@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+    <h1>Calendar client app</h1>
+
+    <p:confirmDialog global="true" showEffect="fade">
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    </p:confirmDialog>
+
+    <p:toolbar>
+        <f:facet name="left">
+            <h:link value="Home" outcome="index"/>
+        </f:facet>
+
+        <f:facet name="right">
+            <h:link value="Search" outcome="search"/>
+        </f:facet>
+
+    </p:toolbar>
+
+    <h1>Add calendar entry</h1>
+
+    <h:form rendered="true" id="addForm">
+
+        <p:growl id="msgs" showDetail="true"/>
+
+        <h:panelGrid columns="2" cellpadding="5" id="panel">
+
+            <p:outputLabel value="Subject: " for="subject"/>
+            <p:inputText id="subject"></p:inputText>
+
+            <p:outputLabel value="Description: " for="description"/>
+            <p:inputTextarea id="description"></p:inputTextarea>
+
+            <p:outputLabel for="dateFrom" value="Date from: "/>
+            <p:calendar id="dateFrom" pattern="dd/MM/yyyy" />
+
+            <p:outputLabel for="dateTo" value="Date to: "/>
+            <p:calendar id="dateTo" pattern="dd/MM/yyyy" />
+
+            <p:commandButton value="Save" outcome="add" action="#{calendarServiceWrapper.addEntry}" ajax="false">
+                <f:param name="subject" value="subject" />
+                <f:param name="description" value="description" />
+                <f:param name="dateFrom" value="dateFrom" />
+                <f:param name="dateTo" value="dateTo" />
+            </p:commandButton>
+
+            <p:commandButton value="Reset" update="panel" process="@this" style="margin-right:20px;">
+                <p:resetInput target="panel"/>
+            </p:commandButton>
+
+        </h:panelGrid>
+
+    </h:form>
+
+
+</h:body>
+</html>

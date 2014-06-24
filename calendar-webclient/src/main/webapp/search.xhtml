@@ -12,6 +12,11 @@
 <h:body>
     <h1>Calendar search</h1>
 
+    <p:confirmDialog global="true" showEffect="fade">
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+    </p:confirmDialog>
+
     <h:outputText value="#{param.subject}"/>
 
     <h:form id="searchSubject">
@@ -22,9 +27,9 @@
         </f:facet>
 
         <f:facet name="right">
-                <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1" />
-                             <!--value="#{calendarServiceWrapper.searchSubject}" -->
-                        <!--/>-->
+                <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1"
+                             value="#{calendarServiceWrapper.searchSubject}"
+                        />
                 <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
                 <h:commandButton value="Search" update="entries"/>
             <!--</h:form>-->
@@ -35,12 +40,12 @@
     <h1>Found entries</h1>
 
     <!--<h:form>-->
-        <p:dataTable id="entries" var="entry" process="@(subject)" value="#{calendarServiceWrapper.getEntriesBySubject}" rows="20" paginator="true">
+        <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesBySubject}" rows="20" paginator="true">
             <p:column headerText="Id">
-                <p:commandLink outcome="index" value="#{entry.id}" actionListener="#{calendarServiceWrapper.displayId}">
+                <p:link outcome="edit" value="#{entry.id}">
                     <f:param name="id" value="#{entry.id}" />
                     <h:outputText value="#{entry.id}" />
-                </p:commandLink>
+                </p:link>
             </p:column>
 
             <p:column headerText="Subject">
@@ -60,7 +65,7 @@
             </p:column>
 
             <p:column headerText="#" width="100">
-                <p:commandButton outcome="index" actionListener="#{calendarServiceWrapper.removeEntry(entry.id)}" icon="ui-icon-closethick" update="entries" title="Remove entry">
+                <p:commandButton actionListener="#{calendarServiceWrapper.removeEntry(entry.id)}" icon="ui-icon-closethick" update="entries" title="Remove entry">
                     <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert" />
                 </p:commandButton>
             </p:column>

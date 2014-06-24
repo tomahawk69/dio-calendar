@@ -21,9 +21,11 @@
         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
     </p:confirmDialog>
 
+    <p:growl id="growl" showDetail="true" sticky="true" />
+
     <p:toolbar>
         <f:facet name="left">
-            <h:link value="New item" outcome="edit"/>
+            <h:link value="New item" outcome="add"/>
         </f:facet>
 
         <f:facet name="right">
@@ -61,7 +63,7 @@
 
             <p:column headerText="#" width="100">
                 <p:commandButton actionListener="#{calendarServiceWrapper.removeEntry(entry.id)}" icon="ui-icon-closethick" update="entries" title="Remove entry">
-                    <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert" />
+                    <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert" update="growl" />
                 </p:commandButton>
             </p:column>
 
