@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>
+        <ui:insert name="title"/>
+    </title>
+</h:head>
+<h:body>
+    <h:form rendered="#{formRender}" id="editForm">
+
+        <p:growl id="editMessages" showDetail="true"/>
+
+        <h:panelGrid columns="2" cellpadding="5" id="panel">
+
+            <ui:fragment rendered="#{entryEdit.isEdit()}">
+                <p:outputLabel value="ID: " for="id"/>
+            </ui:fragment>
+            <ui:fragment rendered="#{entryEdit.isEdit()}">
+                <p:inputText id="id" value="#{entryEdit.oldId}" disabled="true"/>
+            </ui:fragment>
+
+            <p:outputLabel value="Subject: " for="subject"/>
+            <p:inputText id="subject" value="#{entryEdit.subject}"></p:inputText>
+
+            <p:outputLabel value="Description: " for="description"/>
+            <p:inputTextarea id="description" value="#{entryEdit.description}"></p:inputTextarea>
+
+            <p:outputLabel for="dateFrom" value="Date from: "/>
+            <p:calendar id="dateFrom" pattern="dd/MM/yyyy" value="#{entryEdit.dateFrom}"/>
+
+            <p:outputLabel for="dateTo" value="Date to: "/>
+            <p:calendar id="dateTo" pattern="dd/MM/yyyy" value="#{entryEdit.dateTo}"/>
+
+            <p:commandButton value="Save" outcome="add2" action="#{entryEdit.createEntry}" ajax="false">
+            </p:commandButton>
+
+            <p:commandButton value="Reset" update="panel" process="@this" style="margin-right:20px;">
+                <p:resetInput target="panel"/>
+            </p:commandButton>
+        </h:panelGrid>
+    </h:form>
+
+</h:body>
+</html>

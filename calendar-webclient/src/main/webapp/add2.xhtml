@@ -7,18 +7,26 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
-<h:head />
+<h:head>
+</h:head>
 <h:body>
     <ui:composition template="/template/template.xhtml">
-        <ui:param name="entries" value="#{calendarServiceWrapper.entries}" />
-        <ui:param name="formRender" value="#{false}" />
+        <ui:param name="formRender" value="#{true}" />
         <ui:define name="title">
-            Entries
+            Add entry
         </ui:define>
         <ui:define name="content">
             <ui:include src="/template/editform.xhtml" />
-            <ui:include src="/template/entries.xhtml" />
         </ui:define>
     </ui:composition>
+    <!--<ui:include file="header.xhtml" />-->
+    <!--<ui:composition template="editform.xhtml">-->
+        <!--<ui:define name="mode">-->
+            <!--Add-->
+        <!--</ui:define>-->
+        <!--<ui:define name="title">-->
+            <!--Add new item-->
+        <!--</ui:define>-->
+    <!--</ui:composition>-->
 </h:body>
 </html>

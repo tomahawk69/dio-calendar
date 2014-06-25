@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+
+    <h:form>
+    <p:confirmDialog global="true" showEffect="fade">
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+    </p:confirmDialog>
+    </h:form>
+
+    <h:form>
+        <p:growl id="tableGrowl" showDetail="true" sticky="true" autoUpdate="true"/>
+    </h:form>
+
+    <h:form>
+    <p:dataTable id="entries" var="entry" value="#{entries}" rows="20" paginator="true">
+        <p:column headerText="Id">
+            <p:commandLink value="#{entry.subject}" actionListener="calendarServiceWrapper.showEditForm()">
+                <p:confirm header="Confirmation" message="Are you sure you want to edit entry?" icon="ui-icon-alert"/>
+                <f:param name="id" value="#{entry.id}"/>
+                <h:outputText value="#{entry.subject}"/>
+            </p:commandLink>
+        </p:column>
+
+        <!--<p:column headerText="Subject" sortBy="#{entry.subject}" filterBy="#{entry.subject}">-->
+        <!--<h:outputText value="#{entry.subject}" />-->
+        <!--</p:column>-->
+
+        <p:column headerText="Description">
+            <h:outputText value="#{entry.description}"/>
+        </p:column>
+
+        <p:column headerText="Start Date">
+            <h:outputText value="#{entry.startDate}"/>
+        </p:column>
+
+        <p:column headerText="End Date">
+            <h:outputText value="#{entry.endDate}"/>
+        </p:column>
+
+        <p:column headerText="#" width="100">
+            <p:commandButton actionListener="#{calendarServiceWrapper.removeEntryById(entry.id)}"
+                             icon="ui-icon-closethick" update="entries" title="Remove entry" ajax="true">
+                <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert"/>
+                <!--<h:outputText value="Remove"/>-->
+            </p:commandButton>
+        </p:column>
+
+    </p:dataTable>
+    </h:form>
+</h:body>
+</html>

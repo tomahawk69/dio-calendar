@@ -134,14 +134,10 @@ public class ClientWrapperImpl implements ClientWrapper {
 
         try {
             result = addEntry(newEntry(subject, description, dateFrom, dateTo, null, null));
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Successfully added entry", "Entry was successfully added. New id is " + result.getId());
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            setGrowlInfo("Successfully added entry", "Entry was successfully added. New id is " + result.getId());
         } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
             logger.error(e);
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    "Error", "Entry was not added: " + e.getMessage());
-            FacesContext.getCurrentInstance().addMessage(null, message);
+            setGrowlError("Error", "Entry was not added: " + e.getMessage());
         }
 
 
@@ -153,19 +149,27 @@ public class ClientWrapperImpl implements ClientWrapper {
     }
 
     @Override
-    public Entry removeEntry(UUID id) {
-        logger.info("remove entry UUID " + id);
+    public Entry removeEntryById(UUID id) {
+        logger.info("remove entry by UUID " + id);
         Entry result;
         try {
-            result = remoteService.removeEntry(id);
-        } catch (DataStoreFSException e) {
-            logger.error(e);
-            throw new RuntimeException(e);
-        } catch (RemoteException e) {
+            result = remoteService.removeEntryById(id);
+            setGrowlInfo("Entry removed", new StringBuffer("Entry with id ").append(id).append(" was successfully removed").toString());
+        } catch (DataStoreFSException | RemoteException e) {
             logger.error(e);
             throw new RuntimeException(e);
         }
         return result;
+    }
+
+    private void setGrowlInfo(String subject, String body) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, subject, body);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    private void setGrowlError(String subject, String body) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, subject, body);
+        FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     @Override
@@ -226,7 +230,13 @@ public class ClientWrapperImpl implements ClientWrapper {
     @Override
     public Entry getEntry(UUID id) {
         logger.info("Get entry by id: " + id);
-        return null;
+        Entry result = null;
+        try {
+            result = remoteService.getEntry(id);
+        } catch (RemoteException e) {
+            logger.error(e);
+        }
+        return result;
     }
 
     public Entry getEntry(String id) {
@@ -241,7 +251,6 @@ public class ClientWrapperImpl implements ClientWrapper {
 
     @Override
     public List<Entry> getEntriesBySubject(String subject) {
-        logger.info("getEntriesBySubject: " + subject);
         List<Entry> result = null;
         try {
             result = remoteService.getEntriesBySubject(subject);
@@ -252,7 +261,6 @@ public class ClientWrapperImpl implements ClientWrapper {
     }
 
     public List<Entry> getEntriesBySubject() {
-        logger.info("getEntriesBySubject wrapper");
         return getEntriesBySubject(searchSubject);
     }
 
@@ -281,6 +289,10 @@ public class ClientWrapperImpl implements ClientWrapper {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public void showEditForm() {
+        logger.info("showEditForm");
     }
 
 }

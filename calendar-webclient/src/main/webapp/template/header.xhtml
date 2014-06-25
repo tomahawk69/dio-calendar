@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+</h:head>
+<h:body>
+    <h1>Calendar app</h1>
+    <p:toolbar>
+        <f:facet name="left">
+            <h:form>
+            <p:link value="Home" outcome="index"/>&nbsp;
+            <p:commandLink value="New item internal" title="Working only from home page"/>&nbsp;
+            <p:link value="New item external" outcome="add2" title="Standalone page"/>
+            </h:form>
+        </f:facet>
+
+        <f:facet name="right">
+            <h:form rendered="#{searchRender}">
+            <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1"
+                         value="#{calendarServiceWrapper.searchSubject}"
+                    />
+            <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
+            <h:commandButton value="Search" update="entries"/>
+            </h:form>
+            <h:form rendered="#{!searchRender}">
+                <h:link value="Search" action="/search" outcome="search"/>
+            </h:form>
+        </f:facet>
+
+    </p:toolbar>
+</h:body>
+</html>

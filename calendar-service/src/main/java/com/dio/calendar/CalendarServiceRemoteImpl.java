@@ -121,7 +121,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
     }
 
     @Override
-    public Entry removeEntry(UUID id) throws DataStoreFSException {
+    public Entry removeEntryById(UUID id) throws DataStoreFSException {
         logger.debug("Removing entry with id: " + id);
         return data.removeEntry(id);
     }

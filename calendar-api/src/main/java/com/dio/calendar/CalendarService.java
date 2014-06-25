@@ -37,11 +37,11 @@ public interface CalendarService extends Remote {
 
     Entry addEntry(Entry entry) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException, RemoteException;
 
-    Entry removeEntry(UUID id) throws DataStoreFSException, RemoteException;
-
     Entry updateEntry(Entry newEntry, Entry oldEntry) throws CalendarEntryBadAttribute, DataStoreFSException, RemoteException;
     Entry updateEntry(Entry newEntry) throws CalendarEntryBadAttribute, DataStoreFSException, RemoteException;
     Entry removeEntry(Entry entry) throws DataStoreFSException, RemoteException;
+    Entry removeEntryById(UUID id) throws DataStoreFSException, RemoteException;
+
     Entry copyEntry(Entry entry) throws RemoteException;
     TimeInterval[] getFreeTimeLine(String attender, Date date) throws RemoteException;
 

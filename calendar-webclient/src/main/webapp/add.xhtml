@@ -48,7 +48,7 @@
             <p:outputLabel for="dateTo" value="Date to: "/>
             <p:calendar id="dateTo" pattern="dd/MM/yyyy" />
 
-            <p:commandButton value="Save" outcome="add" action="#{calendarServiceWrapper.addEntry}" ajax="false">
+            <p:commandButton value="Save" outcome="add" action="#{calendarServiceWrapper.addEntry()}" ajax="false">
                 <f:param name="subject" value="subject" />
                 <f:param name="description" value="description" />
                 <f:param name="dateFrom" value="dateFrom" />

@@ -38,7 +38,7 @@ public interface ClientWrapper extends CalendarService {
     com.dio.calendar.Entry addEntry(com.dio.calendar.Entry entry) throws com.dio.calendar.CalendarEntryBadAttribute, com.dio.calendar.CalendarKeyViolation;
 
     @Override
-    com.dio.calendar.Entry removeEntry(UUID id);
+    com.dio.calendar.Entry removeEntryById(UUID id);
 
     @Override
     com.dio.calendar.Entry updateEntry(com.dio.calendar.Entry newEntry, com.dio.calendar.Entry oldEntry) throws com.dio.calendar.CalendarEntryBadAttribute;

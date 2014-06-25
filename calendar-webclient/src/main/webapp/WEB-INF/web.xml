@@ -4,13 +4,16 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!-- TODO: search by subject not session (?) -->
+    <!-- TODO: + search by subject not session (?) -->
     <!-- TODO: + new entry -->
-    <!-- TODO: entry edit (standalone page) -->
+    <!-- TODO: + entry edit (standalone page) -->
+    <!-- TODO: ui:composition -->
+    <!-- TODO: entry edit and collapse table on index.xhtml (ui:param) -->
+    <!-- TODO: validation standard and custom -->
     <!-- TODO: login service -->
     <!-- TODO: ExceptionHandler -->
     <!-- TODO: sorting -->
-    <!-- TODO: run both web modules -->
+
 
 
     <display-name>calendar-client</display-name>

@@ -10,6 +10,18 @@
 <h:head>
 </h:head>
 <h:body>
+    <ui:composition template="/template/template.xhtml">
+        <ui:param name="entries" value="#{calendarServiceWrapper.entriesBySubject}" />
+        <ui:param name="searchRender" value="#{true}" />
+        <ui:define name="title">
+            Search entries by subject
+        </ui:define>
+        <ui:define name="content">
+            <ui:include src="/template/editform.xhtml" />
+            <ui:include src="/template/entries.xhtml" />
+        </ui:define>
+    </ui:composition>
+
     <h1>Calendar search</h1>
 
     <p:confirmDialog global="true" showEffect="fade">
@@ -19,11 +31,15 @@
 
     <h:outputText value="#{param.subject}"/>
 
+    <p:growl id="growl" showDetail="true" sticky="true" />
+
     <h:form id="searchSubject">
 
     <p:toolbar>
         <f:facet name="left">
-            <h:link value="Home page" outcome="index"/>
+            <h:link value="Home page" outcome="index"/>&nbsp;
+            <h:link value="New item" outcome="add"/>&nbsp;
+            <h:link value="New item 2" outcome="add2"/>
         </f:facet>
 
         <f:facet name="right">
