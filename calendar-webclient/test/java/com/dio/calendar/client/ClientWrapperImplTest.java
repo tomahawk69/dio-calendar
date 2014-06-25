@@ -96,10 +96,10 @@ public class ClientWrapperImplTest {
         CalendarService service = mock(CalendarService.class);
         UUID uuid = UUID.randomUUID();
         Entry mockEntryReturn = mock(Entry.class);
-        when(service.removeEntry(uuid)).thenReturn(mockEntryReturn);
+        when(service.removeEntryById(uuid)).thenReturn(mockEntryReturn);
         ClientWrapper wrapper = new ClientWrapperImpl(service);
 
-        Entry resultEntry = wrapper.removeEntry(uuid);
+        Entry resultEntry = wrapper.removeEntryById(uuid);
         assertEquals(mockEntryReturn, resultEntry);
     }
 

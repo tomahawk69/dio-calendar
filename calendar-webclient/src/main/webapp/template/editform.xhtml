@@ -13,32 +13,33 @@
     </title>
 </h:head>
 <h:body>
-    <h:form rendered="#{formRender}" id="editForm">
+    <h:form rendered="#{formRender || editEntry.isShowForm()}" id="editForm" >
 
         <p:growl id="editMessages" showDetail="true"/>
 
         <h:panelGrid columns="2" cellpadding="5" id="panel">
 
-            <ui:fragment rendered="#{entryEdit.isEdit()}">
+            <ui:fragment rendered="#{editEntry.isEdit()}">
                 <p:outputLabel value="ID: " for="id"/>
             </ui:fragment>
-            <ui:fragment rendered="#{entryEdit.isEdit()}">
-                <p:inputText id="id" value="#{entryEdit.oldId}" disabled="true"/>
+            <ui:fragment rendered="#{editEntry.isEdit()}">
+                <p:inputText id="id" value="#{editEntry.oldId}" disabled="true"/>
             </ui:fragment>
 
             <p:outputLabel value="Subject: " for="subject"/>
-            <p:inputText id="subject" value="#{entryEdit.subject}"></p:inputText>
+            <p:inputText id="subject" value="#{editEntry.subject}"></p:inputText>
 
             <p:outputLabel value="Description: " for="description"/>
-            <p:inputTextarea id="description" value="#{entryEdit.description}"></p:inputTextarea>
+            <p:inputTextarea id="description" value="#{editEntry.description}"></p:inputTextarea>
 
             <p:outputLabel for="dateFrom" value="Date from: "/>
-            <p:calendar id="dateFrom" pattern="dd/MM/yyyy" value="#{entryEdit.dateFrom}"/>
+            <p:calendar id="dateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}"/>
 
             <p:outputLabel for="dateTo" value="Date to: "/>
-            <p:calendar id="dateTo" pattern="dd/MM/yyyy" value="#{entryEdit.dateTo}"/>
+            <p:calendar id="dateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}"/>
 
-            <p:commandButton value="Save" outcome="add2" action="#{entryEdit.createEntry}" ajax="false">
+            <p:commandButton value="Save" outcome="add2" action="#{editEntry.hideEditForm()}" ajax="false" update="@this">
+            <!--<p:commandButton value="Save" outcome="add2" action="{editEntry.createEntry}" ajax="false">-->
             </p:commandButton>
 
             <p:commandButton value="Reset" update="panel" process="@this" style="margin-right:20px;">

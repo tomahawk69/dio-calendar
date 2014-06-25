@@ -24,8 +24,8 @@
         <constructor-arg name="remoteService" ref="calendarService" />
     </bean>
 
-    <!--<bean id="entryEdit" class="com.dio.calendar.client.EditEntry" scope="request" init-method="init">-->
-        <!--<constructor-arg name="localService" ref="calendarServiceWrapper" />-->
-    <!--</bean>-->
+    <bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="request">
+        <constructor-arg name="localService" ref="calendarServiceWrapper" />
+    </bean>
 
 </beans>

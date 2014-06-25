@@ -154,7 +154,8 @@ public class ClientWrapperImpl implements ClientWrapper {
         Entry result;
         try {
             result = remoteService.removeEntryById(id);
-            setGrowlInfo("Entry removed", new StringBuffer("Entry with id ").append(id).append(" was successfully removed").toString());
+            // FIXME: setGrowlInfo in tests
+            //setGrowlInfo("Entry removed", new StringBuffer("Entry with id ").append(id).append(" was successfully removed").toString());
         } catch (DataStoreFSException | RemoteException e) {
             logger.error(e);
             throw new RuntimeException(e);

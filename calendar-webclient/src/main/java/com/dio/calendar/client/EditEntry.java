@@ -35,6 +35,8 @@ public class EditEntry{
     private Entry oldEntry;
 
     private static Logger logger = Logger.getLogger(EditEntry.class);
+    private boolean showForm = false;
+
 
     @Autowired
     public EditEntry(ClientWrapperImpl localService) {
@@ -175,11 +177,18 @@ public class EditEntry{
         return sb.toString();
     }
 
-    public String showEditForm() {
-        logger.warn("showEditForm");
-        reset();
-
-        return "index";
+    public void showEditForm() {
+        logger.info("showEditForm");
+        showForm = true;
     }
 
+    public void hideEditForm() {
+        logger.info("hideEditForm");
+        showForm = false;
+    }
+
+    public boolean isShowForm() {
+        logger.info("isShowForm");
+        return showForm;
+    }
 }
