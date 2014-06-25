@@ -175,4 +175,11 @@ public class EditEntry{
         return sb.toString();
     }
 
+    public String showEditForm() {
+        logger.warn("showEditForm");
+        reset();
+
+        return "index";
+    }
+
 }
