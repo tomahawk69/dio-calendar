@@ -14,14 +14,12 @@
     <p:toolbar>
         <f:facet name="left">
             <h:form>
-                <h:inputText id="testtss12" label="aaaaa" widgetVar="tessss12" value="#{editEntry.showForm}" rendered="#{editEntry.isShowForm()}" />&nbsp;
-                <p:commandLink value="Test" title="Test purpose" actionListener="#{editEntry.toggleEditFormListener}"  update="@(id$=formId112) @([id$=growl])" immediate="true" />
-
-
+                <!--<h:inputText id="testtss12" label="aaaaa" widgetVar="tessss12" value="editEntry.showForm" rendered="editEntry.isShowForm" />&nbsp;-->
+                <!--<p:commandLink value="Test" title="Test purpose" actionListener="editEntry.toggleEditFormListener"  update="@([id$=formId112]) @([id$=panelFormEdit]) @([id$=growl])" immediate="true" ajax="true"/>-->
+                <!--&nbsp;-->
+                <h:commandLink value="Home" title="Working only from home page" action="#{editEntry.hideEditForm()}"  immediate="true" ajax="true" update=":panelEntries :panelFormEdit" />
                 &nbsp;
-                <p:commandLink value="Home" title="Working only from home page" action="#{editEntry.hideEditForm()}"  immediate="true" ajax="true" update=":panelEntries :panelFormEdit" />
-                &nbsp;
-                <p:commandLink value="New item internal" title="Working only from home page" action="#{editEntry.showEditForm()}" immediate="true" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit" ajax="true" />
+                <h:commandLink value="New item internal" title="Working only from home page" action="#{editEntry.showEditForm()}" immediate="true" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit" ajax="true" />
                 &nbsp;
                 <p:link value="New item external" outcome="add2" title="Standalone page"/>
             </h:form>
@@ -29,9 +27,8 @@
 
         <f:facet name="right">
 
-            <h:form id="formId112">
+            <h:form id="formGrowl">
                 <p:growl id="growl" life="2000" />
-                <h:inputText id="testtss" label="aaaaa" widgetVar="tessss11" value="#{editEntry.showForm}" rendered="#{editEntry.isShowForm()}" />&nbsp;
             </h:form>
 
             <h:form rendered="#{searchRender}" id="formId111">

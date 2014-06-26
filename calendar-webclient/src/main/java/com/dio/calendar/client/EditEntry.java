@@ -101,6 +101,26 @@ public class EditEntry{
         }
     }
 
+    public void updateEntry(ActionEvent actionEvent) {
+        setGrowlInfo("Entry updated", "Update entry");
+        logger.info("Save entry wrapper....");
+        if (oldEntry == null) {
+
+        } else {
+
+        }
+    }
+
+    public void updateEntry2() {
+        setGrowlInfo("Entry updated", "Update entry");
+        logger.info("Save entry wrapper 2....");
+        if (oldEntry == null) {
+
+        } else {
+
+        }
+    }
+
     public Boolean isEdit() {
         return (oldEntry != null);
     }
@@ -122,25 +142,25 @@ public class EditEntry{
         oldEntry = null;
     }
 
-    public void init() {
-        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance()
-                .getExternalContext().getRequest();
-
-        String reqId = req.getParameter("id");
-
-        if (reqId != null) {
-            oldEntry = localService.getEntry(UUID.fromString(reqId));
-            if (oldEntry != null) {
-                subject = oldEntry.getSubject();
-                description = oldEntry.getDescription();
-                dateFrom = oldEntry.getStartDate();
-                dateTo = oldEntry.getEndDate();
-                attenders = oldEntry.getAttenders();
-            }
-        }
-
-    }
-
+//    public void init() {
+//        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance()
+//                .getExternalContext().getRequest();
+//
+//        String reqId = req.getParameter("id");
+//
+//        if (reqId != null) {
+//            oldEntry = localService.getEntry(UUID.fromString(reqId));
+//            if (oldEntry != null) {
+//                subject = oldEntry.getSubject();
+//                description = oldEntry.getDescription();
+//                dateFrom = oldEntry.getStartDate();
+//                dateTo = oldEntry.getEndDate();
+//                attenders = oldEntry.getAttenders();
+//            }
+//        }
+//
+//    }
+//
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -181,7 +201,7 @@ public class EditEntry{
     }
 
     public void showEditForm() {
-        logger.info("showEditForm");
+//        logger.info("showEditForm");
         showForm = true;
     }
 
@@ -194,8 +214,10 @@ public class EditEntry{
             dateFrom = oldEntry.getStartDate();
             dateTo = oldEntry.getEndDate();
             attenders = oldEntry.getAttenders();
+            showForm = true;
+        } else {
+            setGrowlError("Entry not found", "Cancelling edit");
         }
-        showForm = true;
     }
 
     public void hideEditForm() {
@@ -209,14 +231,18 @@ public class EditEntry{
     }
 
     public void toggleEditFormListener(ActionEvent actionEvent) {
-        logger.info("toggleEditFormListener");
-        showForm = !showForm;
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Good",  null);
+//        logger.info("toggleEditFormListener");
+        if (showForm) {
+            hideEditForm();
+        } else {
+            showEditForm();
+        }
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Good " + showForm,  null);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
     public boolean isShowForm() {
-        logger.info("isShowForm = " + showForm);
+//        logger.info("isShowForm = " + showForm);
         return showForm;
     }
 
@@ -226,4 +252,16 @@ public class EditEntry{
     public void setShowForm(Boolean showForm) {
         this.showForm = showForm;
     }
+
+    private void setGrowlInfo(String subject, String body) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, subject, body);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    private void setGrowlError(String subject, String body) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, subject, body);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+
 }

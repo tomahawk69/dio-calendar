@@ -15,9 +15,8 @@
 <h:body>
 
     <h:panelGroup id="panelFormEdit" rendered="#{editEntry.isShowForm()}" >
-    <h:form id="form" >
 
-        <p:growl id="editMessages" showDetail="true"/>
+    <h:form id="form" >
 
         <p:panelGrid columns="2" cellpadding="5" id="panel">
 
@@ -40,15 +39,13 @@
             <p:outputLabel for="dateTo" value="Date to: "/>
             <p:calendar id="dateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}"/>
 
-            <p:commandButton value="Save" actionListener="{editEntry.createEntry}" type="submit" >
-                <!--<f:ajax execute="@form" render="@form" />-->
-            </p:commandButton>
+            <p:commandButton value="Save1" actionListener="#{editEntry.updateEntry2()}" immediate="true" ajax="false" />
 
-            <p:commandButton value="Reset" action="#{editEntry.hideEditForm}" render="@form entries" immediate="true">
+            <p:commandButton value="Reset" action="#{editEntry.hideEditForm}" render="@form entries" immediate="true" ajax="false">
                 <p:resetInput target="panel"/>
             </p:commandButton>
-            <h:messages id="messages" globalOnly="true" layout="table" />
         </p:panelGrid>
+        <h:messages id="messages" globalOnly="true" layout="table" />
     </h:form>
     </h:panelGroup>
 
