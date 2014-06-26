@@ -14,19 +14,32 @@
     <p:toolbar>
         <f:facet name="left">
             <h:form>
-            <p:link value="Home" outcome="index"/>&nbsp;
-            <p:commandLink value="New item internal" title="Working only from home page"/>&nbsp;
-            <p:link value="New item external" outcome="add2" title="Standalone page"/>
+                <h:inputText id="testtss12" label="aaaaa" widgetVar="tessss12" value="#{editEntry.showForm}" rendered="#{editEntry.isShowForm()}" />&nbsp;
+                <p:commandLink value="Test" title="Test purpose" actionListener="#{editEntry.toggleEditFormListener}"  update="@(id$=formId112) @([id$=growl])" immediate="true" />
+
+
+                &nbsp;
+                <p:commandLink value="Home" title="Working only from home page" action="#{editEntry.hideEditForm()}"  immediate="true" ajax="true" update=":panelEntries :panelFormEdit" />
+                &nbsp;
+                <p:commandLink value="New item internal" title="Working only from home page" action="#{editEntry.showEditForm()}" immediate="true" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit" ajax="true" />
+                &nbsp;
+                <p:link value="New item external" outcome="add2" title="Standalone page"/>
             </h:form>
         </f:facet>
 
         <f:facet name="right">
-            <h:form rendered="#{searchRender}">
-            <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1"
-                         value="#{calendarServiceWrapper.searchSubject}"
-                    />
-            <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
-            <h:commandButton value="Search" update="entries"/>
+
+            <h:form id="formId112">
+                <p:growl id="growl" life="2000" />
+                <h:inputText id="testtss" label="aaaaa" widgetVar="tessss11" value="#{editEntry.showForm}" rendered="#{editEntry.isShowForm()}" />&nbsp;
+            </h:form>
+
+            <h:form rendered="#{searchRender}" id="formId111">
+                <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1"
+                             value="#{calendarServiceWrapper.searchSubject}"
+                        />
+                <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
+                <p:commandButton value="Search" update="entries"/>
             </h:form>
             <h:form rendered="#{!searchRender}">
                 <h:link value="Search" action="/search" outcome="search"/>

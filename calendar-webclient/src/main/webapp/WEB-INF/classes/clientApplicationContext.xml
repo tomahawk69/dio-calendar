@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--
+    JSF (primefaces ?)
+    + add week view
+    -->
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations" value="classpath:calendar-client.properties"/>
+    </bean>
+
+    <bean id="calendarService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
+        <property name="serviceUrl" value="${serviceUrl}"/>
+        <property name="serviceInterface" value="com.dio.calendar.CalendarService"/>
+        <property name="refreshStubOnConnectFailure" value="true" />
+    </bean>
+    <!--<bean id="calendarServiceInterfaceWrapper" class="com.dio.calendar.client.Wrapper">-->
+        <!--<constructor-arg name="service" ref="calendarService" />-->
+    <!--</bean>-->
+    <bean id="calendarServiceWrapper" class="com.dio.calendar.client.ClientWrapperImpl" scope="session">
+        <constructor-arg name="remoteService" ref="calendarService" />
+    </bean>
+
+    <bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="request">
+        <constructor-arg name="localService" ref="calendarServiceWrapper" />
+    </bean>
+
+</beans>

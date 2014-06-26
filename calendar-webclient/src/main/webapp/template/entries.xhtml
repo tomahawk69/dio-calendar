@@ -22,13 +22,19 @@
         <p:growl id="tableGrowl" showDetail="true" sticky="true" autoUpdate="true"/>
     </h:form>
 
+    <p:outputPanel id="container" layout="none">
+
+
+    <h:panelGroup id="panelEntries" rendered="#{!editEntry.isShowForm()}" autoUpdate="true">
+
     <h:form id="formEntries">
-    <p:dataTable id="entries" var="entry" value="#{entries}" rows="20" paginator="true" rendered="#{!editEntry.isShowForm()}">
+
+    <p:dataTable id="entries" var="entry" value="#{entries}" rows="20" paginator="true">
 
         <p:column headerText="Subject">
-            <p:commandButton value="#{entry.subject}" actionListener="#{editEntry.showEditForm()}" immediate="true" update="entries">
-                <h:outputText value="#{entry.subject}"/>
-            </p:commandButton>
+            <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}" immediate="true" ajax="true" update=":panelEntries :panelFormEdit">
+                <!--<h:outputText value="#{entry.subject}"/>-->
+            </h:commandLink>
         </p:column>
 
         <!--<p:column headerText="Subject" sortBy="#{entry.subject}" filterBy="#{entry.subject}">-->
@@ -57,7 +63,9 @@
 
     </p:dataTable>
     </h:form>
+    </h:panelGroup>
 
+    </p:outputPanel>
 
 </h:body>
 </html>

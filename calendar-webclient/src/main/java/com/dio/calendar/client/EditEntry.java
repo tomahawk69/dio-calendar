@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,19 +85,20 @@ public class EditEntry{
         this.attenders = attenders;
     }
 
-    public String createEntry() {
+    public void createEntry(ActionEvent actionEvent) {
+        logger.info("Create entry....");
         try {
             Entry result = localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Successfully added entry", "Entry was successfully added. New id is " + result.getId());
             FacesContext.getCurrentInstance().addMessage(null, message);
-            reset();
+            hideEditForm();
+
+//            reset();
         } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
             logger.error(e);
             throw new RuntimeException(e);
         }
-        return "add2";
-
     }
 
     public Boolean isEdit() {
@@ -182,13 +185,45 @@ public class EditEntry{
         showForm = true;
     }
 
+    public void editEntry(Entry entry) {
+        logger.info("editEntry");
+        oldEntry = entry;
+        if (oldEntry != null) {
+            subject = oldEntry.getSubject();
+            description = oldEntry.getDescription();
+            dateFrom = oldEntry.getStartDate();
+            dateTo = oldEntry.getEndDate();
+            attenders = oldEntry.getAttenders();
+        }
+        showForm = true;
+    }
+
     public void hideEditForm() {
         logger.info("hideEditForm");
         showForm = false;
     }
 
+    public void toggleEditForm() {
+        logger.info("toggleEditForm");
+        showForm = !showForm;
+    }
+
+    public void toggleEditFormListener(ActionEvent actionEvent) {
+        logger.info("toggleEditFormListener");
+        showForm = !showForm;
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Good",  null);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
     public boolean isShowForm() {
-        logger.info("isShowForm");
+        logger.info("isShowForm = " + showForm);
         return showForm;
+    }
+
+    public boolean getShowForm() {
+        return showForm;
+    }
+    public void setShowForm(Boolean showForm) {
+        this.showForm = showForm;
     }
 }

@@ -13,11 +13,13 @@
     </title>
 </h:head>
 <h:body>
-    <h:form rendered="#{formRender || editEntry.isShowForm()}" id="editForm" >
+
+    <h:panelGroup id="panelFormEdit" rendered="#{editEntry.isShowForm()}" >
+    <h:form id="form" >
 
         <p:growl id="editMessages" showDetail="true"/>
 
-        <h:panelGrid columns="2" cellpadding="5" id="panel">
+        <p:panelGrid columns="2" cellpadding="5" id="panel">
 
             <ui:fragment rendered="#{editEntry.isEdit()}">
                 <p:outputLabel value="ID: " for="id"/>
@@ -27,7 +29,7 @@
             </ui:fragment>
 
             <p:outputLabel value="Subject: " for="subject"/>
-            <p:inputText id="subject" value="#{editEntry.subject}"></p:inputText>
+            <p:inputText id="subject" value="#{editEntry.subject}" required="true"></p:inputText>
 
             <p:outputLabel value="Description: " for="description"/>
             <p:inputTextarea id="description" value="#{editEntry.description}"></p:inputTextarea>
@@ -38,15 +40,17 @@
             <p:outputLabel for="dateTo" value="Date to: "/>
             <p:calendar id="dateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}"/>
 
-            <p:commandButton value="Save" outcome="add2" action="#{editEntry.hideEditForm()}" ajax="false" update="@this">
-            <!--<p:commandButton value="Save" outcome="add2" action="{editEntry.createEntry}" ajax="false">-->
+            <p:commandButton value="Save" actionListener="{editEntry.createEntry}" type="submit" >
+                <!--<f:ajax execute="@form" render="@form" />-->
             </p:commandButton>
 
-            <p:commandButton value="Reset" update="panel" process="@this" style="margin-right:20px;">
+            <p:commandButton value="Reset" action="#{editEntry.hideEditForm}" render="@form entries" immediate="true">
                 <p:resetInput target="panel"/>
             </p:commandButton>
-        </h:panelGrid>
+            <h:messages id="messages" globalOnly="true" layout="table" />
+        </p:panelGrid>
     </h:form>
+    </h:panelGroup>
 
 </h:body>
 </html>
