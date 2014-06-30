@@ -3,40 +3,19 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
 
-<h:head>
-</h:head>
+<h:head />
 <h:body>
-    <h1>Calendar client app</h1>
-
-    <p:confirmDialog global="true" showEffect="fade">
-        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-    </p:confirmDialog>
-
-    <p:toolbar>
-        <f:facet name="left">
-            <h:link value="Home" outcome="index"/>
-        </f:facet>
-
-        <f:facet name="right">
-            <h:link value="Search" outcome="search"/>
-        </f:facet>
-
-    </p:toolbar>
-
-    <h1>Edit calendar entries</h1>
-
-    <h:form rendered="true">
-        <h:inputText value="#{calendarServiceWrapper.getEntry(param.id).id}"></h:inputText>
-        <p>
-        <p:commandButton value="Save" />
-        </p>
-    </h:form>
-
-
+    <ui:composition template="/template/template.xhtml">
+        <ui:param name="isEdit" value="#{true}" />
+        <ui:param name="formRender" value="#{true}" />
+        <ui:define name="title">
+            Edit Entry
+        </ui:define>
+        <ui:define name="content">
+            <ui:include src="/template/editform.xhtml" />
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

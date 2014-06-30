@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -20,7 +21,7 @@ import java.util.*;
 /**
  * Created by yur on 17.06.2014.
  */
-public class ClientWrapperImpl implements ClientWrapper {
+public class ClientWrapperImpl implements ClientWrapper, Serializable {
     private final CalendarService remoteService;
     private final Logger logger = Logger.getLogger(ClientWrapperImpl.class);
 

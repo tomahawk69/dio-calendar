@@ -14,14 +14,11 @@
     <p:toolbar>
         <f:facet name="left">
             <h:form>
-                <!--<h:inputText id="testtss12" label="aaaaa" widgetVar="tessss12" value="editEntry.showForm" rendered="editEntry.isShowForm" />&nbsp;-->
-                <!--<p:commandLink value="Test" title="Test purpose" actionListener="editEntry.toggleEditFormListener"  update="@([id$=formId112]) @([id$=panelFormEdit]) @([id$=growl])" immediate="true" ajax="true"/>-->
-                <!--&nbsp;-->
-                <h:commandLink value="Home" title="Working only from home page" action="#{editEntry.hideEditForm()}"  immediate="true" ajax="true" update=":panelEntries :panelFormEdit" />
+                <h:commandLink value="Home" title="Working only from home page" action="index"  update=":panelEntries :panelFormEdit" />
                 &nbsp;
-                <h:commandLink value="New item internal" title="Working only from home page" action="#{editEntry.showEditForm()}" immediate="true" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit" ajax="true" />
+                <h:commandLink value="New entry" title="Working only from home page" action="#{editEntry.newEntry}" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit"/>
                 &nbsp;
-                <p:link value="New item external" outcome="add2" title="Standalone page"/>
+                <!--<h:link value="New item external" outcome="add" title="Standalone add page"/>-->
             </h:form>
         </f:facet>
 
@@ -35,8 +32,7 @@
                 <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1"
                              value="#{calendarServiceWrapper.searchSubject}"
                         />
-                <!--<h:commandButton value="Search" action="#{calendarServiceWrapper.searchSubject}" update="entries"/>-->
-                <p:commandButton value="Search" update="entries"/>
+                <p:commandButton value="Search" update="@([id$=entries])"/>
             </h:form>
             <h:form rendered="#{!searchRender}">
                 <h:link value="Search" action="/search" outcome="search"/>

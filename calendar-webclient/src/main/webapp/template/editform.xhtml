@@ -13,40 +13,56 @@
     </title>
 </h:head>
 <h:body>
+    <h:panelGroup id="panelFormEdit">
 
-    <h:panelGroup id="panelFormEdit" rendered="#{editEntry.isShowForm()}" >
+        <h:form id="formEdit">
 
-    <h:form id="form" >
+            <h:inputHidden id="editOldId" value="{editEntry.oldId}"/>
 
-        <p:panelGrid columns="2" cellpadding="5" id="panel">
+            <h:messages id="messages" globalOnly="true" layout="table" />
 
-            <ui:fragment rendered="#{editEntry.isEdit()}">
-                <p:outputLabel value="ID: " for="id"/>
-            </ui:fragment>
-            <ui:fragment rendered="#{editEntry.isEdit()}">
-                <p:inputText id="id" value="#{editEntry.oldId}" disabled="true"/>
-            </ui:fragment>
+            <f:event listener="{editEntry.validateEntry}" type="postValidate" />
 
-            <p:outputLabel value="Subject: " for="subject"/>
-            <p:inputText id="subject" value="#{editEntry.subject}" required="true"></p:inputText>
+            <p:panelGrid columns="2" cellpadding="5" id="panel">
 
-            <p:outputLabel value="Description: " for="description"/>
-            <p:inputTextarea id="description" value="#{editEntry.description}"></p:inputTextarea>
 
-            <p:outputLabel for="dateFrom" value="Date from: "/>
-            <p:calendar id="dateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}"/>
 
-            <p:outputLabel for="dateTo" value="Date to: "/>
-            <p:calendar id="dateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}"/>
+                <h:outputLabel value="Subject: " for="editSubject"/>
+                <p:inputText id="editSubject" value="#{editEntry.subject}" required="true"
+                             requiredMessage="Subject is required"/>
 
-            <p:commandButton value="Save1" actionListener="#{editEntry.updateEntry2()}" immediate="true" ajax="false" />
 
-            <p:commandButton value="Reset" action="#{editEntry.hideEditForm}" render="@form entries" immediate="true" ajax="false">
-                <p:resetInput target="panel"/>
-            </p:commandButton>
-        </p:panelGrid>
-        <h:messages id="messages" globalOnly="true" layout="table" />
-    </h:form>
+                <h:outputLabel value="Description: " for="editDescription"/>
+                <h:inputTextarea id="editDescription" value="#{editEntry.description}"></h:inputTextarea>
+
+                <h:outputLabel for="editDateFrom" value="Date from: "/>
+                <p:calendar id="editDateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}"
+                            validator="#{entryEdit.validateDateFrom}"/>
+
+                <h:outputLabel for="editDateTo" value="Date to: "/>
+                <p:calendar id="editDateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}">
+                </p:calendar>
+
+
+                <h:commandButton value="Save" id="editSave" action="#{editEntry.updateEntry}"/>
+
+                <h:commandButton value="Reset" id="editReset" actionListener="#{editEntry.resetListener}"
+                                 immediate="true" reRender="@form">
+                    <f:ajax render="@form" />
+                </h:commandButton>
+
+
+            </p:panelGrid>
+            <h:inputHidden value="true">
+                <f:validator validatorId="entryValidator" />
+                <f:attribute name="subject" value="#{editSubject}" />
+                <f:attribute name="test" value="test1" />
+                <f:attribute name="dateFrom" value="#{editDateFrom}" />
+                <f:attribute name="dateTo" value="#{editDateTo}" />
+            </h:inputHidden>
+            <!--<h:commandButton value="Close" action="index" immediate="true"/>-->
+
+        </h:form>
     </h:panelGroup>
 
 </h:body>

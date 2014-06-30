@@ -25,15 +25,15 @@
     <p:outputPanel id="container" layout="none">
 
 
-    <h:panelGroup id="panelEntries" rendered="#{!editEntry.isShowForm()}" autoUpdate="true">
+    <h:panelGroup id="panelEntries" rendered1="{!editEntry.isShowForm()}" autoUpdate="true">
 
     <h:form id="formEntries">
 
     <p:dataTable id="entries" var="entry" value="#{entries}" rows="20" paginator="true">
 
         <p:column headerText="Subject">
-            <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}" immediate="true" ajax="true" update=":panelEntries :panelFormEdit">
-                <!--<h:outputText value="#{entry.subject}"/>-->
+            <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}">
+                <!--<f:ajax render=":panelFormEdit"/>-->
             </h:commandLink>
         </p:column>
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <!--
     JSF (primefaces ?)
@@ -11,6 +11,9 @@
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations" value="classpath:calendar-client.properties"/>
     </bean>
+
+    <!--<context:component-scan base-package="com.dio.calendar.client" />-->
+    <!--<context:annotation-config />-->
 
     <bean id="calendarService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
         <property name="serviceUrl" value="${serviceUrl}"/>
@@ -24,7 +27,7 @@
         <constructor-arg name="remoteService" ref="calendarService" />
     </bean>
 
-    <bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="request">
+    <bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="session">
         <constructor-arg name="localService" ref="calendarServiceWrapper" />
     </bean>
 

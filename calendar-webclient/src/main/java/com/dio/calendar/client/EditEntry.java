@@ -7,13 +7,17 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.ManagedBean;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.ComponentSystemEvent;
+import javax.faces.validator.ValidatorException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,10 +27,10 @@ import java.util.UUID;
  * Created by iovchynnikov on 6/25/2014.
  */
 
-@ManagedBean
-@RequestScoped
-public class EditEntry{
-    private final ClientWrapperImpl localService;
+@ManagedBean(name="editEntry")
+@SessionScoped
+public class EditEntry implements Serializable {
+    private ClientWrapperImpl localService;
     private String subject;
 
     private String description;
@@ -39,6 +43,9 @@ public class EditEntry{
     private static Logger logger = Logger.getLogger(EditEntry.class);
     private boolean showForm = false;
 
+
+    public EditEntry() {
+    }
 
     @Autowired
     public EditEntry(ClientWrapperImpl localService) {
@@ -92,7 +99,6 @@ public class EditEntry{
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
                     "Successfully added entry", "Entry was successfully added. New id is " + result.getId());
             FacesContext.getCurrentInstance().addMessage(null, message);
-            hideEditForm();
 
 //            reset();
         } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
@@ -101,24 +107,41 @@ public class EditEntry{
         }
     }
 
-    public void updateEntry(ActionEvent actionEvent) {
-        setGrowlInfo("Entry updated", "Update entry");
+//    public void updateEntry(ActionEvent actionEvent) {
+//        //setGrowlInfo("Entry updated", "Update entry");
+//        logger.info("Save entry wrapper....");
+//        if (oldEntry == null) {
+//
+//        } else {
+//
+//        }
+//    }
+//
+    public String updateEntry() {
         logger.info("Save entry wrapper....");
         if (oldEntry == null) {
-
+            logger.info("New entry");
+            try {
+                localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
+                reset();
+                setGrowlInfo("Entry added", "Entry successfully created");
+            } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
+                logger.error(e);
+                setGrowlError("Entry update error", e.getMessage());
+            }
         } else {
+            logger.info("Update entry");
+            try {
+                localService.updateEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null), oldEntry);
+                reset();
+                setGrowlInfo("Entry updated", "Entry successfully updated");
+            } catch (CalendarEntryBadAttribute e) {
+                logger.error(e);
+                setGrowlError("Entry update error", e.getMessage());
+            }
 
         }
-    }
-
-    public void updateEntry2() {
-        setGrowlInfo("Entry updated", "Update entry");
-        logger.info("Save entry wrapper 2....");
-        if (oldEntry == null) {
-
-        } else {
-
-        }
+        return "index";
     }
 
     public Boolean isEdit() {
@@ -142,25 +165,87 @@ public class EditEntry{
         oldEntry = null;
     }
 
-//    public void init() {
-//        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance()
-//                .getExternalContext().getRequest();
-//
-//        String reqId = req.getParameter("id");
-//
-//        if (reqId != null) {
-//            oldEntry = localService.getEntry(UUID.fromString(reqId));
-//            if (oldEntry != null) {
-//                subject = oldEntry.getSubject();
-//                description = oldEntry.getDescription();
-//                dateFrom = oldEntry.getStartDate();
-//                dateTo = oldEntry.getEndDate();
-//                attenders = oldEntry.getAttenders();
-//            }
-//        }
-//
-//    }
-//
+    public void resetListener(ActionEvent actionEvent) {
+        logger.info("reset");
+        if (oldEntry == null) {
+            reset();
+        }
+        else {
+            subject = oldEntry.getSubject();
+            description = oldEntry.getDescription();
+            dateFrom = oldEntry.getStartDate();
+            dateTo = oldEntry.getEndDate();
+            attenders = oldEntry.getAttenders();
+        }
+    }
+
+    public String newEntry() {
+        logger.info("newEntry");
+        reset();
+        return "add";
+    }
+
+
+    public String editEntry(Entry entry) {
+        logger.info("editEntry " + entry);
+        oldEntry = entry;
+        if (oldEntry != null) {
+            subject = oldEntry.getSubject();
+            description = oldEntry.getDescription();
+            dateFrom = oldEntry.getStartDate();
+            dateTo = oldEntry.getEndDate();
+            attenders = oldEntry.getAttenders();
+            //showForm = true;
+            return "edit";
+        } else {
+            setGrowlError("Entry not found", "Cancelling edit");
+            return "index";
+        }
+    }
+
+    private void setGrowlInfo(String subject, String body) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, subject, body);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    private void setGrowlError(String subject, String body) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, subject, body);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void validateDateFrom(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        dateFrom = (Date) value;
+        logger.info("DateFrom validation: " + dateFrom);
+        if (dateFrom == null && dateTo != null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "DateFrom value required", "DateFrom value required when DateTo value is not null"));
+        }
+        if (dateFrom != null && dateTo != null && dateTo.before(dateFrom)) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Date period is invalid", "DateFrom value should be lesser or equal then DateTo value"));
+        }
+    }
+
+    public void validateDateTo(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        dateTo = (Date) value;
+        logger.info("DateTo validation: " + dateTo);
+        if (dateFrom == null && dateTo != null) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "DateFrom value required", "DateFrom value required when DateTo value is not null"));
+        }
+        if (dateFrom != null && dateTo != null && dateTo.before(dateFrom)) {
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Date period is invalid", "DateFrom value should be lesser or equal then DateTo value"));
+        }
+    }
+
+    public void validateEntry(ComponentSystemEvent event) {
+        FacesContext fc = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        //setGrowlError("Validation error", "Test error");
+        FacesMessage msg = new FacesMessage("Test error");
+        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+        fc.addMessage("test", msg);
+        fc.renderResponse();
+//        logger.info("Subject is " + subject);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -199,69 +284,5 @@ public class EditEntry{
         sb.append('}');
         return sb.toString();
     }
-
-    public void showEditForm() {
-//        logger.info("showEditForm");
-        showForm = true;
-    }
-
-    public void editEntry(Entry entry) {
-        logger.info("editEntry");
-        oldEntry = entry;
-        if (oldEntry != null) {
-            subject = oldEntry.getSubject();
-            description = oldEntry.getDescription();
-            dateFrom = oldEntry.getStartDate();
-            dateTo = oldEntry.getEndDate();
-            attenders = oldEntry.getAttenders();
-            showForm = true;
-        } else {
-            setGrowlError("Entry not found", "Cancelling edit");
-        }
-    }
-
-    public void hideEditForm() {
-        logger.info("hideEditForm");
-        showForm = false;
-    }
-
-    public void toggleEditForm() {
-        logger.info("toggleEditForm");
-        showForm = !showForm;
-    }
-
-    public void toggleEditFormListener(ActionEvent actionEvent) {
-//        logger.info("toggleEditFormListener");
-        if (showForm) {
-            hideEditForm();
-        } else {
-            showEditForm();
-        }
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Good " + showForm,  null);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    public boolean isShowForm() {
-//        logger.info("isShowForm = " + showForm);
-        return showForm;
-    }
-
-    public boolean getShowForm() {
-        return showForm;
-    }
-    public void setShowForm(Boolean showForm) {
-        this.showForm = showForm;
-    }
-
-    private void setGrowlInfo(String subject, String body) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, subject, body);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    private void setGrowlError(String subject, String body) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, subject, body);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
 
 }
