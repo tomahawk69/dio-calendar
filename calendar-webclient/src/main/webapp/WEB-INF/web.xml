@@ -8,12 +8,15 @@
     <!-- TODO: + new entry -->
     <!-- TODO: + entry edit (standalone page) -->
     <!-- TODO: + ui:composition -->
-    <!-- TODO: entry edit and collapse table on index.xhtml (ui:param) -->
-    <!-- TODO: validation standard and custom -->
-    <!-- TODO: login service -->
-    <!-- TODO: ExceptionHandler -->
-    <!-- TODO: sorting -->
+    <!-- TODO: - entry edit and collapse table on index.xhtml (ui:param) -->
+    <!-- TODO: - validation standard and custom -->
+    <!-- TODO: - login service -->
+    <!-- TODO: - ExceptionHandler -->
+    <!-- TODO: - sorting -->
 
+    <!-- TODO: version with show/hide to branch and send to Vasyl -->
+    <!-- TODO: Primefaces standard validation -->
+    <!-- TODO: Hybernate instead of XML -->
 
 
     <display-name>calendar-client</display-name>

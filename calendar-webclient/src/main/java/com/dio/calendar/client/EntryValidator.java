@@ -16,7 +16,6 @@ import java.util.Date;
  * Created by yur on 30.06.2014.
  */
 
-@Named
 @FacesValidator("entryValidator")
 public class EntryValidator implements Validator {
     private static Logger logger = Logger.getLogger(EntryValidator.class);

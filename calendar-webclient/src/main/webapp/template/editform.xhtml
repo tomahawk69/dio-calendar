@@ -13,35 +13,42 @@
     </title>
 </h:head>
 <h:body>
-    <h:panelGroup id="panelFormEdit">
+    <h:panelGroup id="panelFormEdit" render="#{editEntry.showForm}">
 
         <h:form id="formEdit">
 
             <h:inputHidden id="editOldId" value="{editEntry.oldId}"/>
 
-            <h:messages id="messages" globalOnly="true" layout="table" />
+            <h:messages id="messages" for="editValidate" globalOnly="true" layout="table" />
 
             <f:event listener="{editEntry.validateEntry}" type="postValidate" />
 
-            <p:panelGrid columns="2" cellpadding="5" id="panel">
+            <p:panelGrid columns="3" cellpadding="5" id="panel">
 
 
 
                 <h:outputLabel value="Subject: " for="editSubject"/>
                 <p:inputText id="editSubject" value="#{editEntry.subject}" required="true"
                              requiredMessage="Subject is required"/>
-
+                <h:message for="editSubject" />
 
                 <h:outputLabel value="Description: " for="editDescription"/>
-                <h:inputTextarea id="editDescription" value="#{editEntry.description}"></h:inputTextarea>
+                <h:inputTextarea id="editDescription" value="#{editEntry.description}" required="true"
+                                 requiredMessage="Description is required"
+                                 validatorMessage="Field is required and should has length not less then 5 symbols">
+                    <f:validateLength minimum="5"/>
+                </h:inputTextarea>
+                <h:message for="editDescription" />
+
 
                 <h:outputLabel for="editDateFrom" value="Date from: "/>
-                <p:calendar id="editDateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}"
-                            validator="#{entryEdit.validateDateFrom}"/>
+                <p:calendar id="editDateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}" />
+                <h:message for="editDateFrom" />
 
                 <h:outputLabel for="editDateTo" value="Date to: "/>
                 <p:calendar id="editDateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}">
                 </p:calendar>
+                <h:message for="editDateTo" />
 
 
                 <h:commandButton value="Save" id="editSave" action="#{editEntry.updateEntry}"/>
@@ -52,8 +59,9 @@
                 </h:commandButton>
 
 
+                &nbsp;
             </p:panelGrid>
-            <h:inputHidden value="true">
+            <h:inputHidden id="editValidate" value="true">
                 <f:validator validatorId="entryValidator" />
                 <f:attribute name="subject" value="#{editSubject}" />
                 <f:attribute name="test" value="test1" />
