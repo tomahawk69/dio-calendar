@@ -43,6 +43,9 @@ public class EditEntry implements Serializable {
     private static Logger logger = Logger.getLogger(EditEntry.class);
     private boolean showForm = false;
 
+    public boolean isShowSearch() {
+        return localService.getIsSearch();
+    }
 
     public EditEntry() {
     }
@@ -117,13 +120,14 @@ public class EditEntry implements Serializable {
 //        }
 //    }
 //
-    public String updateEntry() {
+    public void updateEntry() {
         logger.info("Save entry wrapper....");
         if (oldEntry == null) {
             logger.info("New entry");
             try {
                 localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
                 reset();
+                showForm = false;
                 setGrowlInfo("Entry added", "Entry successfully created");
             } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
                 logger.error(e);
@@ -134,6 +138,7 @@ public class EditEntry implements Serializable {
             try {
                 localService.updateEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null), oldEntry);
                 reset();
+                showForm = false;
                 setGrowlInfo("Entry updated", "Entry successfully updated");
             } catch (CalendarEntryBadAttribute e) {
                 logger.error(e);
@@ -141,7 +146,7 @@ public class EditEntry implements Serializable {
             }
 
         }
-        return "index";
+//        return "index";
     }
 
     public Boolean isEdit() {
@@ -155,6 +160,11 @@ public class EditEntry implements Serializable {
             return null;
         }
     }
+
+    public boolean isShowForm() {
+        return showForm;
+    }
+
 
     private void reset() {
         subject = null;
@@ -179,14 +189,16 @@ public class EditEntry implements Serializable {
         }
     }
 
-    public String newEntry() {
+    public void newEntry() {
         logger.info("newEntry");
         reset();
-        return "add";
+        showForm = true;
+        localService.setIsSearch(false);
+//        return "add";
     }
 
 
-    public String editEntry(Entry entry) {
+    public void editEntry(Entry entry) {
         logger.info("editEntry " + entry);
         oldEntry = entry;
         if (oldEntry != null) {
@@ -195,11 +207,11 @@ public class EditEntry implements Serializable {
             dateFrom = oldEntry.getStartDate();
             dateTo = oldEntry.getEndDate();
             attenders = oldEntry.getAttenders();
-            //showForm = true;
-            return "edit";
+            showForm = true;
+//            return "edit";
         } else {
             setGrowlError("Entry not found", "Cancelling edit");
-            return "index";
+//            return "index";
         }
     }
 
@@ -244,6 +256,24 @@ public class EditEntry implements Serializable {
         fc.addMessage("test", msg);
         fc.renderResponse();
 //        logger.info("Subject is " + subject);
+    }
+
+    public void showForm() {
+        showForm = true;
+        localService.setIsSearch(false);
+//        return "add";
+    }
+
+    public void showSearch() {
+        hideForm();
+        //showForm = false;
+        localService.setIsSearch(true);
+    }
+
+    public void hideForm() {
+        showForm = false;
+        localService.setIsSearch(false);
+//        return "index";
     }
 
     @Override

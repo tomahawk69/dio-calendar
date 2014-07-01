@@ -28,6 +28,18 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
     private List<Entry> searchResults;
 
     private String searchSubject;
+    private Boolean isSearch = false;
+
+    public Boolean getIsSearch() {
+        return isSearch;
+    }
+    public void setIsSearch(Boolean isSearch) {
+        this.isSearch = isSearch;
+    }
+
+    public void showSearch() {
+        isSearch = true;
+    }
 
     public void setSearchSubject(String searchTerms) {
         this.searchSubject = searchTerms;
@@ -280,6 +292,13 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
             logger.error(e);
         }
         return result;
+    }
+    public List<Entry> getEntriesWrapper() {
+        if (isSearch) {
+            return getEntriesBySubject();
+        } else {
+            return getEntries();
+        }
     }
 
     @Override

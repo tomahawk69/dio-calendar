@@ -28,7 +28,14 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath:clientApplicationContext.xml</param-value>
     </context-param>
-
+    <context-param>
+        <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>primefaces.TRANSFORM_METADATA</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>

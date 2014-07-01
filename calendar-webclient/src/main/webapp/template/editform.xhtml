@@ -13,13 +13,14 @@
     </title>
 </h:head>
 <h:body>
-    <h:panelGroup id="panelFormEdit" render="#{editEntry.showForm}">
 
-        <h:form id="formEdit">
+    <h:panelGroup id="panelFormEdit" rendered="#{editEntry.showForm and !editEntry.showSearch}">
+
+        <h:form id="formEdit" rendered="#{editEntry.showForm and !editEntry.showSearch}">
 
             <h:inputHidden id="editOldId" value="{editEntry.oldId}"/>
 
-            <h:messages id="messages" for="editValidate" globalOnly="true" layout="table" />
+            <!--<h:messages id="messages" for="editValidate" globalOnly="true" layout="table" />-->
 
             <f:event listener="{editEntry.validateEntry}" type="postValidate" />
 
@@ -29,29 +30,39 @@
 
                 <h:outputLabel value="Subject: " for="editSubject"/>
                 <p:inputText id="editSubject" value="#{editEntry.subject}" required="true"
-                             requiredMessage="Subject is required"/>
-                <h:message for="editSubject" />
+                             requiredMessage="Subject is required" >
+                    <p:clientValidator />
+                </p:inputText>
+                <p:message for="editSubject" />
 
                 <h:outputLabel value="Description: " for="editDescription"/>
-                <h:inputTextarea id="editDescription" value="#{editEntry.description}" required="true"
+                <p:inputTextarea id="editDescription" value="#{editEntry.description}" required="true"
                                  requiredMessage="Description is required"
-                                 validatorMessage="Field is required and should has length not less then 5 symbols">
+                                 validatorMessage="Description should has length not less then 5 symbols">
                     <f:validateLength minimum="5"/>
-                </h:inputTextarea>
-                <h:message for="editDescription" />
+                </p:inputTextarea>
+                <p:message for="editDescription" />
 
 
                 <h:outputLabel for="editDateFrom" value="Date from: "/>
-                <p:calendar id="editDateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}" />
-                <h:message for="editDateFrom" />
+                <p:calendar id="editDateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}"
+                            validator="entryValidator">
+                    <p:clientValidator />
+                </p:calendar>
+                <p:message for="editDateFrom" />
 
                 <h:outputLabel for="editDateTo" value="Date to: "/>
-                <p:calendar id="editDateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}">
+                <p:calendar id="editDateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}"
+                        validator="entryValidator">
+                    <p:clientValidator />
                 </p:calendar>
-                <h:message for="editDateTo" />
+                <p:message for="editDateTo" />
 
 
-                <h:commandButton value="Save" id="editSave" action="#{editEntry.updateEntry}"/>
+                <p:commandButton value="Save" id="editSave" action="#{editEntry.updateEntry}"
+                                 validateClient="true" update="@([id$=panelEntries]) @([id$=panelFormEdit]) panel @form"
+                        ajax="false">
+                </p:commandButton>
 
                 <h:commandButton value="Reset" id="editReset" actionListener="#{editEntry.resetListener}"
                                  immediate="true" reRender="@form">
@@ -61,13 +72,13 @@
 
                 &nbsp;
             </p:panelGrid>
-            <h:inputHidden id="editValidate" value="true">
-                <f:validator validatorId="entryValidator" />
-                <f:attribute name="subject" value="#{editSubject}" />
-                <f:attribute name="test" value="test1" />
-                <f:attribute name="dateFrom" value="#{editDateFrom}" />
-                <f:attribute name="dateTo" value="#{editDateTo}" />
-            </h:inputHidden>
+            <!--<h:inputHidden id="editValidate" value="true">-->
+                <!--<f:validator validatorId="entryValidator" />-->
+                <!--<f:attribute name="subject" value="{editSubject}" />-->
+                <!--<f:attribute name="test" value="test1" />-->
+                <!--<f:attribute name="dateFrom" value="{editDateFrom}" />-->
+                <!--<f:attribute name="dateTo" value="{editDateTo}" />-->
+            <!--</h:inputHidden>-->
             <!--<h:commandButton value="Close" action="index" immediate="true"/>-->
 
         </h:form>

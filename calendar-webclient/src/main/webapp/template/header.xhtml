@@ -14,9 +14,9 @@
     <p:toolbar>
         <f:facet name="left">
             <h:form>
-                <h:commandLink value="Home" title="Working only from home page" action="index"  update=":panelEntries :panelFormEdit" />
+                <h:commandLink value="Home" title="Working only from home page" action="#{editEntry.hideForm()}"  update=":panelEntries :panelFormEdit" />
                 &nbsp;
-                <h:commandLink value="New entry" title="Working only from home page" action="#{editEntry.newEntry}" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit"/>
+                <h:commandLink value="New entry" title="Working only from home page" action="#{editEntry.showForm()}" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit"/>
                 &nbsp;
                 <!--<h:link value="New item external" outcome="add" title="Standalone add page"/>-->
             </h:form>
@@ -28,14 +28,14 @@
                 <p:growl id="growl" life="2000" />
             </h:form>
 
-            <h:form rendered="#{searchRender}" id="formId111">
-                <h:inputText id="subject" label="Enter one or more words" widgetVar="subject1"
+            <h:form id="formSearch">
+                <p:inputText id="subject" label="Enter one or more words"
                              value="#{calendarServiceWrapper.searchSubject}"
+                             rendered="#{editEntry.showSearch}"
                         />
-                <p:commandButton value="Search" update="@([id$=entries])"/>
-            </h:form>
-            <h:form rendered="#{!searchRender}">
-                <h:link value="Search" action="/search" outcome="search"/>
+                <p:commandButton value="Search" update="@([id$=entries])"
+                                 rendered="#{editEntry.showSearch}" />
+                <h:commandLink value="Search" title="Working only from home page" action="#{editEntry.showSearch()}"  update=":panelEntries :panelFormEdit" rendered="#{!editEntry.showSearch}"/>
             </h:form>
         </f:facet>
 

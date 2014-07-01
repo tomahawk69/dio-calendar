@@ -22,14 +22,11 @@
         <p:growl id="tableGrowl" showDetail="true" sticky="true" autoUpdate="true"/>
     </h:form>
 
-    <p:outputPanel id="container" layout="none">
+    <h:panelGroup id="panelEntries" autoUpdate="true">
 
+    <h:form id="formEntries" rendered="#{!editEntry.showForm}" >
 
-    <h:panelGroup id="panelEntries" rendered1="{!editEntry.isShowForm()}" autoUpdate="true">
-
-    <h:form id="formEntries">
-
-    <p:dataTable id="entries" var="entry" value="#{entries}" rows="20" paginator="true">
+    <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesWrapper}" rows="20" paginator="true">
 
         <p:column headerText="Subject">
             <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}">
@@ -64,8 +61,6 @@
     </p:dataTable>
     </h:form>
     </h:panelGroup>
-
-    </p:outputPanel>
 
 </h:body>
 </html>
