@@ -15,22 +15,23 @@ import java.util.UUID;
  */
 public interface CalendarDataStore {
 
-    public Entry removeEntry(UUID id) throws DataStoreFSException;
-    ArrayList<Entry> getEntries();
-    Collection<Notification> getNotifications();
-    boolean entryExists(UUID id);
-    Entry getEntry(UUID id);
+    void init();
+    void loadData();
+    void clearData() throws DataStoreFSException;
 
-    void init() throws IOException;
-    void loadData() throws IOException;
-    void clearData() throws IOException, DataStoreFSException;
-
+    List<Entry> getEntries();
     List<Entry> getEntryByAttender(String attender);
     List<Entry> getEntryBySubject(String subject);
 
+    List<Notification> getNotifications();
+
+    Entry getEntry(UUID id);
     Entry addEntry(Entry entry) throws CalendarKeyViolation, DataStoreFSException;
     void addEntryToEntries(Entry entry);
     Entry updateEntry(Entry newEntry, Entry oldEntry) throws DataStoreFSException;
+    Entry removeEntry(UUID id) throws DataStoreFSException;
+
+    boolean entryExists(UUID id);
 
     void setLoadDone();
 

@@ -16,7 +16,7 @@ public interface FileSystemHelper {
 
     Path getPath(UUID id, Path dbPath);
     Path getPath(String dbPath);
-    List<Path> getListFiles(Path dbPath) throws IOException;
+    List<Path> getListFiles(Path dbPath);
 
     boolean delete(Path file) throws IOException;
 

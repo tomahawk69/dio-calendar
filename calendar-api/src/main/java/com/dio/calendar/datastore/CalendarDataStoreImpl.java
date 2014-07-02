@@ -5,7 +5,6 @@ import com.dio.calendar.Entry;
 import com.dio.calendar.Notification;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
@@ -38,7 +37,6 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
         notifications = new HashMap<>();
         indexEntryAttenders = new HashMap<>();
         indexEntrySubjects = new HashMap<>();
-
     }
 
     private void indexEntry(Entry entry) {
@@ -236,13 +234,13 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     }
 
     @Override
-    public ArrayList<Entry> getEntries() {
+    public List<Entry> getEntries() {
         return new ArrayList(entries.values());
     }
 
     @Override
-    public Collection<Notification> getNotifications() {
-        return notifications.values();
+    public List<Notification> getNotifications() {
+        return new ArrayList<>(notifications.values());
     }
 
     @Override
@@ -256,18 +254,17 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
     }
 
     @Override
-    public void init() throws IOException {
+    public void init() {
         logger.info("Init dataStore");
         loadData();
     }
 
     @Override
-    public void loadData() throws IOException {
+    public void loadData() {
         if (! isLoadData.compareAndSet(false, true)) {
             logger.warn("Loading data in progress");
             return;
         }
-
         logger.info("Load dataStore");
         entries.clear();
         indexEntryAttenders.clear();
@@ -302,8 +299,6 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 //            }
         } catch (DataStoreFSException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            throw e;
         }
 
     }

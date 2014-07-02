@@ -53,7 +53,7 @@ public class DataStoreFSImpl implements DataStoreFS {
         Boolean result = false;
         try {
             result = helper.delete(file);
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new DataStoreFSException(e);
         }
         return result;
@@ -94,7 +94,12 @@ public class DataStoreFSImpl implements DataStoreFS {
     }
 
     @Override
-    public List<Path> getListFiles() throws DataStoreFSException, IOException {
+    public List<Entry> getEntries() throws DataStoreFSException {
+        return null;
+    }
+
+    @Override
+    public List<Path> getListFiles() throws DataStoreFSException {
         return helper.getListFiles(dbPath);
     }
 

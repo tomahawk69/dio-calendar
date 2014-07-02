@@ -31,9 +31,13 @@ public class FileSystemHelperImpl implements FileSystemHelper {
     }
 
     @Override
-    public List<Path> getListFiles(Path dbPath) throws IOException {
+    public List<Path> getListFiles(Path dbPath) {
         ListFilesVisitor visitor = new ListFilesVisitor();
-        Files.walkFileTree(dbPath, visitor); // move visitor and method to helper?
+        try {
+            Files.walkFileTree(dbPath, visitor); // move visitor and method to helper?
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return visitor.getFiles();
     }
 
