@@ -284,8 +284,8 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
     }
 
     @Override
-    public ArrayList<Entry> getEntries() {
-        ArrayList<Entry> result = null;
+    public List<Entry> getEntries() {
+        List<Entry> result = null;
         try {
             result = remoteService.getEntries();
         } catch (RemoteException e) {

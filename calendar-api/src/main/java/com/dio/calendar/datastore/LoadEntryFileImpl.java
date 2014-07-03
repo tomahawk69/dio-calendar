@@ -1,6 +1,5 @@
 package com.dio.calendar.datastore;
 
-import com.dio.calendar.Entry;
 import org.apache.log4j.Logger;
 
 import java.nio.file.Path;
@@ -8,13 +7,14 @@ import java.nio.file.Path;
 /**
  * Created by yur on 01.06.2014.
  */
-public class LoadFileImpl implements LoadFile {
-    private final DataStoreFS fs;
+public class LoadEntryFileImpl implements LoadEntry {
+
+    private final DataStoreFSImpl fs;
     private final CalendarDataStore data;
     private final Path path;
-    private static Logger logger = Logger.getLogger(LoadFileImpl.class);
+    private static Logger logger = Logger.getLogger(LoadEntryFileImpl.class);
 
-    public LoadFileImpl(DataStoreFS fs, CalendarDataStore data, Path path) {
+    public LoadEntryFileImpl(DataStoreFSImpl fs, CalendarDataStore data, Path path) {
         this.fs = fs;
         this.data = data;
         this.path = path;
@@ -34,7 +34,7 @@ public class LoadFileImpl implements LoadFile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LoadFileImpl loadFile = (LoadFileImpl) o;
+        LoadEntryFileImpl loadFile = (LoadEntryFileImpl) o;
 
         if (!data.equals(loadFile.data)) return false;
         if (!fs.equals(loadFile.fs)) return false;

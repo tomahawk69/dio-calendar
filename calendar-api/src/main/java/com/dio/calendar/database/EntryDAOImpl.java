@@ -12,6 +12,7 @@ import com.dio.calendar.EntryWrapper;
 import org.hibernate.Session;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
 
 /**
  * Created by iovchynnikov on 7/2/2014.
@@ -21,6 +22,7 @@ public class EntryDAOImpl implements EntryDAO {
     @Override
     public void addEntry(EntryWrapper entry) throws SQLException {
         Session session = HibernateUtil.getSessionFactory().openSession();
+        HibernateTransactionManager tm = new HibernateTransactionManager(HibernateUtil.getSessionFactory());
         try {
 //            session.beginTransaction();
             Transaction tx = session.beginTransaction();

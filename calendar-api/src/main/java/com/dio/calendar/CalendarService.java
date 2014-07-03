@@ -50,7 +50,7 @@ public interface CalendarService extends Remote {
     List<Entry> getEntriesBySubject(String subject) throws RemoteException;
     List<Entry> getEntriesByAttender(String attender) throws RemoteException;
 
-    ArrayList<Entry> getEntries() throws RemoteException;
+    List<Entry> getEntries() throws RemoteException;
 
     void clearData() throws DataStoreFSException, IOException;
 

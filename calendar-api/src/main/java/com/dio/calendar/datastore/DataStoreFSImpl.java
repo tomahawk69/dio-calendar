@@ -4,6 +4,7 @@ import com.dio.calendar.Entry;
 import com.dio.calendar.EntryWrapper;
 import org.apache.log4j.Logger;
 
+import org.apache.commons.io.FilenameUtils;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
@@ -12,13 +13,14 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * Created by iovchynnikov on 5/21/14.
  */
-public class DataStoreFSImpl implements DataStoreFS {
+public class DataStoreFSImpl implements DataStore {
     private static Logger logger = Logger.getLogger(DataStoreFSImpl.class);
     private final Path dbPath;
     private final FileSystemHelper helper;
@@ -48,7 +50,6 @@ public class DataStoreFSImpl implements DataStoreFS {
         return delete(helper.getPath(id, dbPath));
     }
 
-    @Override
     public Boolean delete(Path file) throws DataStoreFSException {
         Boolean result = false;
         try {
@@ -64,7 +65,6 @@ public class DataStoreFSImpl implements DataStoreFS {
         return read(helper.getPath(id, dbPath));
     }
 
-    @Override
     public Entry read(Path file) throws DataStoreFSException {
         Entry entry = null;
         if (helper.exists(file)) {
@@ -98,9 +98,26 @@ public class DataStoreFSImpl implements DataStoreFS {
         return null;
     }
 
-    @Override
     public List<Path> getListFiles() throws DataStoreFSException {
         return helper.getListFiles(dbPath);
+    }
+
+    @Override
+    public List<UUID> getListEntries() {
+        List<UUID> result = new LinkedList<>();
+        for (Path file : helper.getListFiles(dbPath)) {
+            result.add(UUID.fromString(FilenameUtils.removeExtension(file.getFileName().toString())));
+        }
+        return result;
+    }
+
+    @Override
+    public LoadEntry createLoader(CalendarDataStore calendarDataStore, UUID id) {
+        return new LoadEntryFileImpl(this, calendarDataStore, getFilePath(id));
+    }
+
+    public Path getFilePath(UUID id) {
+        return helper.getPath(id, dbPath);
     }
 
     public Marshaller createMarschaller(Class inputClass) throws JAXBException {

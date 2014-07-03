@@ -47,7 +47,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
     }
 
     @Override
-    public ArrayList<Entry> getEntries() {
+    public List<Entry> getEntries() {
         return data.getEntries();
     }
 

@@ -8,10 +8,6 @@
         <property column="f_subject" name="subject" type="java.lang.String"/>
         <property column="f_description" name="description" type="java.lang.String"/>
         <property column="f_dateFrom" name="startDate" type="java.sql.Date"/>
-        <!--<property column="f_dateTo" name="endDate" type="java.util.Date"/>-->
-    </class>
-    <class name="java.util.UUID" table="entries">
-        <id column="f_id" name="id" type="uuid-char" />
-        <!--<property column="f_dateTo" name="endDate" type="java.util.Date"/>-->
+        <property column="f_dateTo" name="endDate" type="java.sql.Date"/>
     </class>
 </hibernate-mapping>

@@ -65,7 +65,7 @@ public interface ClientWrapper extends CalendarService {
     List<com.dio.calendar.Entry> getEntriesByAttender(String attender);
 
     @Override
-    ArrayList<Entry> getEntries();
+    List<Entry> getEntries();
 
     @Override
     void clearData();

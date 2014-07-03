@@ -5,7 +5,6 @@ import com.dio.calendar.Entry;
 import com.dio.calendar.Notification;
 import org.apache.log4j.Logger;
 
-import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -17,7 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * Created by iovchynnikov on 4/30/14.
  */
 public class CalendarDataStoreImpl implements CalendarDataStore {
-    private final DataStoreFS fileStore;
+    private final DataStore fileStore;
     private HashMap<UUID, Entry> entries;
     private Map<String, HashSet<UUID>> indexEntryAttenders, indexEntrySubjects;
     private Map<String, Notification> notifications;
@@ -31,7 +30,7 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
     private final ReentrantLock lockEntryWord = new ReentrantLock(false);
 
-    public CalendarDataStoreImpl(DataStoreFS fs) {
+    public CalendarDataStoreImpl(DataStore fs) {
         fileStore = fs;
         entries = new HashMap<>();
         notifications = new HashMap<>();
@@ -274,31 +273,16 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
             logger.info("Used threads count: " + threads);
             ExecutorService exec = Executors.newFixedThreadPool(threads);
             List<Future> futures = new LinkedList<>();
-            for (Path file : fileStore.getListFiles()) {
-                LoadFileImpl runLoadFile = new LoadFileImpl(fileStore, this, file);
-                futures.add(exec.submit(runLoadFile));
+            for (UUID id : fileStore.getListEntries()) {
+                LoadEntry loadEntry = fileStore.createLoader(this, id);
+                futures.add(exec.submit(loadEntry));
             }
             CheckLoadFileImpl checkLoad = new CheckLoadFileImpl(futures, this);
             exec.submit(checkLoad);
-
             exec.shutdown();
+        }
+        finally {
 
-            // TODO: ++ Reentrance: Registry (?)
-            // unstructured, lock polling, lock waits, interrupting locks, optional fairness policy
-            // Collection hold value
-            // Blocking operations
-
-
-//            exec.shutdown();
-//            try {
-//                exec.awaitTermination(1, TimeUnit.HOURS);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            while (!exec.isTerminated()) {
-//            }
-        } catch (DataStoreFSException e) {
-            e.printStackTrace();
         }
 
     }
@@ -330,7 +314,7 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
     @Override
     public List<Entry> getEntryBySubject(String subject) {
-        logger.info("getEntryBySubject " + subject);
+//        logger.info("getEntryBySubject " + subject);
         List<Entry> result = new LinkedList();
         if (subject != null) {
             HashSet<UUID> entries = new HashSet<>();

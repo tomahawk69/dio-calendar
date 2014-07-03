@@ -14,4 +14,8 @@ public interface DataStore {
     Entry read(UUID id) throws DataStoreFSException;
     void clear() throws DataStoreFSException;
     List<Entry> getEntries() throws DataStoreFSException;
+
+    List<UUID> getListEntries();
+
+    LoadEntry createLoader(CalendarDataStore calendarDataStore, UUID id);
 }

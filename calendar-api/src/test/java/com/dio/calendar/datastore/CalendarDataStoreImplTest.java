@@ -3,7 +3,7 @@ package com.dio.calendar.datastore;
 import com.dio.calendar.CalendarKeyViolation;
 import com.dio.calendar.Entry;
 import com.dio.calendar.datastore.CalendarDataStoreImpl;
-import com.dio.calendar.datastore.DataStoreFS;
+import com.dio.calendar.datastore.DataStoreFSImpl;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.mockito.InOrder;
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.*;
  */
 public class CalendarDataStoreImplTest {
     private CalendarDataStoreImpl data;
-    private DataStoreFS fs;
+    private DataStoreFSImpl fs;
 
     private String getMessage(String what, String where, String condition) {
         return String.format("%s %s test %s %s", this.getClass(), what, where, condition);
@@ -34,7 +34,7 @@ public class CalendarDataStoreImplTest {
 
     @Before
     public void setUp() {
-        fs = mock(DataStoreFS.class);
+        fs = mock(DataStoreFSImpl.class);
         data = new CalendarDataStoreImpl(fs);
     }
 
