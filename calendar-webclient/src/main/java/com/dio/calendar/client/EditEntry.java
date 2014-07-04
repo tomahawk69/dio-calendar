@@ -125,6 +125,7 @@ public class EditEntry implements Serializable {
         if (oldEntry == null) {
             logger.info("New entry");
             try {
+                subject = "insert";
                 localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
                 reset();
                 showForm = false;
@@ -136,6 +137,7 @@ public class EditEntry implements Serializable {
         } else {
             logger.info("Update entry");
             try {
+                subject = "update";
                 localService.updateEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null), oldEntry);
                 reset();
                 showForm = false;

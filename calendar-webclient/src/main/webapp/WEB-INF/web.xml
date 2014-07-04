@@ -4,6 +4,12 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
+    <!--TODO: Hibernate through annotations (Entry)-->
+    <!--TODO: constraints for Entry (required etc)-->
+    <!--TODO: id as primary key-->
+    <!--TODO: table for attenders and attenders to standalone class-->
+    <!--TODO: look on Spring JDBC templates (spring-data, spring-jdbc) -->
+
     <!-- TODO: + search by subject not session (?) -->
     <!-- TODO: + new entry -->
     <!-- TODO: + entry edit (standalone page) -->
@@ -14,9 +20,11 @@
     <!-- TODO: - ExceptionHandler -->
     <!-- TODO: - sorting -->
 
-    <!-- TODO: version with show/hide to branch and send to Vasyl -->
-    <!-- TODO: Primefaces standard validation -->
-    <!-- TODO: Hybernate instead of XML -->
+    <!-- TODO: + version with show/hide to branch and send to Vasyl -->
+    <!-- TODO: + Primefaces standard validation -->
+    <!-- TODO: + Hybernate instead of XML -->
+
+
 
 
     <display-name>calendar-client</display-name>

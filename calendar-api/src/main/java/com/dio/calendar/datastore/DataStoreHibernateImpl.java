@@ -115,7 +115,7 @@ public class DataStoreHibernateImpl implements DataStore {
             cr.add(Restrictions.eq("id", id));
             EntryWrapper wrapper = (EntryWrapper) cr.uniqueResult();
             if (wrapper != null) {
-                result = ((EntryWrapper) wrapper).createEntry();
+                result = wrapper.createEntry();
             }
         }
         finally {
