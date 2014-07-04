@@ -30,6 +30,7 @@ public class CalendarServer {
 
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//        context.getEnvironment().acceptsProfiles("work");
         CalendarDataStore data = context.getBean("dataStore", CalendarDataStore.class);
         CalendarService service = context.getBean("calendarService", CalendarService.class);
 

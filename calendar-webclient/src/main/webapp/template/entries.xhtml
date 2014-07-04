@@ -43,11 +43,15 @@
         </p:column>
 
         <p:column headerText="Start Date">
-            <h:outputText value="#{entry.startDate}"/>
+            <h:outputText value="#{entry.startDate}">
+                <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+            </h:outputText>
         </p:column>
 
         <p:column headerText="End Date">
-            <h:outputText value="#{entry.endDate}"/>
+            <h:outputText value="#{entry.endDate}">
+                <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+            </h:outputText>
         </p:column>
 
         <p:column headerText="#" width="100">

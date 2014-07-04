@@ -7,6 +7,7 @@
     CDI
 
 -->
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations" value="classpath:calendar.properties"/>
     </bean>
@@ -25,10 +26,6 @@
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
     </bean>
 
 
@@ -54,5 +51,10 @@
     <!--<bean id="calendarWebServiceLogin" class="com.dio.calendar.webservice.CalendarWebServiceLogin" />-->
 
     <!--<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />-->
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:hibernate.${hibernate.profile}.cfg.xml"/>
+    </bean>
+
 
 </beans>
