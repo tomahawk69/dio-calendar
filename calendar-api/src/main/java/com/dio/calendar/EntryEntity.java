@@ -1,9 +1,9 @@
 package com.dio.calendar;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -14,13 +14,13 @@ import java.util.UUID;
 
 @Entity
 @Table(name="entries")
-public class EntryEntity {
+public class EntryEntity implements Serializable{
     private String subject;
     private String description;
     private Date startDate;
     private Date endDate;
     private List<String> attenders;
-    private List<Notification> notifications;
+    private List<NotificationEntity> notifications;
     private UUID id;
 
 
@@ -33,12 +33,13 @@ public class EntryEntity {
         this.startDate = entry.getStartDate();
         this.endDate = entry.getEndDate();
         this.attenders = entry.getAttenders();
-        this.notifications = entry.getNotifications();
+        //this.notifications = entry.getNotifications();
         this.id = entry.getId();
     }
 
     @Id
-    @Column(name="f_id")
+    @Column(name="f_entry_id", unique = true, nullable = false)
+    @Type(type="uuid-char")
     public UUID getId() {
         return id;
     }
@@ -83,20 +84,24 @@ public class EntryEntity {
         this.endDate = endDate;
     }
 
-    public void setAttenders(List<String> attenders) {
-        this.attenders = attenders;
-    }
-
-    public void setNotifications(List<Notification> notifications) {
-        this.notifications = notifications;
-    }
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "entry_attenders", joinColumns = @JoinColumn(name = "f_entry_id"))
+    @Column(name = "f_attender")
     public List<String> getAttenders() {
         return attenders;
     }
 
-    public List<Notification> getNotifications() {
+    public void setAttenders(List<String> attenders) {
+        this.attenders = attenders;
+    }
+
+    @OneToMany(mappedBy = "entryEntity", cascade = CascadeType.ALL)
+    public List<NotificationEntity> getNotifications() {
         return notifications;
+    }
+
+    public void setNotifications(List<NotificationEntity> notifications) {
+        this.notifications = notifications;
     }
 
     public Entry createEntry() {
@@ -106,7 +111,8 @@ public class EntryEntity {
                 startDate(startDate).
                 endDate(endDate).
                 attenders(attenders).
-                notifications(notifications).
+//                notifications(notifications).
+//                id(UUID.fromString(id)).
                 id(id).
                 build();
     }

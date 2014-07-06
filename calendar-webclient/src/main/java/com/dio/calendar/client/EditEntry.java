@@ -37,6 +37,7 @@ public class EditEntry implements Serializable {
     private Date dateFrom;
     private Date dateTo;
     private List<String> attenders = new ArrayList<>();
+    private String attender;
 
     private Entry oldEntry;
 
@@ -110,16 +111,6 @@ public class EditEntry implements Serializable {
         }
     }
 
-//    public void updateEntry(ActionEvent actionEvent) {
-//        //setGrowlInfo("Entry updated", "Update entry");
-//        logger.info("Save entry wrapper....");
-//        if (oldEntry == null) {
-//
-//        } else {
-//
-//        }
-//    }
-//
     public void updateEntry() {
         logger.info("Save entry wrapper....");
         if (oldEntry == null) {
@@ -175,14 +166,15 @@ public class EditEntry implements Serializable {
         dateTo = null;
         attenders.clear();
         oldEntry = null;
+        attender = null;
     }
 
     public void resetListener(ActionEvent actionEvent) {
         logger.info("reset");
-        if (oldEntry == null) {
-            reset();
-        }
-        else {
+        Entry tempEntry = oldEntry;
+        reset();
+        oldEntry = tempEntry;
+        if (oldEntry != null) {
             subject = oldEntry.getSubject();
             description = oldEntry.getDescription();
             dateFrom = oldEntry.getStartDate();
@@ -215,6 +207,14 @@ public class EditEntry implements Serializable {
             setGrowlError("Entry not found", "Cancelling edit");
 //            return "index";
         }
+    }
+
+    public String getAttender() {
+        return attender;
+    }
+
+    public void setAttender(String attender) {
+        this.attender = attender;
     }
 
     private void setGrowlInfo(String subject, String body) {
@@ -258,6 +258,22 @@ public class EditEntry implements Serializable {
         fc.addMessage("test", msg);
         fc.renderResponse();
 //        logger.info("Subject is " + subject);
+    }
+
+    public void removeAttender(String attender) {
+        attenders.remove(attender);
+    }
+
+    public void addAttender(String attender) {
+        if (attender == null || attender.trim() == "") {
+            setGrowlError("Error adding attender", "Attender is empty");
+            return;
+        }
+        if (attenders.indexOf(attender) < 0) {
+            attenders.remove(attender);
+        } else {
+            setGrowlError("Error adding attender", String.format("Attender %s already exists", attender));
+        }
     }
 
     public void showForm() {

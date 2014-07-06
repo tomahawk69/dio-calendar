@@ -28,6 +28,22 @@
         <level value="info"/>
         <appender-ref ref="R" />
     </logger>
+    
+    <logger name="org.hibernate.type">
+        <level value="trace"/>
+    </logger>
+
+    <logger name="com.dio.calendar.datastore.DataStoreHibernateImpl">
+        <level value="debug"/>
+    </logger>
+
+    <logger name="com.dio.calendar.datastore.LoadEntryHibernateImpl">
+        <level value="debug"/>
+    </logger>
+
+
+
+
 
     <root>
         <!-- Set root logger level to DEBUG and its only appender to A1 -->

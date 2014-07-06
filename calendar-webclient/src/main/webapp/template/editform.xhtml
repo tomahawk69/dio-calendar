@@ -16,24 +16,28 @@
 
     <h:panelGroup id="panelFormEdit" rendered="#{editEntry.showForm and !editEntry.showSearch}">
 
+
+        <h:inputHidden id="editOldId" value="{editEntry.oldId}"/>
+
+        <!--<h:messages id="messages" for="editValidate" globalOnly="true" layout="table" />-->
+
+
+        <h3>
+            Edit entry #{editEntry.oldId}
+        </h3>
+
         <h:form id="formEdit" rendered="#{editEntry.showForm and !editEntry.showSearch}">
-
-            <h:inputHidden id="editOldId" value="{editEntry.oldId}"/>
-
-            <!--<h:messages id="messages" for="editValidate" globalOnly="true" layout="table" />-->
-
-            <f:event listener="{editEntry.validateEntry}" type="postValidate" />
+            <f:event listener="{editEntry.validateEntry}" type="postValidate"/>
 
             <p:panelGrid columns="3" cellpadding="5" id="panel">
 
 
-
                 <h:outputLabel value="Subject: " for="editSubject"/>
                 <p:inputText id="editSubject" value="#{editEntry.subject}" required="true"
-                             requiredMessage="Subject is required" >
-                    <p:clientValidator />
+                             requiredMessage="Subject is required">
+                    <p:clientValidator/>
                 </p:inputText>
-                <p:message for="editSubject" />
+                <p:message for="editSubject"/>
 
                 <h:outputLabel value="Description: " for="editDescription"/>
                 <p:inputTextarea id="editDescription" value="#{editEntry.description}" required="true"
@@ -41,47 +45,100 @@
                                  validatorMessage="Description should has length not less then 5 symbols">
                     <f:validateLength minimum="5"/>
                 </p:inputTextarea>
-                <p:message for="editDescription" />
+                <p:message for="editDescription"/>
 
 
                 <h:outputLabel for="editDateFrom" value="Date from: "/>
                 <p:calendar id="editDateFrom" pattern="dd/MM/yyyy" value="#{editEntry.dateFrom}"
                             validator="entryValidator">
-                    <p:clientValidator />
+                    <p:clientValidator/>
                 </p:calendar>
-                <p:message for="editDateFrom" />
+                <p:message for="editDateFrom"/>
 
                 <h:outputLabel for="editDateTo" value="Date to: "/>
                 <p:calendar id="editDateTo" pattern="dd/MM/yyyy" value="#{editEntry.dateTo}"
-                        validator="entryValidator">
-                    <p:clientValidator />
+                            validator="entryValidator">
+                    <p:clientValidator/>
                 </p:calendar>
-                <p:message for="editDateTo" />
-
+                <p:message for="editDateTo"/>
 
                 <p:commandButton value="Save" id="editSave" action="#{editEntry.updateEntry}"
                                  validateClient="true" update="@([id$=panelEntries]) @([id$=panelFormEdit]) panel @form"
-                        ajax="false">
+                                 ajax="false">
                 </p:commandButton>
 
                 <h:commandButton value="Reset" id="editReset" actionListener="#{editEntry.resetListener}"
                                  immediate="true" reRender="@form">
-                    <f:ajax render="@form" />
+                    <f:ajax render="@form"/>
                 </h:commandButton>
 
 
                 &nbsp;
+
             </p:panelGrid>
-            <!--<h:inputHidden id="editValidate" value="true">-->
-                <!--<f:validator validatorId="entryValidator" />-->
-                <!--<f:attribute name="subject" value="{editSubject}" />-->
-                <!--<f:attribute name="test" value="test1" />-->
-                <!--<f:attribute name="dateFrom" value="{editDateFrom}" />-->
-                <!--<f:attribute name="dateTo" value="{editDateTo}" />-->
-            <!--</h:inputHidden>-->
-            <!--<h:commandButton value="Close" action="index" immediate="true"/>-->
 
         </h:form>
+
+        <h3>
+            Attenders
+        </h3>
+
+        <h:form id="editAttenders">
+            <p:panelGrid columns="1" cellpadding="5" id="panel1">
+                <h:dataTable var="attender" value="#{editEntry.attenders}" id="attenders">
+
+
+                    <p:column headerText="Subject" >
+                        <h:commandLink value="#{attender}" action="#{editEntry.setAttender(attender)}">
+                            <!--<f:ajax render=":panelFormEdit"/>-->
+                        </h:commandLink>
+                    </p:column>
+
+
+
+                    <!--<p:column headerText="#" width="50">-->
+                        <!--<p:commandButton actionListener="#{editEntry.removeAttender(attender)}"-->
+                                         <!--icon="ui-icon-closethick" update="@form attenders" title="Remove attender"-->
+                                         <!--ajax="true"-->
+                                         <!--immediate="true">-->
+                        <!--&lt;!&ndash;<p:confirm header="Confirmation" message="Are you sure you want to delete attender?" icon="ui-icon-alert"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<h:outputText value="Remove"/>&ndash;&gt;-->
+                        <!--</p:commandButton>-->
+                    <!--</p:column>-->
+
+                </h:dataTable>
+            </p:panelGrid>
+
+            <p:panelGrid columns="3" cellpadding="5" id="panelEditAttender">
+                <h:outputLabel value="Attender: " for="editAttender"/>
+                <p:inputText id="editAttender" value="#{editEntry.attender}">
+                    <p:clientValidator/>
+                </p:inputText>
+                <p:message for="editAttender"/>
+
+                <p:commandButton actionListener="#{editEntry.addAttender(editAttender)}"
+                                 value="Save"
+                                 update="@form attenders" title="Add attender"
+                                 ajax="true"
+                                 immediate="true">
+                </p:commandButton>
+
+                <p:commandButton actionListener="#{editEntry.removeAttender}"
+                                 value="Remove"
+                                 icon="ui-icon-closethick" update="@form attenders" title="Remove attender"
+                                 ajax="true"
+                                 immediate="true">
+                </p:commandButton>
+
+                &nbsp;
+
+            </p:panelGrid>
+
+
+
+        </h:form>
+
+
     </h:panelGroup>
 
 </h:body>

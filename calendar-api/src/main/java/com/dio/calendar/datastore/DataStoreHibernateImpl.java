@@ -1,7 +1,7 @@
 package com.dio.calendar.datastore;
 
 import com.dio.calendar.Entry;
-import com.dio.calendar.EntryWrapper;
+import com.dio.calendar.EntryEntity;
 import com.dio.calendar.database.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
@@ -71,7 +71,7 @@ public class DataStoreHibernateImpl implements DataStore {
         Session session = sessionFactory.openSession();
         try {
             Transaction tx = session.beginTransaction();
-            session.save(new EntryWrapper(entry));
+            session.save(new EntryEntity(entry));
             tx.commit();
             result = true;
         }
@@ -88,9 +88,9 @@ public class DataStoreHibernateImpl implements DataStore {
         Boolean result = false;
         Session session = sessionFactory.openSession();
         try {
-            Criteria cr = session.createCriteria(EntryWrapper.class);
+            Criteria cr = session.createCriteria(EntryEntity.class);
             cr.add(Restrictions.eq("id", id));
-            EntryWrapper wrapper = (EntryWrapper) cr.uniqueResult();
+            EntryEntity wrapper = (EntryEntity) cr.uniqueResult();
             if (wrapper != null) {
                 Transaction tx = session.beginTransaction();
                 session.delete(wrapper);
@@ -111,12 +111,17 @@ public class DataStoreHibernateImpl implements DataStore {
         Entry result = null;
         Session session = sessionFactory.openSession();
         try {
-            Criteria cr = session.createCriteria(EntryWrapper.class);
+            logger.debug("Read entry: " + id);
+            Criteria cr = session.createCriteria(EntryEntity.class);
             cr.add(Restrictions.eq("id", id));
-            EntryWrapper wrapper = (EntryWrapper) cr.uniqueResult();
+            EntryEntity wrapper = (EntryEntity) cr.uniqueResult();
+            logger.debug("wrapper is: " + wrapper);
             if (wrapper != null) {
                 result = wrapper.createEntry();
             }
+        }
+        catch (Exception e) {
+            logger.error(e);
         }
         finally {
             if (session.isOpen()) {
@@ -130,7 +135,7 @@ public class DataStoreHibernateImpl implements DataStore {
     public void clear() throws DataStoreFSException {
         Session session = sessionFactory.openSession();
         try {
-            Query query = session.createQuery("delete from EntryWrapper");
+            Query query = session.createQuery("delete from EntryEntity");
             Transaction tx = session.beginTransaction();
             query.executeUpdate();
             tx.commit();
@@ -147,9 +152,9 @@ public class DataStoreHibernateImpl implements DataStore {
         List entries = new ArrayList<Entry>();
         Session session = sessionFactory.openSession();
         try {
-            List<EntryWrapper> wrapper = session.createCriteria(EntryWrapper.class).list();
-            for (Object entryWrapper : wrapper) {
-                entries.add(((EntryWrapper) entryWrapper).createEntry());
+            List<EntryEntity> wrapper = session.createCriteria(EntryEntity.class).list();
+            for (Object entryEntity : wrapper) {
+                entries.add(((EntryEntity) entryEntity).createEntry());
             }
         }
         finally {
@@ -165,9 +170,13 @@ public class DataStoreHibernateImpl implements DataStore {
         List ids = new ArrayList<UUID>();
         Session session = sessionFactory.openSession();
         try {
-            List<EntryWrapper> wrapper = session.createCriteria(EntryWrapper.class).list();
-            for (Object entryWrapper : wrapper) {
-                ids.add(((EntryWrapper) entryWrapper).getId());
+            List<EntryEntity> wrapper = session.createCriteria(EntryEntity.class).list();
+            for (Object entryEntity : wrapper) {
+                System.out.println(((EntryEntity) entryEntity).getId());
+                System.out.println(session.createCriteria(EntryEntity.class).
+                        add(Restrictions.eq("id", ((EntryEntity) entryEntity).getId())).list());
+//                ids.add(UUID.fromString(((EntryEntity) entryEntity).getId()));
+                ids.add(((EntryEntity) entryEntity).getId());
             }
         }
         finally {
