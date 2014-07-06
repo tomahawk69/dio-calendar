@@ -88,14 +88,11 @@
                 <h:dataTable var="attender" value="#{editEntry.attenders}" id="attenders">
 
 
-                    <p:column headerText="Subject" >
+                    <p:column headerText="Attender" >
                         <h:commandLink value="#{attender}" action="#{editEntry.setAttender(attender)}">
                             <!--<f:ajax render=":panelFormEdit"/>-->
                         </h:commandLink>
                     </p:column>
-
-
-
                     <!--<p:column headerText="#" width="50">-->
                         <!--<p:commandButton actionListener="#{editEntry.removeAttender(attender)}"-->
                                          <!--icon="ui-icon-closethick" update="@form attenders" title="Remove attender"-->
@@ -112,15 +109,17 @@
             <p:panelGrid columns="3" cellpadding="5" id="panelEditAttender">
                 <h:outputLabel value="Attender: " for="editAttender"/>
                 <p:inputText id="editAttender" value="#{editEntry.attender}">
-                    <p:clientValidator/>
+                    <!--<p:clientValidator/>-->
                 </p:inputText>
                 <p:message for="editAttender"/>
 
-                <p:commandButton actionListener="#{editEntry.addAttender(editAttender)}"
+
+                <p:commandButton action="#{editEntry.addAttender()}"
                                  value="Save"
                                  update="@form attenders" title="Add attender"
                                  ajax="true"
                                  immediate="true">
+                        <!--<f:attribute name="attender" value=""/>-->
                 </p:commandButton>
 
                 <p:commandButton actionListener="#{editEntry.removeAttender}"

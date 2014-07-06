@@ -100,10 +100,7 @@ public class EditEntry implements Serializable {
         logger.info("Create entry....");
         try {
             Entry result = localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
-                    "Successfully added entry", "Entry was successfully added. New id is " + result.getId());
-            FacesContext.getCurrentInstance().addMessage(null, message);
-
+            setGrowlInfo("Successfully added entry", "Entry was successfully added. New id is " + result.getId());
 //            reset();
         } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
             logger.error(e);
@@ -128,7 +125,7 @@ public class EditEntry implements Serializable {
         } else {
             logger.info("Update entry");
             try {
-                subject = "update";
+//                subject = "update";
                 localService.updateEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null), oldEntry);
                 reset();
                 showForm = false;
@@ -214,6 +211,7 @@ public class EditEntry implements Serializable {
     }
 
     public void setAttender(String attender) {
+        System.out.println("Set attender: " + attender);
         this.attender = attender;
     }
 
@@ -264,7 +262,10 @@ public class EditEntry implements Serializable {
         attenders.remove(attender);
     }
 
-    public void addAttender(String attender) {
+//    public void addAttender(ActionEvent event) {
+    public void addAttender() {
+//        System.out.println((String)event.getComponent().findComponent("attenderEdit").;
+
         if (attender == null || attender.trim() == "") {
             setGrowlError("Error adding attender", "Attender is empty");
             return;
@@ -332,5 +333,4 @@ public class EditEntry implements Serializable {
         sb.append('}');
         return sb.toString();
     }
-
 }
