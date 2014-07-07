@@ -271,7 +271,7 @@ public class EditEntry implements Serializable {
             return;
         }
         if (attenders.indexOf(attender) < 0) {
-            attenders.remove(attender);
+            attenders.add(attender);
         } else {
             setGrowlError("Error adding attender", String.format("Attender %s already exists", attender));
         }

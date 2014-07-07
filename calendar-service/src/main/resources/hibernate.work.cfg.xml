@@ -16,6 +16,9 @@
         <property name="connection.pool_size">5</property>
         <property name="current_session_context_class">thread</property>
         <!--<property name="dialect">org.hibernate.dialect.SQLAnywhere11Dialect</property>-->
+        <property name="hibernate.show_sql">true</property>
+        <property name="format_sql">true</property>
+
         <property name="hibernate.dialect">org.hibernate.dialect.SybaseDialect</property>
         <property name="hibernate.temp.use_jdbc_metadata_defaults">false</property>
 
@@ -26,7 +29,8 @@
         <property name="hibernate.c3p0.idle_test_period">3000</property>
 
 
-        <mapping resource="EntryWrapper.hbm.xml"/>
+        <mapping class="com.dio.calendar.EntryEntity" />
+        <mapping class="com.dio.calendar.NotificationEntity" />
 
     </session-factory>
 

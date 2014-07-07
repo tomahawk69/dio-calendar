@@ -62,6 +62,7 @@
                 </p:calendar>
                 <p:message for="editDateTo"/>
 
+
                 <p:commandButton value="Save" id="editSave" action="#{editEntry.updateEntry}"
                                  validateClient="true" update="@([id$=panelEntries]) @([id$=panelFormEdit]) panel @form"
                                  ajax="false">
@@ -83,7 +84,7 @@
             Attenders
         </h3>
 
-        <h:form id="editAttenders">
+        <h:form id="viewAttenders">
             <p:panelGrid columns="1" cellpadding="5" id="panel1">
                 <h:dataTable var="attender" value="#{editEntry.attenders}" id="attenders">
 
@@ -106,36 +107,48 @@
                 </h:dataTable>
             </p:panelGrid>
 
-            <p:panelGrid columns="3" cellpadding="5" id="panelEditAttender">
+        <!--</h:form>-->
+
+        <!--<h:form id="editAttenders">-->
+        <h:panelGrid columns="3" cellpadding="5" id="panelEditAttender">
+
                 <h:outputLabel value="Attender: " for="editAttender"/>
-                <p:inputText id="editAttender" value="#{editEntry.attender}">
-                    <!--<p:clientValidator/>-->
-                </p:inputText>
-                <p:message for="editAttender"/>
+                <h:inputText id="editAttender" value="#{editEntry.attender}">
+                </h:inputText>
+                <h:message for="editAttender"/>
 
 
-                <p:commandButton action="#{editEntry.addAttender()}"
-                                 value="Save"
-                                 update="@form attenders" title="Add attender"
-                                 ajax="true"
-                                 immediate="true">
-                        <!--<f:attribute name="attender" value=""/>-->
-                </p:commandButton>
 
-                <p:commandButton actionListener="#{editEntry.removeAttender}"
+                <!--<h:commandButton action="#{editEntry.addAttender()}"-->
+                                 <!--value="Save"-->
+
+                                 <!--title="Add attender"-->
+
+                                 <!-->-->
+                        <!--<f:ajax execute="editAttender" render="attenders"/>-->
+                <!--</h:commandButton>-->
+
+            <p:commandButton action="#{editEntry.addAttender()}"
+                             value="Save"
+                             update="@form"
+                             title="Add attender"
+
+                    >
+                <!--<f:ajax execute="editAttender" render="attenders"/>-->
+            </p:commandButton>
+                <h:commandButton actionListener="#{editEntry.removeAttender}"
                                  value="Remove"
-                                 icon="ui-icon-closethick" update="@form attenders" title="Remove attender"
-                                 ajax="true"
-                                 immediate="true">
-                </p:commandButton>
+                                 icon="ui-icon-closethick"
+
+                                 title="Remove attender"
+                             >
+                </h:commandButton>
 
                 &nbsp;
 
-            </p:panelGrid>
-
-
-
+            </h:panelGrid>
         </h:form>
+
 
 
     </h:panelGroup>

@@ -41,7 +41,7 @@ public class NotificationEntity implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name="entry_id")
+    @JoinColumn(name="f_entry_id")
     public EntryEntity getEntryEntity() {
         return entryEntity;
     }
