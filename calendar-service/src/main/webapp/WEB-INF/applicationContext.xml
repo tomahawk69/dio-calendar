@@ -24,13 +24,19 @@
         <constructor-arg ref="dataStoreFs"/>
     </bean>
 
-    <bean id="dataStoreDB" class="com.dio.calendar.datastore.DataStoreHibernateImpl">
-        <constructor-arg ref="sessionFactory"/>
-    </bean>
 
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
+        <!--<property name="configLocation" value="classpath:hibernate.${hibernate.profile}.cfg.xml"/>-->
+     <!--</bean>-->
+ <!---->
+    <!--&lt;!&ndash;<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />&ndash;&gt;-->
+    <!--<bean id="dataStoreDB" class="com.dio.calendar.datastore.DataStoreHibernateImpl">-->
+        <!--<constructor-arg ref="sessionFactory"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">-->
+        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
 
 
     <bean id="dataStoreFs" class="com.dio.calendar.datastore.DataStoreFSImpl">
@@ -50,15 +56,10 @@
     <!--<property name="registryPort" value="1199"/>-->
     <!--</bean>-->
 
-
     <!--<bean id="calendarWebService" class="com.dio.calendar.webservice.CalendarWebService" />-->
     <!--<bean id="calendarWebServiceLogin" class="com.dio.calendar.webservice.CalendarWebServiceLogin" />-->
 
-    <!--<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />-->
 
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="configLocation" value="classpath:hibernate.${hibernate.profile}.cfg.xml"/>
-    </bean>
 
 
 </beans>

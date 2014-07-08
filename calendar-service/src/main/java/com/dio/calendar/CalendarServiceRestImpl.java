@@ -5,12 +5,11 @@ import com.dio.calendar.datastore.CalendarDataStoreImpl;
 import com.dio.calendar.datastore.DataStoreFSException;
 import org.apache.log4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -23,7 +22,7 @@ import static com.dio.calendar.ValidateEntry.validateDateRange;
  *
  * Created by iovchynnikov on 4/30/14.
  */
-@Path("entries")
+@Path("/")
 public class CalendarServiceRestImpl implements CalendarService {
 
     private final CalendarDataStoreImpl data;
@@ -40,8 +39,12 @@ public class CalendarServiceRestImpl implements CalendarService {
         return result.toArray(new TimeInterval[result.size()]);
     }
 
+    @Path("entry/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public Entry getEntry(UUID id) throws RemoteException {
+    public Entry getEntry( @PathParam("id") UUID id)  {
+        System.out.println("get uuid " + id);
         return data.getEntry(id);
     }
 
@@ -57,8 +60,9 @@ public class CalendarServiceRestImpl implements CalendarService {
     }
 
     @Override
+    @Path("entries")
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces("application/json")
     public List<Entry> getEntries() {
         System.out.println("get entries");
         return data.getEntries();
@@ -155,7 +159,11 @@ public class CalendarServiceRestImpl implements CalendarService {
     }
 
     @Override
-    public Entry addEntry(Entry entry) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException {
+    @Path("add")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Entry addEntry(@RequestParam Entry entry) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException {
         logger.info("Adding entry: " + entry);
         validateDateRange(entry.getStartDate(), entry.getEndDate());
         return data.addEntry(entry);

@@ -23,13 +23,13 @@ import java.util.*;
 @XmlRootElement
 public class Entry implements Serializable {
 
-    private final String subject;
-    private final String description;
-    private final Date startDate;
-    private final Date endDate;
-    private final List<String> attenders;
-    private final List<Notification> notifications;
-    private final UUID id;
+    private String subject;
+    private String description;
+    private Date startDate;
+    private Date endDate;
+    private List<String> attenders;
+    private List<Notification> notifications;
+    private UUID id;
 
     public UUID getId() { return id; }
 
@@ -66,6 +66,9 @@ public class Entry implements Serializable {
         this.notifications = builder.notifications;
         this.id = builder.id;
     }
+
+    public Entry() { }
+
 
     @Override
     public String toString() {

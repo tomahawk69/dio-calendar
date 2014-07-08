@@ -3,11 +3,11 @@ package com.dio.calendar.client;
 import com.dio.calendar.CalendarEntryBadAttribute;
 import com.dio.calendar.CalendarKeyViolation;
 import com.dio.calendar.Entry;
-import com.dio.calendar.datastore.DataStoreFSException;
+import com.dio.calendar.EntryWrapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.rmi.RemoteException;
+import java.util.UUID;
 
 /**
  * Created by iovchynnikov on 5/27/14.
@@ -23,7 +23,26 @@ public class ClientMain {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
         ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
 
-        System.out.println(calendarServiceWrapper.getEntries());
+        Entry entry = calendarServiceWrapper.getEntry(UUID.fromString("9ff1b57f-3efb-46e0-8813-a30d4277db20"));
+
+        System.out.println("Parsed entry " + entry);
+        EntryWrapper wrapper = new EntryWrapper();
+        wrapper.setDescription("test update");
+        Entry newEntry = wrapper.createEntry();
+        try {
+            calendarServiceWrapper.addEntry(newEntry);
+        } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+            calendarEntryBadAttribute.printStackTrace();
+        } catch (CalendarKeyViolation calendarKeyViolation) {
+            calendarKeyViolation.printStackTrace();
+        }
+
+//        EntryWrapper wrapper = new EntryWrapper(entry);
+//        wrapper.setSubject("test update");
+//        Entry newEntry = wrapper
+
+
+//        System.out.println(calendarServiceWrapper.getEntries());
 
 //        CalendarService service = context.getBean("calendarService", CalendarService.class);
 

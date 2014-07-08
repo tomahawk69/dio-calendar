@@ -16,7 +16,7 @@
         <parentVersion>1.0</parentVersion>
         <springVersion>4.0.4.RELEASE</springVersion>
         <jettyVersion>9.0.5.v20130815</jettyVersion>
-        <jerseyVersion>2.0</jerseyVersion>
+        <jerseyVersion>1.18.1</jerseyVersion>
     </properties>
 
     <groupId>com.dio.calendar</groupId>

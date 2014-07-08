@@ -49,7 +49,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" scope="RUNTIME">
+    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="jar://C:/Program Files (x86)/Sybase/SQL Anywhere 9/java/jodbc.jar!/" />
@@ -110,7 +110,7 @@
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-ehcache:4.3.5.Final" level="project" />
     <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache-core:2.4.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.1" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0" level="project" />
+    <orderEntry type="library" name="Maven: com.owlike:genson:0.99" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-core:1.18.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-server:1.18.1" level="project" />
     <orderEntry type="library" name="Maven: com.sun.jersey:jersey-servlet:1.18.1" level="project" />

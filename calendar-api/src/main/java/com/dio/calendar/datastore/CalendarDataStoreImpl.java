@@ -270,7 +270,7 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
         indexEntrySubjects.clear();
         try {
             int threads = Runtime.getRuntime().availableProcessors() * 5;
-            threads = 1;
+//            threads = 1;
             logger.info("Used threads count: " + threads);
             ExecutorService exec = Executors.newFixedThreadPool(threads);
             List<Future> futures = new LinkedList<>();
