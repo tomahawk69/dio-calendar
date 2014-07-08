@@ -21,28 +21,30 @@ public class ClientMain {
     * */
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
-        ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceWrapper", ClientWrapper.class);
+        ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
+
+        System.out.println(calendarServiceWrapper.getEntries());
 
 //        CalendarService service = context.getBean("calendarService", CalendarService.class);
 
-        Entry testInput = calendarServiceWrapper.newEntry("test", null, null, null, null, null);
-        Entry entry = calendarServiceWrapper.getEntry(testInput.getId());
-        if (entry == null) {
-            try {
-                entry = calendarServiceWrapper.addEntry(testInput);
-            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
-                calendarEntryBadAttribute.printStackTrace();
-            } catch (CalendarKeyViolation calendarKeyViolation) {
-                calendarKeyViolation.printStackTrace();
-            }
-        } else {
-            try {
-                entry = calendarServiceWrapper.updateEntry(testInput);
-            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
-                calendarEntryBadAttribute.printStackTrace();
-            }
-        }
-         calendarServiceWrapper.removeEntry(entry);
+//        Entry testInput = calendarServiceWrapper.newEntry("test", null, null, null, null, null);
+//        Entry entry = calendarServiceWrapper.getEntry(testInput.getId());
+//        if (entry == null) {
+//            try {
+//                entry = calendarServiceWrapper.addEntry(testInput);
+//            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+//                calendarEntryBadAttribute.printStackTrace();
+//            } catch (CalendarKeyViolation calendarKeyViolation) {
+//                calendarKeyViolation.printStackTrace();
+//            }
+//        } else {
+//            try {
+//                entry = calendarServiceWrapper.updateEntry(testInput);
+//            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+//                calendarEntryBadAttribute.printStackTrace();
+//            }
+//        }
+//         calendarServiceWrapper.removeEntry(entry);
 
     }
 }

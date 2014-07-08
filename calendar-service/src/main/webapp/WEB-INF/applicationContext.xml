@@ -2,15 +2,21 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-<!--
-    TestCoverage
-    CDI
--->
+    <!--
+        TestCoverage
+        CDI
+
+    -->
+
     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations" value="classpath:calendar.properties"/>
     </bean>
 
-    <bean id="calendarService" class="com.dio.calendar.CalendarServiceRemoteImpl">
+    <bean id="calendarServiceRmi" class="com.dio.calendar.CalendarServiceRemoteImpl">
+        <constructor-arg ref="dataStore" />
+    </bean>
+
+    <bean id="calendarServiceRest" class="com.dio.calendar.CalendarServiceRestImpl">
         <constructor-arg ref="dataStore" />
     </bean>
 
@@ -18,28 +24,41 @@
         <constructor-arg ref="dataStoreFs"/>
     </bean>
 
+    <bean id="dataStoreDB" class="com.dio.calendar.datastore.DataStoreHibernateImpl">
+        <constructor-arg ref="sessionFactory"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
     <bean id="dataStoreFs" class="com.dio.calendar.datastore.DataStoreFSImpl">
         <constructor-arg value="${database.path}"/>
         <constructor-arg ref="fileSystemHelper"/>
     </bean>
 
-    <bean id="fileSystemHelper" class="com.dio.calendar.datastore.FileSystemHelperImpl">
-    </bean>
+    <bean id="fileSystemHelper" class="com.dio.calendar.datastore.FileSystemHelperImpl" />
 
-
-    <bean class="org.springframework.remoting.rmi.RmiServiceExporter" scope="singleton">
-        <!-- does not necessarily have to be the same name as the bean to be exported -->
-        <property name="serviceName" value="CalendarService"/>
-        <property name="service" ref="calendarService"/>
-        <property name="serviceInterface" value="com.dio.calendar.CalendarService"/>
-        <!-- defaults to 1099 -->
-        <property name="registryPort" value="1099"/>
-    </bean>
+    <!--<bean class="org.springframework.remoting.rmi.RmiServiceExporter">-->
+    <!-- does not necessarily have to be the same name as the bean to be exported -->
+    <!--<property name="serviceName" value="CalendarService"/>-->
+    <!--<property name="service" ref="calendarService"/>-->
+    <!--<property name="serviceInterface" value="com.dio.calendar.CalendarService"/>-->
+    <!-- defaults to 1099 -->
+    <!-- TODO: set to 1099 or 1199 -->
+    <!--<property name="registryPort" value="1199"/>-->
+    <!--</bean>-->
 
 
     <!--<bean id="calendarWebService" class="com.dio.calendar.webservice.CalendarWebService" />-->
     <!--<bean id="calendarWebServiceLogin" class="com.dio.calendar.webservice.CalendarWebServiceLogin" />-->
 
     <!--<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />-->
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="configLocation" value="classpath:hibernate.${hibernate.profile}.cfg.xml"/>
+    </bean>
+
 
 </beans>

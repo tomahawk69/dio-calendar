@@ -2,6 +2,7 @@ package com.dio.calendar;
 
 
 
+import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
 
@@ -19,6 +20,7 @@ import java.util.*;
  *
  * Created by yur on 29.04.2014.
  */
+@XmlRootElement
 public class Entry implements Serializable {
 
     private final String subject;

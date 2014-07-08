@@ -68,6 +68,37 @@
             <version>5.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>javax.ws.rs</groupId>
+            <artifactId>javax.ws.rs-api</artifactId>
+            <version>${jerseyVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-bundle</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.18.1</version>
+        </dependency>
+
 
         <!--<dependency>-->
             <!--<groupId>com.sun.faces</groupId>-->
@@ -94,7 +125,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jettyVersion}</version>
                 <configuration>
-                    <!--<jettyXml>jetty-http.xml</jettyXml>-->
+                    <jettyXml>src\main\webapp\WEB-INF\jetty.xml</jettyXml>
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>

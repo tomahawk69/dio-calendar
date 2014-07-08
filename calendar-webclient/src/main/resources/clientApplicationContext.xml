@@ -15,20 +15,25 @@
     <!--<context:component-scan base-package="com.dio.calendar.client" />-->
     <!--<context:annotation-config />-->
 
-    <bean id="calendarService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">
-        <property name="serviceUrl" value="${serviceUrl}"/>
-        <property name="serviceInterface" value="com.dio.calendar.CalendarService"/>
-        <property name="refreshStubOnConnectFailure" value="true" />
-    </bean>
+    <!--<bean id="calendarService" class="org.springframework.remoting.rmi.RmiProxyFactoryBean">-->
+        <!--<property name="serviceUrl" value="${serviceUrl}"/>-->
+        <!--<property name="serviceInterface" value="com.dio.calendar.CalendarService"/>-->
+        <!--<property name="refreshStubOnConnectFailure" value="true" />-->
+    <!--</bean>-->
     <!--<bean id="calendarServiceInterfaceWrapper" class="com.dio.calendar.client.Wrapper">-->
         <!--<constructor-arg name="service" ref="calendarService" />-->
     <!--</bean>-->
-    <bean id="calendarServiceWrapper" class="com.dio.calendar.client.ClientWrapperImpl" scope="session">
-        <constructor-arg name="remoteService" ref="calendarService" />
+    <!--<bean id="calendarServiceWrapper" class="com.dio.calendar.client.ClientWrapperImpl" scope="session">-->
+        <!--<constructor-arg name="remoteService" ref="calendarService" />-->
+    <!--</bean>-->
+
+    <bean id="calendarServiceRestClient" class="com.dio.calendar.client.ClientWrapperRestImpl">
+        <constructor-arg name="serviceUri" value="${restServiceUrl}" />
+        <constructor-arg name="servicePath" value="${restServiceUri}" />
     </bean>
 
-    <bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="session">
-        <constructor-arg name="localService" ref="calendarServiceWrapper" />
-    </bean>
+    <!--<bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="session">-->
+        <!--<constructor-arg name="localService" ref="calendarServiceWrapper" />-->
+    <!--</bean>-->
 
 </beans>

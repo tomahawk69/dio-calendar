@@ -234,8 +234,6 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
     @Override
     public List<Entry> getEntries() {
-        logger.info("Here");
-        logger.info(entries);
         return new ArrayList(entries.values());
     }
 
@@ -356,8 +354,8 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
 
     @Override
     public void addEntryToEntries(Entry entry) {
-        logger.info("Added entry: ");
-        logger.info(entry);
+        logger.debug("Added entry: ");
+        logger.debug(entry);
         entries.put(entry.getId(), entry);
         indexEntry(entry);
     }
