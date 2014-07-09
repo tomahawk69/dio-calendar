@@ -97,7 +97,16 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     @Override
     public Entry updateEntry(Entry newEntry, Entry oldEntry) throws CalendarEntryBadAttribute {
-        return null;
+        logger.info(String.format("Smart update entry to %s from %s", newEntry, oldEntry));
+        List<Entry> token = new ArrayList<>();
+        token.add(newEntry);
+        token.add(oldEntry);
+        return restService.
+                path(servicePath).path("updateSmart").
+                accept(MediaType.APPLICATION_JSON).
+                type(MediaType.APPLICATION_JSON).
+                entity(token).
+                post(Entry.class);
     }
 
     @Override

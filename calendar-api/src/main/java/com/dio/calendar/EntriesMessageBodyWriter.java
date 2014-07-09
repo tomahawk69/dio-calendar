@@ -7,6 +7,7 @@ import org.codehaus.jackson.type.TypeReference;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.ext.MessageBodyWriter;
@@ -34,7 +35,18 @@ public class EntriesMessageBodyWriter implements MessageBodyWriter<List<Entry>> 
         logger.info(String.format("is readable EntriesMessageBodyWriter type %s, genericType %s", type, genericType));
 //        System.out.println(new TypeReference<List<Entry>>() {});
 //        System.out.println(genericType);
-        return type == ArrayList.class;// && Entry.class.toString().equals(genericType.toString());
+//        if (genericType == Entry.class) {
+//            System.out.println(1);
+//        }
+//        if (genericType.equals(Entry.class)) {
+//            System.out.println(2);
+//        }
+//        if (type.isAssignableFrom(List.class)) {
+//            System.out.println(3);
+//
+//        }
+//        return type == ArrayList.class && genericType == Entry.class;
+        return type == ArrayList.class;
     }
 
     @Override

@@ -172,14 +172,24 @@ public class CalendarServiceRestImpl implements CalendarService {
         return data.getEntry(newEntry.getId());
     }
 
+    @Path("updateSmart")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Entry updateEntry(@RequestParam List<Entry> token) throws CalendarEntryBadAttribute, DataStoreFSException {
+        logger.info("Smart entry update: " + token);
+        return data.updateEntry(token.get(0), token.get(1));
+    }
+
+
     @Override
     @Path("update")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Entry updateEntry(Entry newEntry) throws CalendarEntryBadAttribute, DataStoreFSException {
+    public Entry updateEntry(@RequestParam Entry newEntry) throws CalendarEntryBadAttribute, DataStoreFSException {
         validateDateRange(newEntry.getStartDate(), newEntry.getEndDate());
-        logger.info("Full update entry: " + newEntry);
+        logger.info("Dire update entry: " + newEntry);
         return data.updateEntry(newEntry, null);
     }
 

@@ -32,7 +32,7 @@ public class EntryMessageBodyReader implements MessageBodyReader<Entry> {
     @Override
     public boolean isReadable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
-        logger.debug("is readable EntryMessageBodyReader " + type);
+        logger.info("is readable EntryMessageBodyReader " + type);
         return type == Entry.class;
     }
 
@@ -44,7 +44,7 @@ public class EntryMessageBodyReader implements MessageBodyReader<Entry> {
                           InputStream entityStream)
             throws IOException, WebApplicationException {
 
-        logger.debug("readFrom EntryMessageBodyReader");
+        logger.info("readFrom EntryMessageBodyReader");
         try {
             ObjectMapper mapper = new ObjectMapper();
             EntryWrapper entryWrapper = mapper.readValue(entityStream, EntryWrapper.class);

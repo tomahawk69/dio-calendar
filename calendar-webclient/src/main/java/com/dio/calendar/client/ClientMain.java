@@ -52,13 +52,18 @@ public class ClientMain {
             entry = calendarServiceWrapper.updateEntry(newEntry);
             System.out.println("Entry updated " + entry);
 
-            System.out.println("Updating entry " + newEntry);
-            entry = calendarServiceWrapper.editSubject(entry, "test subject update 2");
-            System.out.println("Updated entry " + entry);
+            System.out.println("Smart updating entry " + newEntry);
+            entry = calendarServiceWrapper.updateEntry(newEntry, entry);
+            System.out.println("Entry updated " + entry);
 
-            System.out.println("Removing...");
-            calendarServiceWrapper.removeEntryById(entry.getId());
-            System.out.println("Done");
+//            System.out.println("Updating entry " + newEntry);
+//            entry = calendarServiceWrapper.editSubject(entry, "test subject update 2");
+//            System.out.println("Updated entry " + entry);
+//
+//            System.out.println("Removing...");
+//            calendarServiceWrapper.removeEntryById(entry.getId());
+//            System.out.println("Done");
+
         } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
             calendarEntryBadAttribute.printStackTrace();
         } catch (CalendarKeyViolation calendarKeyViolation) {
