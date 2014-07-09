@@ -64,13 +64,17 @@ public class CalendarServiceRestImpl implements CalendarService {
     @GET
     @Produces("application/json")
     public List<Entry> getEntries() {
-        System.out.println("get entries");
+        logger.info("Get entries execute");
         return data.getEntries();
     }
 
     @Override
+    @Path("clear")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @POST
     public void clearData() throws DataStoreFSException, IOException {
-        data.clearData();
+        logger.info("Clear data executed");
+        //data.clearData();
     }
 
 

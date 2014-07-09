@@ -7,13 +7,10 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
-import com.sun.jersey.json.impl.provider.entity.JSONRootElementProvider;
 import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONObject;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +26,9 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     public ClientWrapperRestImpl(String serviceUri, String servicePath) {
         ClientConfig config = new DefaultClientConfig();
+        config.getClasses().add(EntryMessageBodyReader.class);
+        config.getClasses().add(EntryMessageBodyWriter.class);
+        config.getClasses().add(EntriesMessageBodyReader.class);
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
         this.restService = client.resource(UriBuilder.fromUri(serviceUri).build());
@@ -72,8 +72,7 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     @Override
     public Entry addEntry(Entry entry) throws CalendarEntryBadAttribute, CalendarKeyViolation {
-        System.out.println("add entry " + entry);
-
+        logger.debug("Add entry " + entry);
         return restService.path(servicePath).path("add").
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
@@ -112,7 +111,7 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     @Override
     public Entry getEntry(UUID id) {
-        System.out.println("get entry " + id);
+        logger.debug("Get entry " + id);
         return restService.path(servicePath).path("entry").path(id.toString()).accept(MediaType.APPLICATION_JSON).get(Entry.class);
     }
 
@@ -128,19 +127,14 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     @Override
     public List<Entry> getEntries() {
+        logger.debug("Get entries");
         List<Entry> entries = restService.path(servicePath).path("entries").accept(MediaType.APPLICATION_JSON).get(new  GenericType<List<Entry>>(){});
-//        System.out.println(entries);
-//        EntryWrapper[] entries = restService.path(servicePath).path("entries").accept(MediaType.APPLICATION_JSON).get(EntryWrapper[].class);
-//        System.out.println(entries);
-//        EntriesWrapper wrapper = restService.path(servicePath).path("entries").accept(MediaType.APPLICATION_JSON).get(EntriesWrapper.class);
-//        EntryWrapper wrapper = restService.path(servicePath).path("entries").accept(MediaType.APPLICATION_JSON).get(EntryWrapper.class);
-//        return wrapper.getEntries();
         return entries;
     }
 
     @Override
     public void clearData() {
-
+        restService.path(servicePath).path("clear").accept(MediaType.APPLICATION_JSON).post();
     }
 
 

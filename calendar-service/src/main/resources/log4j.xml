@@ -28,7 +28,12 @@
         <level value="info"/>
         <appender-ref ref="R" />
     </logger>
-    
+
+
+    <logger name="com.dio.calendar.EntriesMessageBodyWriter">
+        <level value="debug"/>
+    </logger>
+
     <!--<logger name="org.hibernate.type">-->
         <!--<level value="trace"/>-->
     <!--</logger>-->

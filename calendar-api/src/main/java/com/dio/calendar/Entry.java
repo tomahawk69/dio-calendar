@@ -67,7 +67,7 @@ public class Entry implements Serializable {
         this.id = builder.id;
     }
 
-    public Entry() { }
+//    public Entry() { }
 
 
     @Override

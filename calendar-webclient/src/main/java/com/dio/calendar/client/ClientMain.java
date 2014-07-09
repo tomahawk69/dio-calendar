@@ -7,6 +7,7 @@ import com.dio.calendar.EntryWrapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -22,15 +23,27 @@ public class ClientMain {
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
         ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
+        Entry entry = null;
+//        entry = calendarServiceWrapper.getEntry(UUID.fromString("9ff1b57f-3efb-46e0-8813-a30d4277db20"));
+//        entry = calendarServiceWrapper.getEntry(UUID.fromString("425fc3d4-242e-40ef-b74c-a8661225d655"));
+        System.out.println("Read all entries");
+        List<Entry> entries = calendarServiceWrapper.getEntries();
+        System.out.println("Returned " + entries.size());
+        if (entries.size() > 0) {
+            System.out.println(entries.get(0).getClass());
+//            System.out.println("Get entry with id " + entry.getId());
+//            entry = calendarServiceWrapper.getEntry(entry.getId());
+        }
 
-        Entry entry = calendarServiceWrapper.getEntry(UUID.fromString("9ff1b57f-3efb-46e0-8813-a30d4277db20"));
-
-        System.out.println("Parsed entry " + entry);
+        System.out.println("Create entry");
         EntryWrapper wrapper = new EntryWrapper();
-        wrapper.setDescription("test update");
+        wrapper.setSubject("test subject");
         Entry newEntry = wrapper.createEntry();
+
+        wrapper.setDescription("test add and delete");
         try {
             calendarServiceWrapper.addEntry(newEntry);
+            //calendarServiceWrapper.removeEntry(entry);
         } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
             calendarEntryBadAttribute.printStackTrace();
         } catch (CalendarKeyViolation calendarKeyViolation) {
@@ -42,28 +55,9 @@ public class ClientMain {
 //        Entry newEntry = wrapper
 
 
-//        System.out.println(calendarServiceWrapper.getEntries());
+//        System.out.println("Clear all entries");
+//        calendarServiceWrapper.clearData();
 
-//        CalendarService service = context.getBean("calendarService", CalendarService.class);
-
-//        Entry testInput = calendarServiceWrapper.newEntry("test", null, null, null, null, null);
-//        Entry entry = calendarServiceWrapper.getEntry(testInput.getId());
-//        if (entry == null) {
-//            try {
-//                entry = calendarServiceWrapper.addEntry(testInput);
-//            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
-//                calendarEntryBadAttribute.printStackTrace();
-//            } catch (CalendarKeyViolation calendarKeyViolation) {
-//                calendarKeyViolation.printStackTrace();
-//            }
-//        } else {
-//            try {
-//                entry = calendarServiceWrapper.updateEntry(testInput);
-//            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
-//                calendarEntryBadAttribute.printStackTrace();
-//            }
-//        }
-//         calendarServiceWrapper.removeEntry(entry);
 
     }
 }
