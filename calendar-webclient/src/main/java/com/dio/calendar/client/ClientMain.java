@@ -24,15 +24,17 @@ public class ClientMain {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
         ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
         Entry entry = null;
-//        entry = calendarServiceWrapper.getEntry(UUID.fromString("9ff1b57f-3efb-46e0-8813-a30d4277db20"));
-//        entry = calendarServiceWrapper.getEntry(UUID.fromString("425fc3d4-242e-40ef-b74c-a8661225d655"));
+
         System.out.println("Read all entries");
         List<Entry> entries = calendarServiceWrapper.getEntries();
         System.out.println("Returned " + entries.size());
+
         if (entries.size() > 0) {
-            System.out.println(entries.get(0).getClass());
-//            System.out.println("Get entry with id " + entry.getId());
-//            entry = calendarServiceWrapper.getEntry(entry.getId());
+            entry = entries.get(0);
+//            System.out.println(entries.get(0).getClass());
+            System.out.println("Get entry with id " + entry.getId());
+            entry = calendarServiceWrapper.getEntry(entry.getId());
+            System.out.println("Read entry " + entry);
         }
 
         System.out.println("Create entry");
@@ -40,15 +42,30 @@ public class ClientMain {
         wrapper.setSubject("test subject");
         Entry newEntry = wrapper.createEntry();
 
-        wrapper.setDescription("test add and delete");
+        wrapper.setDescription("test add, update and delete");
         try {
-            calendarServiceWrapper.addEntry(newEntry);
-            //calendarServiceWrapper.removeEntry(entry);
+            System.out.println("Adding entry " + newEntry);
+            entry = calendarServiceWrapper.addEntry(newEntry);
+            System.out.println("Added entry " + entry);
+
+            System.out.println("Updating entry " + newEntry);
+            entry = calendarServiceWrapper.updateEntry(newEntry);
+            System.out.println("Entry updated " + entry);
+
+            System.out.println("Updating entry " + newEntry);
+            entry = calendarServiceWrapper.editSubject(entry, "test subject update 2");
+            System.out.println("Updated entry " + entry);
+
+            System.out.println("Removing...");
+            calendarServiceWrapper.removeEntryById(entry.getId());
+            System.out.println("Done");
         } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
             calendarEntryBadAttribute.printStackTrace();
         } catch (CalendarKeyViolation calendarKeyViolation) {
             calendarKeyViolation.printStackTrace();
         }
+
+
 
 //        EntryWrapper wrapper = new EntryWrapper(entry);
 //        wrapper.setSubject("test update");

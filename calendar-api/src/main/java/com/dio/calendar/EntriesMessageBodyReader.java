@@ -14,6 +14,7 @@ import com.dio.calendar.Entry;
 import com.dio.calendar.EntryWrapper;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.WebApplicationException;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 @Provider
@@ -36,7 +38,9 @@ public class EntriesMessageBodyReader implements MessageBodyReader<List<Entry>> 
     public boolean isReadable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
         logger.debug("is readable EntriesMessageBodyReader " + type);
-        return type == List.class;
+        List<Entry> typeClass = new ArrayList<>();
+        System.out.println(typeClass.getClass());
+        return type == List.class && genericType == typeClass.getClass();
     }
 
     @Override
@@ -51,7 +55,7 @@ public class EntriesMessageBodyReader implements MessageBodyReader<List<Entry>> 
         try {
             System.out.println("readFrom EntriesMessageBodyReader");
             ObjectMapper mapper = new ObjectMapper();
-            List<Entry> entries = mapper.readValue(entityStream, List.class);
+            List<Entry> entries = mapper.readValue(entityStream, new TypeReference<List<Entry>>() {});
             return entries;
         } catch (Exception e) {
             logger.error("Error de-serializing entries. " + e);

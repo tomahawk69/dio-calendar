@@ -566,10 +566,10 @@ public class CalendarServiceRemoteImplTest {
         // initialize class to test
 
         // invoke method on class to test
-        Entry testResult = service.removeEntry(testInput);
+        service.removeEntry(testInput);
 
         // assert return value
-        assertEquals(getTestMessage("Remove mock", "positive", ""), testInput, testResult);
+//        assertEquals(getTestMessage("Remove mock", "positive", ""), testInput, testResult);
 
         // verify mock expectations
         //verify(dataMock).addEntry(isA(Entry.class));

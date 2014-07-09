@@ -11,9 +11,8 @@ import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import javax.xml.ws.Response;
+import java.util.*;
 
 /**
  * Created by iovchynnikov on 7/8/2014.
@@ -42,7 +41,14 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     @Override
     public Entry editSubject(Entry oldEntry, String subject) {
-        return null;
+        logger.debug(String.format("Update subject to %s of entry %s", subject, oldEntry));
+        List<String> requestList = Arrays.asList(oldEntry.getId().toString(), subject);
+        Entry entry = restService.path(servicePath).path("updateSubject").
+                accept(MediaType.APPLICATION_JSON).
+                type(MediaType.APPLICATION_JSON).
+                entity(requestList).
+                post(Entry.class);
+        return entry;
     }
 
     @Override
@@ -80,8 +86,13 @@ public class ClientWrapperRestImpl implements ClientWrapper {
     }
 
     @Override
-    public Entry removeEntryById(UUID id) {
-        return null;
+    public void removeEntryById(UUID id) {
+        logger.debug("Remove entry by id " + id);
+        restService.
+                path(servicePath).path("delete").path(id.toString()).
+                accept(MediaType.APPLICATION_JSON).
+                type(MediaType.APPLICATION_JSON).
+                delete();
     }
 
     @Override
@@ -91,12 +102,24 @@ public class ClientWrapperRestImpl implements ClientWrapper {
 
     @Override
     public Entry updateEntry(Entry newEntry) throws CalendarEntryBadAttribute {
-        return null;
+        logger.debug(String.format("Update entry %s", newEntry));
+        return restService.
+                path(servicePath).path("update").
+                accept(MediaType.APPLICATION_JSON).
+                type(MediaType.APPLICATION_JSON).
+                entity(newEntry).
+                post(Entry.class);
     }
 
     @Override
-    public Entry removeEntry(Entry entry) {
-        return null;
+    public void removeEntry(Entry entry) {
+        logger.debug("Remove entry " + entry);
+        restService.
+                path(servicePath).path("delete").
+                accept(MediaType.APPLICATION_JSON).
+                type(MediaType.APPLICATION_JSON).
+                entity(entry).
+                delete(Entry.class);
     }
 
     @Override

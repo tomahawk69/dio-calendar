@@ -6,10 +6,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.plexus.util.StringUtils;
 
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
@@ -162,18 +159,16 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
     }
 
     @Override
-    public Entry removeEntryById(UUID id) {
+    public void removeEntryById(UUID id) {
         logger.info("remove entry by UUID " + id);
-        Entry result;
         try {
-            result = remoteService.removeEntryById(id);
+            remoteService.removeEntryById(id);
             // FIXME: setGrowlInfo in tests
             //setGrowlInfo("Entry removed", new StringBuffer("Entry with id ").append(id).append(" was successfully removed").toString());
         } catch (DataStoreFSException | RemoteException e) {
             logger.error(e);
             throw new RuntimeException(e);
         }
-        return result;
     }
 
     private void setGrowlInfo(String subject, String body) {
@@ -217,10 +212,9 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
     }
 
     @Override
-    public Entry removeEntry(Entry entry) {
-        Entry result;
+    public void removeEntry(Entry entry) {
         try {
-            result = remoteService.removeEntry(entry);
+            remoteService.removeEntry(entry);
         } catch (DataStoreFSException e) {
             logger.error(e);
             throw new RuntimeException(e);
@@ -228,7 +222,6 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
             logger.error(e);
             throw new RuntimeException(e);
         }
-        return result;
     }
 
     @Override

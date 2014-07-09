@@ -1,18 +1,15 @@
 package com.dio.calendar;
 
-import com.dio.calendar.datastore.CalendarDataStore;
 import com.dio.calendar.datastore.CalendarDataStoreImpl;
 import com.dio.calendar.datastore.DataStoreFSException;
+import com.sun.jersey.api.NotFoundException;
 import org.apache.log4j.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.annotation.Resource;
-import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.*;
 
 import static com.dio.calendar.ValidateEntry.validateDateRange;
@@ -91,6 +88,19 @@ public class CalendarServiceRestImpl implements CalendarService {
                 build();
     }
 
+    @Path("updateSubject")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editSubjectRest(@RequestParam List<String> token) {
+        logger.info(String.format("Update subject to %s for entry entry with id %s", token.get(1), token.get(0)));
+        Entry entry = editSubject(getEntry(UUID.fromString(token.get(0))), token.get(1));
+        if(entry == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity("Entity not found for UUID: " + token.get(0)).build();
+        }
+        return Response.ok().entity(entry).type(MediaType.APPLICATION_JSON).build();
+    }
+
     @Override
     public Entry editSubject(Entry oldEntry, String subject) {
         return new Entry.Builder(oldEntry).
@@ -136,15 +146,22 @@ public class CalendarServiceRestImpl implements CalendarService {
     // data routines
 
     @Override
-    public Entry removeEntry(Entry entry) throws DataStoreFSException {
+//    @Path("delete")
+//    @DELETE
+//    @Consumes(MediaType.APPLICATION_JSON)
+    public void removeEntry(Entry entry) throws DataStoreFSException {
         logger.info("Removing entry: " + entry);
-        return data.removeEntry(entry.getId());
+        if (data.removeEntry(entry.getId()) == null)
+            throw new NotFoundException("Entry not found");
     }
 
     @Override
-    public Entry removeEntryById(UUID id) throws DataStoreFSException {
+    @Path("delete/{id}")
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void removeEntryById(@PathParam("id") UUID id) throws DataStoreFSException {
         logger.debug("Removing entry with id: " + id);
-        return data.removeEntry(id);
+        data.removeEntry(id);
     }
 
     @Override
@@ -156,6 +173,10 @@ public class CalendarServiceRestImpl implements CalendarService {
     }
 
     @Override
+    @Path("update")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public Entry updateEntry(Entry newEntry) throws CalendarEntryBadAttribute, DataStoreFSException {
         validateDateRange(newEntry.getStartDate(), newEntry.getEndDate());
         logger.info("Full update entry: " + newEntry);

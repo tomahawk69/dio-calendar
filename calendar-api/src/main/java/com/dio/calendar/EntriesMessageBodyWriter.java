@@ -2,6 +2,7 @@ package com.dio.calendar;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
@@ -30,8 +31,10 @@ public class EntriesMessageBodyWriter implements MessageBodyWriter<List<Entry>> 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
-        logger.info("is readable EntriesMessageBodyWriter " + type);
-        return type == ArrayList.class;
+        logger.info(String.format("is readable EntriesMessageBodyWriter type %s, genericType %s", type, genericType));
+//        System.out.println(new TypeReference<List<Entry>>() {});
+//        System.out.println(genericType);
+        return type == ArrayList.class;// && Entry.class.toString().equals(genericType.toString());
     }
 
     @Override
@@ -49,7 +52,7 @@ public class EntriesMessageBodyWriter implements MessageBodyWriter<List<Entry>> 
                         MultivaluedMap<String, Object> httpHeaders,
                         OutputStream entityStream)
             throws IOException, WebApplicationException {
-        logger.info("write EntriesMessageBodyWriter " + entries.size());
+        logger.debug("write EntriesMessageBodyWriter " + entries.size());
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.writeValue(entityStream, entries);

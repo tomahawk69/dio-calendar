@@ -3,8 +3,6 @@ package com.dio.calendar.client;
 import com.dio.calendar.CalendarService;
 import com.dio.calendar.Entry;
 
-import java.io.IOException;
-import java.rmi.RemoteException;
 import java.util.*;
 
 /**
@@ -38,7 +36,7 @@ public interface ClientWrapper extends CalendarService {
     com.dio.calendar.Entry addEntry(com.dio.calendar.Entry entry) throws com.dio.calendar.CalendarEntryBadAttribute, com.dio.calendar.CalendarKeyViolation;
 
     @Override
-    com.dio.calendar.Entry removeEntryById(UUID id);
+    void removeEntryById(UUID id);
 
     @Override
     com.dio.calendar.Entry updateEntry(com.dio.calendar.Entry newEntry, com.dio.calendar.Entry oldEntry) throws com.dio.calendar.CalendarEntryBadAttribute;
@@ -47,7 +45,7 @@ public interface ClientWrapper extends CalendarService {
     com.dio.calendar.Entry updateEntry(com.dio.calendar.Entry newEntry) throws com.dio.calendar.CalendarEntryBadAttribute;
 
     @Override
-    com.dio.calendar.Entry removeEntry(com.dio.calendar.Entry entry);
+    void removeEntry(Entry entry);
 
     @Override
     com.dio.calendar.Entry copyEntry(com.dio.calendar.Entry entry);
