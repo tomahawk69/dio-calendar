@@ -1,4 +1,4 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.old;
 
 import com.dio.calendar.Entry;
 
@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
+ * OLD
  * Created by iovchynnikov on 7/8/2014.
  */
 @XmlRootElement

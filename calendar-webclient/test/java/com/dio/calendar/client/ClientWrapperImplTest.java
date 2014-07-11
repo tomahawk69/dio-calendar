@@ -3,6 +3,8 @@ package com.dio.calendar.client;
 import com.dio.calendar.CalendarService;
 import com.dio.calendar.Entry;
 import com.dio.calendar.Notification;
+import com.dio.calendar.client.old.ClientWrapper;
+import com.dio.calendar.client.old.ClientWrapperImpl;
 import org.junit.Test;
 
 import java.util.ArrayList;

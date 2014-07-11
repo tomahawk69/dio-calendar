@@ -4,19 +4,16 @@ import com.dio.calendar.CalendarEntryBadAttribute;
 import com.dio.calendar.CalendarKeyViolation;
 import com.dio.calendar.Entry;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.faces.event.ComponentSystemEvent;
 import javax.faces.validator.ValidatorException;
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +27,7 @@ import java.util.UUID;
 @ManagedBean(name="editEntry")
 @SessionScoped
 public class EditEntry implements Serializable {
-    private ClientWrapperImpl localService;
+    private ClientRemoteWrapperImpl localService;
     private String subject;
 
     private String description;
@@ -45,14 +42,15 @@ public class EditEntry implements Serializable {
     private boolean showForm = false;
 
     public boolean isShowSearch() {
-        return localService.getIsSearch();
+//        return localService.getIsSearch();
+        return false;
     }
 
     public EditEntry() {
     }
 
     @Autowired
-    public EditEntry(ClientWrapperImpl localService) {
+    public EditEntry(ClientRemoteWrapperImpl localService) {
         this.localService = localService;
     }
 
@@ -184,7 +182,7 @@ public class EditEntry implements Serializable {
         logger.info("newEntry");
         reset();
         showForm = true;
-        localService.setIsSearch(false);
+//        localService.setIsSearch(false);
 //        return "add";
     }
 
@@ -279,19 +277,19 @@ public class EditEntry implements Serializable {
 
     public void showForm() {
         showForm = true;
-        localService.setIsSearch(false);
+//        localService.setIsSearch(false);
 //        return "add";
     }
 
     public void showSearch() {
         hideForm();
         //showForm = false;
-        localService.setIsSearch(true);
+//        localService.setIsSearch(true);
     }
 
     public void hideForm() {
         showForm = false;
-        localService.setIsSearch(false);
+//        localService.setIsSearch(false);
 //        return "index";
     }
 

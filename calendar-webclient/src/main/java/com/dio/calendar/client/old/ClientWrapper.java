@@ -1,4 +1,4 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.old;
 
 import com.dio.calendar.CalendarService;
 import com.dio.calendar.Entry;

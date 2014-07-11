@@ -1,9 +1,8 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.old;
 
 import com.dio.calendar.*;
-import com.dio.calendar.datastore.DataStoreFSException;
 import org.apache.log4j.Logger;
-import java.rmi.Naming;
+
 import java.rmi.RemoteException;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.UUID;
 // TODO: Rewrite to bean
 
 /**
+ * OLD
  * Created by yur on 15.06.2014.
  */
 public class Wrapper {

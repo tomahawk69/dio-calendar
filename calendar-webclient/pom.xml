@@ -125,9 +125,9 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jettyVersion}</version>
                 <configuration>
-                    <jettyXml>src\main\webapp\WEB-INF\jetty.xml</jettyXml>
+                    <!--<jettyXml>src\main\webapp\WEB-INF\jetty.xml</jettyXml>-->
                     <stopKey>STOP</stopKey>
-                    <stopPort>9999</stopPort>
+                    <stopPort>9998</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
                 </configuration>
             </plugin>

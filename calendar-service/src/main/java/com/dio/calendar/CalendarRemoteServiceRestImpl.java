@@ -10,6 +10,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 
 import static com.dio.calendar.ValidateEntry.validateDateRange;
@@ -78,18 +79,6 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         //data.clearData();
     }
 
-
-    public Entry newEntry(String subject, String description, Date startDate, Date endDate,
-                          List<String> attenders, List<Notification> notifications) {
-        return new Entry.Builder().
-                subject(subject).
-                description(description).
-                startDate(startDate).
-                endDate(endDate).
-                attenders(attenders).
-                notifications(notifications).
-                build();
-    }
 
     @Path("updateSubject")
     @POST
@@ -206,6 +195,37 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         }
         return new EntryRestWrapper(resultEntry);
     }
+
+    @Path("new")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public EntryRestWrapper newEntry(List<Object> token) {
+        try {
+            Entry entry = newEntry((String)token.get(0), (String)token.get(1),
+                    EntryApi.stringToDate((String)token.get(2)),
+                    EntryApi.stringToDate((String)token.get(3)),
+                    (List<String>)token.get(4),
+                    null);
+            return new EntryRestWrapper(entry);
+        } catch (ParseException e) {
+            logger.error(e);
+            throw new WebApplicationException(e);
+        }
+    }
+
+    public Entry newEntry(String subject, String description, Date startDate, Date endDate,
+                          List<String> attenders, List<Notification> notifications) {
+        return new Entry.Builder().
+                subject(subject).
+                description(description).
+                startDate(startDate).
+                endDate(endDate).
+                attenders(attenders).
+                notifications(notifications).
+                build();
+    }
+
 
     @Path("add")
     @POST

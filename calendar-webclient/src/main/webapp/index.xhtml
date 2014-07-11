@@ -8,7 +8,7 @@
 <h:head />
 <h:body>
     <ui:composition template="/template/template.xhtml">
-        <ui:param name="entries" value="#{calendarServiceWrapper.showSearch? calendarServiceWrapper.entriesBySubject : calendarServiceWrapper.entries}" />
+        <ui:param name="entries" value="#{clientWebWrapper.showSearch? clientWebWrapper.entriesBySubject : clientWebWrapper.entries}" />
         <ui:param name="formRender" value="#{false}" />
         <ui:define name="title">
             Entries

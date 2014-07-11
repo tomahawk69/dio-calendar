@@ -30,7 +30,7 @@
 
             <h:form id="formSearch">
                 <p:inputText id="subject" label="Enter one or more words"
-                             value="#{calendarServiceWrapper.searchSubject}"
+                             value="#{clientWebWrapper.searchSubject}"
                              rendered="#{editEntry.showSearch}"
                         />
                 <p:commandButton value="Search" update="@([id$=entries])"

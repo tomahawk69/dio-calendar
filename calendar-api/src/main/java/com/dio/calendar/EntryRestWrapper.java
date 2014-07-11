@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,8 +26,6 @@ public class EntryRestWrapper implements Serializable {
     private List<Notification> notifications;
     private String id;
 
-    private static DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-
     private static Logger logger = Logger.getLogger(EntryRestWrapper.class);
 
 
@@ -37,8 +36,8 @@ public class EntryRestWrapper implements Serializable {
         this.subject = entry.getSubject();
         this.description = entry.getDescription();
 
-        this.startDate = dateToString(entry.getStartDate());
-        this.endDate = dateToString(entry.getEndDate());
+        this.startDate = EntryApi.dateToString(entry.getStartDate());
+        this.endDate = EntryApi.dateToString(entry.getEndDate());
         this.attenders = entry.getAttenders();
         this.notifications = entry.getNotifications();
         this.id = entry.getId().toString();
@@ -102,36 +101,21 @@ public class EntryRestWrapper implements Serializable {
     }
 
     public Entry createEntry() {
-        return new Entry.Builder().
-                subject(subject).
-                description(description).
-                startDate(stringToDate(startDate)).
-                endDate(stringToDate(endDate)).
-                attenders(attenders).
-                notifications(notifications).
-                id(UUID.fromString(id)).
-                build();
-    }
-
-    public String dateToString(Date date) {
-        if (date == null) {
-            return null;
-        } else {
-            return df.format(date);
+        Entry entry = null;
+        try {
+            entry = new Entry.Builder().
+                    subject(subject).
+                    description(description).
+                    startDate(EntryApi.stringToDate(startDate)).
+                    endDate(EntryApi.stringToDate(endDate)).
+                    attenders(attenders).
+                    notifications(notifications).
+                    id(UUID.fromString(id)).
+                    build();
+        } catch (ParseException e) {
+            logger.error(e);
         }
+        return entry;
     }
 
-    private Date stringToDate(String string) {
-        Date result = null;
-        if (string != null) {
-            try {
-                result = df.parse(string);
-            }
-            catch (Exception e) {
-                logger.error(String.format("Wrong String '%s' provided to encode into the Date", string));
-            }
-
-        }
-        return result;
-    }
 }

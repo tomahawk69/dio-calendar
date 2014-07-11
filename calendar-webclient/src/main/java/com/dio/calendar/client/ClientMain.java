@@ -8,7 +8,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by iovchynnikov on 5/27/14.
@@ -22,7 +21,7 @@ public class ClientMain {
     * */
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
-        ClientWrapperRestImpl calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
+        ClientRemoteWrapperImpl calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientRemoteWrapperImpl.class);
         Entry entry = null;
 
         System.out.println("Read all entries");

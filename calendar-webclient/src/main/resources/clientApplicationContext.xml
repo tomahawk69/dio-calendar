@@ -27,9 +27,13 @@
         <!--<constructor-arg name="remoteService" ref="calendarService" />-->
     <!--</bean>-->
 
-    <bean id="calendarServiceRestClient" class="com.dio.calendar.client.ClientWrapperRestImpl">
+    <bean id="calendarServiceRestClient" class="com.dio.calendar.client.ClientRemoteWrapperImpl">
         <constructor-arg name="serviceUri" value="${restServiceUrl}" />
         <constructor-arg name="servicePath" value="${restServiceUri}" />
+    </bean>
+
+    <bean id="clientWebWrapper" class="com.dio.calendar.client.ClientWebWrapper" scope="session">
+        <constructor-arg name="wrapperService" ref="calendarServiceRestClient" />
     </bean>
 
     <!--<bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="session">-->

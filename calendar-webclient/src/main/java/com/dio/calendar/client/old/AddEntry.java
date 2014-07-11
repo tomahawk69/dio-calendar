@@ -1,7 +1,8 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.old;
 
 import com.dio.calendar.Entry;
 import com.dio.calendar.EntryWrapper;
+import com.dio.calendar.client.old.ClientWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.ManagedBean;

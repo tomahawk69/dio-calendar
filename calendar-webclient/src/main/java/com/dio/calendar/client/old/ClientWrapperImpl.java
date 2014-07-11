@@ -1,4 +1,4 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.old;
 
 import com.dio.calendar.*;
 import com.dio.calendar.datastore.DataStoreFSException;
