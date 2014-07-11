@@ -20,8 +20,8 @@ import java.lang.reflect.Type;
  * Created by yur on 08.07.2014.
  */
 
-@Provider
-@Produces(MediaType.APPLICATION_JSON)
+//@Provider
+//@Produces(MediaType.APPLICATION_JSON)
 public class EntryMessageBodyWriter implements MessageBodyWriter<Entry> {
 
     private static Logger logger = Logger.getLogger(EntryMessageBodyWriter.class);

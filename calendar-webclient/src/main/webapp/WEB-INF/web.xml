@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
 
-    <!-- TODO: rmi->jax-rs -->
+    <!-- TODO: + rmi->jax-rs -->
 
     <!--TODO: + Hibernate through annotations (Entry) -->
-    <!--TODO: constraints for Entry (required etc) -->
+    <!--TODO: + constraints for Entry (required etc) -->
     <!--TODO: + id as primary key -->
     <!--TODO: + table for attenders and attenders to standalone class -->
     <!--TODO: look on Spring JDBC templates (spring-data, spring-jdbc) -->

@@ -23,8 +23,8 @@ import java.lang.reflect.Type;
 /**
  * Created by iovchynnikov on 7/9/14.
  */
-@Provider
-@Produces("application/json")
+//@Provider
+//@Produces("application/json")
 public class EntriesMessageBodyWriter implements MessageBodyWriter<List<Entry>> {
 
     private static Logger logger = Logger.getLogger(EntryMessageBodyWriter.class);

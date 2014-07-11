@@ -22,7 +22,7 @@ public class ClientMain {
     * */
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
-        ClientWrapper calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
+        ClientWrapperRestImpl calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientWrapperRestImpl.class);
         Entry entry = null;
 
         System.out.println("Read all entries");
@@ -46,23 +46,23 @@ public class ClientMain {
         try {
             System.out.println("Adding entry " + newEntry);
             entry = calendarServiceWrapper.addEntry(newEntry);
-            System.out.println("Added entry " + entry);
+            System.out.println("Added entry: " + entry);
+
+            System.out.println("Updating entry...");
+            entry = calendarServiceWrapper.updateEntry(newEntry);
+            System.out.println("Updated entry: " + entry);
+
+            System.out.println("Smart updating entry...");
+            entry = calendarServiceWrapper.updateEntry(newEntry, entry);
+            System.out.println("Updated entry: " + entry);
 
             System.out.println("Updating entry " + newEntry);
-            entry = calendarServiceWrapper.updateEntry(newEntry);
-            System.out.println("Entry updated " + entry);
+            entry = calendarServiceWrapper.editSubject(entry, "test subject update 2");
+            System.out.println("Updated entry " + entry);
 
-            System.out.println("Smart updating entry " + newEntry);
-            entry = calendarServiceWrapper.updateEntry(newEntry, entry);
-            System.out.println("Entry updated " + entry);
-
-//            System.out.println("Updating entry " + newEntry);
-//            entry = calendarServiceWrapper.editSubject(entry, "test subject update 2");
-//            System.out.println("Updated entry " + entry);
-//
-//            System.out.println("Removing...");
-//            calendarServiceWrapper.removeEntryById(entry.getId());
-//            System.out.println("Done");
+            System.out.println("Removing. enrty..");
+            calendarServiceWrapper.removeEntryById(entry.getId());
+            System.out.println("Done");
 
         } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
             calendarEntryBadAttribute.printStackTrace();

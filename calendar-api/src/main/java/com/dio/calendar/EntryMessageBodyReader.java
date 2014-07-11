@@ -23,8 +23,8 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 
-@Provider
-@Consumes("application/json")
+//@Provider
+//@Consumes("application/json")
 public class EntryMessageBodyReader implements MessageBodyReader<Entry> {
 
     private static Logger logger = Logger.getLogger(EntryMessageBodyReader.class);

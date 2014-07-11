@@ -16,7 +16,7 @@
         <constructor-arg ref="dataStore" />
     </bean>
 
-    <bean id="calendarServiceRest" class="com.dio.calendar.CalendarServiceRestImpl">
+    <bean id="calendarServiceRest" class="com.dio.calendar.CalendarRemoteServiceRestImpl">
         <constructor-arg ref="dataStore" />
     </bean>
 
@@ -28,8 +28,8 @@
     <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">-->
         <!--<property name="configLocation" value="classpath:hibernate.${hibernate.profile}.cfg.xml"/>-->
      <!--</bean>-->
- <!---->
-    <!--&lt;!&ndash;<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />&ndash;&gt;-->
+
+    <!--<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />-->
     <!--<bean id="dataStoreDB" class="com.dio.calendar.datastore.DataStoreHibernateImpl">-->
         <!--<constructor-arg ref="sessionFactory"/>-->
     <!--</bean>-->

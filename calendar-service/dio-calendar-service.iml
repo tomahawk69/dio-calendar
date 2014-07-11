@@ -58,7 +58,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library" scope="PROVIDED">
+    <orderEntry type="module-library" scope="RUNTIME">
       <library>
         <CLASSES>
           <root url="jar://C:/Sybase/SybaseIQ/IQ-15_4/Java/sajdbc4.jar!/" />

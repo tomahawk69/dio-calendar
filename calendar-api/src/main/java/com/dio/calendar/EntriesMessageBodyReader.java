@@ -26,10 +26,11 @@ import java.io.InputStream;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-@Provider
-@Consumes("application/json")
+//@Provider
+//@Consumes("application/json")
 public class EntriesMessageBodyReader implements MessageBodyReader<List<Entry>> {
 
     private static Logger logger = Logger.getLogger(EntriesMessageBodyReader.class);
@@ -37,9 +38,12 @@ public class EntriesMessageBodyReader implements MessageBodyReader<List<Entry>> 
     @Override
     public boolean isReadable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
-        logger.info(String.format("is readable EntriesMessageBodyReader type %s genericType %s", type, genericType));
+        logger.info(String.format("is readable EntriesMessageBodyReader type %s genericType %s", type, Arrays.toString(genericType.getClass().getGenericInterfaces())));
         List<Entry> typeClass = new ArrayList<>();
         System.out.println(typeClass.getClass());
+//        if(genericType.getClass().getClasses()getName().equals(Entry.class.getName())){
+//
+//        }
 //        return type == List.class && genericType == typeClass.getClass();
         return type == List.class;
     }

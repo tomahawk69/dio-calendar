@@ -31,8 +31,8 @@ public class Entry implements Serializable {
     private List<Notification> notifications;
     private UUID id;
 
-    public Entry() {
-    }
+//    public Entry() {
+//    }
 
     public UUID getId() { return id; }
 

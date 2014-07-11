@@ -16,12 +16,12 @@
         <constructor-arg ref="dataStore" />
     </bean>
 
-    <bean id="calendarServiceRest" class="com.dio.calendar.CalendarServiceRestImpl">
+    <bean id="calendarServiceRest" class="com.dio.calendar.CalendarRemoteServiceRestImpl">
         <constructor-arg ref="dataStore" />
     </bean>
 
     <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init">
-        <constructor-arg ref="dataStoreFs"/>
+        <constructor-arg ref="dataStoreDB"/>
     </bean>
 
     <bean id="dataStoreDB" class="com.dio.calendar.datastore.DataStoreHibernateImpl">
