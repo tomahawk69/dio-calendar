@@ -231,8 +231,8 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
                         accept(MediaType.APPLICATION_JSON).
                         get(new GenericType<List<EntryRestWrapper>>(){});
 
-        System.out.println(entriesWrapper);
-        System.out.println(new GenericType<List<EntryRestWrapper>>(){});
+//        System.out.println(entriesWrapper);
+//        System.out.println(new GenericType<List<EntryRestWrapper>>(){});
         List<Entry> entries = new LinkedList<>();
         if (entriesWrapper != null) {
             for (EntryRestWrapper entryWrapper : entriesWrapper) {
