@@ -24,12 +24,14 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
 
     public ClientRemoteWrapperImpl(String serviceUri, String servicePath) {
         ClientConfig config = new DefaultClientConfig();
-//        config.getClasses().add(EntryMessageBodyReader.class);
-//        config.getClasses().add(EntryMessageBodyWriter.class);
-//        config.getClasses().add(EntriesMessageBodyReader.class);
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
         this.restService = client.resource(UriBuilder.fromUri(serviceUri).build());
+        this.servicePath = servicePath;
+    }
+
+    public ClientRemoteWrapperImpl(WebResource restService, String servicePath) {
+        this.restService = restService;
         this.servicePath = servicePath;
     }
 
@@ -37,6 +39,11 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     public Entry editSubject(Entry oldEntry, String subject) {
         logger.debug(String.format("Update subject to %s of entry %s", subject, oldEntry));
         List<String> requestList = Arrays.asList(oldEntry.getId().toString(), subject);
+        restService.path(servicePath).path("updateSubject").
+                accept(MediaType.APPLICATION_JSON).
+                type(MediaType.APPLICATION_JSON).
+                entity(requestList);
+
         EntryRestWrapper entryWrapper = restService.path(servicePath).path("updateSubject").
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
