@@ -52,7 +52,7 @@
     <!--<property name="service" ref="calendarService"/>-->
     <!--<property name="serviceInterface" value="com.dio.calendar.CalendarService"/>-->
     <!-- defaults to 1099 -->
-    <!-- TODO: set to 1099 or 1199 -->
+    <!-- !!! set to 1099 or 1199 -->
     <!--<property name="registryPort" value="1199"/>-->
     <!--</bean>-->
 

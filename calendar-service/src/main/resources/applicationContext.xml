@@ -20,6 +20,8 @@
         <constructor-arg ref="dataStore" />
     </bean>
 
+    <!--TODO: spring JDBC-->
+
     <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init">
         <constructor-arg ref="dataStoreDB"/>
     </bean>

@@ -7,7 +7,8 @@
     <artifactId>calendar-combined</artifactId>
     <packaging>pom</packaging>
     <!--<version>${parentVersion}</version>-->
-    <version>1.0</version>
+    <!--<version>1.0</version>-->
+
 
     <parent>
         <groupId>com.dio.calendar</groupId>
@@ -18,19 +19,25 @@
     </parent>
 
 
-    <modules>
-        <module>../calendar-api</module>
-        <module>../calendar-service</module>
-        <module>../calendar-webclient</module>
-    </modules>
+    <!--<modules>-->
+        <!--<module>../calendar-api</module>-->
+        <!--<module>../calendar-service</module>-->
+        <!--<module>../calendar-webclient</module>-->
+    <!--</modules>-->
 
     <dependencies>
         <dependency>
-            <groupId>org.mortbay.jetty</groupId>
-            <artifactId>jetty</artifactId>
-            <version>6.1.25</version>
+            <groupId>com.dio.calendar</groupId>
+            <artifactId>dio-calendar-service</artifactId>
+            <version>1.0</version>
+            <type>war</type>
         </dependency>
-
+        <dependency>
+            <groupId>com.dio.calendar</groupId>
+            <artifactId>dio-calendar-webclient</artifactId>
+            <version>1.0</version>
+            <type>war</type>
+        </dependency>
     </dependencies>
 
     <build>
@@ -53,6 +60,9 @@
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <!--TODO: deploy other war's-->
+                    <!--<war></war>-->
+                    <!--<webApp></webApp>-->
                 </configuration>
             </plugin>
         </plugins>

@@ -26,7 +26,7 @@ public class EntryRestWrapper implements Serializable {
     private List<Notification> notifications;
     private String id;
 
-    private static Logger logger = Logger.getLogger(EntryRestWrapper.class);
+//    private static Logger logger = Logger.getLogger(EntryRestWrapper.class);
 
 
     public EntryRestWrapper() {
@@ -113,8 +113,9 @@ public class EntryRestWrapper implements Serializable {
                     id(UUID.fromString(id)).
                     build();
         } catch (ParseException e) {
-            logger.error(e);
-        }
+//            logger.error(e);
+            throw new RuntimeException(e);
+}
         return entry;
     }
 

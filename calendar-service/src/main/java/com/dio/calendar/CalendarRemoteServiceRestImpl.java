@@ -196,6 +196,9 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         return new EntryRestWrapper(resultEntry);
     }
 
+
+    // FIXME: send parameters as entry
+
     @Path("new")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -226,7 +229,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
                 build();
     }
 
-
+    // TODO: Response
     @Path("add")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
