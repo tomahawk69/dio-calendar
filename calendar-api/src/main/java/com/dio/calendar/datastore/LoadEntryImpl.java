@@ -7,13 +7,13 @@ import java.util.UUID;
 /**
  * Created by yur on 04.07.2014.
  */
-public class LoadEntryHibernateImpl implements LoadEntry {
-    private final DataStoreHibernateImpl fs;
+public class LoadEntryImpl implements LoadEntry {
+    private final DataStore fs;
     private final CalendarDataStore data;
     private final UUID id;
-    private static Logger logger = Logger.getLogger(LoadEntryHibernateImpl.class);
+    private static Logger logger = Logger.getLogger(LoadEntryImpl.class);
 
-    public LoadEntryHibernateImpl(DataStoreHibernateImpl fs, CalendarDataStore data, UUID id) {
+    public LoadEntryImpl(DataStore fs, CalendarDataStore data, UUID id) {
         this.fs = fs;
         this.data = data;
         this.id = id;
@@ -51,7 +51,7 @@ public class LoadEntryHibernateImpl implements LoadEntry {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LoadEntryHibernateImpl that = (LoadEntryHibernateImpl) o;
+        LoadEntryImpl that = (LoadEntryImpl) o;
 
         if (!data.equals(that.data)) return false;
         if (!fs.equals(that.fs)) return false;

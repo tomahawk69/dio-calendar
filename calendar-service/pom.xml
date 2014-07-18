@@ -16,7 +16,7 @@
     <properties>
         <jacoco.version>0.7.1.201405082137</jacoco.version>
         <!--<argLine>${argLine}</argLine>-->
-        <skipTests></skipTests>
+        <skipTests/>
     </properties>
 
     <artifactId>dio-calendar-service</artifactId>
@@ -217,15 +217,20 @@
 
 
         <dependency>
-            <groupId>org.javassist</groupId>
-            <artifactId>javassist</artifactId>
-            <version>3.18.2-GA</version>
+            <groupId>springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>1.2.6</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.tomcat</groupId>
-            <artifactId>tomcat-dbcp</artifactId>
-            <version>8.0.9</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.javassist</groupId>-->
+            <!--<artifactId>javassist</artifactId>-->
+            <!--<version>3.18.2-GA</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.tomcat</groupId>-->
+            <!--<artifactId>tomcat-dbcp</artifactId>-->
+            <!--<version>8.0.9</version>-->
+        <!--</dependency>-->
 
 
     </dependencies>

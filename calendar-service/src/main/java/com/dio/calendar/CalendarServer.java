@@ -6,6 +6,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.*;
 
 import static com.dio.calendar.Utils.constructDate;
@@ -22,17 +26,43 @@ import static com.dio.calendar.Utils.constructDate;
  */
 public class CalendarServer {
 
-    private static void printEntries(Iterable<Entry> entries) {
-        for (Entry item : entries) {
+    private static void printEntries(Iterable<EntryRestWrapper> entries) {
+        for (EntryRestWrapper item : entries) {
             System.out.println(item);
         }
     }
 
     public static void main(String[] args) {
+
+        try {
+            DriverManager.registerDriver((Driver)
+                            Class.forName(
+                                    // "com.sybase.jdbc3.jdbc.SybDriver").newInstance()
+                                    "ianywhere.ml.jdbcodbc.IDriver").newInstance()
+            );
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+//        try {
+//            Connection con = DriverManager.getConnection(
+//                    // "jdbc:sybase:Tds:localhost:2638", "DBA", "sql");
+//                    // "jdbc:odbc:driver=SQL Anywhere 11;uid=DBA;pwd=sql" );
+//                    "jdbc:odbc:Driver=Adaptive Server Anywhere 9.0;eng=PressaYur" );
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
         ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 //        context.getEnvironment().acceptsProfiles("work");
         CalendarDataStore data = context.getBean("dataStore", CalendarDataStore.class);
-        CalendarService service = context.getBean("calendarServiceRest", CalendarService.class);
+        CalendarRemoteServiceRestImpl service = context.getBean("calendarServiceRest", CalendarRemoteServiceRestImpl.class);
 
 //        try {
 //            data.init();
@@ -40,42 +70,66 @@ public class CalendarServer {
 //            e.printStackTrace();
 //        }
 //
-//        try {
-//            while (data.getIsLoad()) {
-//                try {
-//                    Thread.sleep(1);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            List<String> att1 = new LinkedList<>();
-//            att1.add("First");
-//            att1.add("Second");
+
+        try {
+            while (data.getIsLoad()) {
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            List<String> att1 = new LinkedList<>();
+            att1.add("First");
+            att1.add("Second");
+
+            List<String> att2 = new LinkedList<>();
+            att2.add("First");
+            att2.add("Third");
 //
-//            List<String> att2 = new LinkedList<>();
-//            att2.add("First");
-//            att2.add("Third");
 //
+            Entry e1 = service.newEntry("Subject1", "Description1", constructDate(2014, 5, 1, 10, 0, 0), constructDate(2014, 5, 1, 11, 0, 0), att1, new ArrayList<Notification>());
+            Entry e2 = service.newEntry("Subject2", "Description2", constructDate(2014, 5, 2, 4, 0, 0), constructDate(2014, 5, 2, 5, 0, 0), att2, new ArrayList<Notification>());
 //
-//            Entry e1 = service.newEntry("Subject1", "Description1", constructDate(2014, 5, 1, 10, 0, 0), constructDate(2014, 5, 1, 11, 0, 0), att1, new ArrayList<Notification>());
-//            Entry e2 = service.newEntry("Subject2", "Description2", constructDate(2014, 5, 2, 4, 0, 0), constructDate(2014, 5, 2, 5, 0, 0), att2, new ArrayList<Notification>());
-//
-//            System.out.println("Zero iteration");
-//            printEntries(service.getEntries());
-//
-//            service.addEntry(e1);
-//            service.addEntry(e2);
-//
+            System.out.println("Zero iteration");
+            printEntries(service.getEntries());
+
+            try {
+                service.addEntry(new EntryRestWrapper(e1));
+                service.addEntry(new EntryRestWrapper(e2));
+            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+                calendarEntryBadAttribute.printStackTrace();
+            } catch (CalendarKeyViolation calendarKeyViolation) {
+                calendarKeyViolation.printStackTrace();
+            } catch (DataStoreFSException e) {
+                e.printStackTrace();
+            }
+
 //            System.out.println("--indexes for First:");
 //            printEntries(service.getEntriesByAttender("First"));
 //            System.out.println("--indexes for Second:");
 //            printEntries(service.getEntriesByAttender("Second"));
-//
+
 //            System.out.println("1st iteration");
 //            printEntries(service.getEntries());
-//
-//            e1 = service.editSubject(e1, "Subject3");
-//            service.updateEntry(e1);
+
+            e1 = service.editSubject(e1, "Subject3");
+            try {
+                service.updateEntry(new EntryRestWrapper(e1));
+            } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
+                calendarEntryBadAttribute.printStackTrace();
+            } catch (DataStoreFSException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                service.removeEntryById(e1.getId().toString());
+                service.removeEntry(new EntryRestWrapper(e2));
+            } catch (DataStoreFSException e) {
+                e.printStackTrace();
+            }
+
+
 //            Entry e2New = service.editSubject(e2, e2.getSubject() + "_new");
 //            service.updateEntry(e2New, e2);
 //
@@ -128,7 +182,7 @@ public class CalendarServer {
 //                }
 //            }
 //            System.out.println(service.getEntriesBySubject("test").size());
-//
+
 //        } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
 //            calendarEntryBadAttribute.printStackTrace();
 //            System.exit(1);
@@ -140,8 +194,11 @@ public class CalendarServer {
 //            System.exit(1);
 //        } catch (IOException e) {
 //            e.printStackTrace();
-//        }
-//        ;
+        }
+        finally {
+
+        }
+        ;
 
     }
 }

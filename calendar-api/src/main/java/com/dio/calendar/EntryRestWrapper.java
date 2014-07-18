@@ -149,4 +149,17 @@ public class EntryRestWrapper implements Serializable {
         result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "EntryRestWrapper{" +
+                "subject='" + subject + '\'' +
+                ", description='" + description + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", attenders=" + attenders +
+                ", notifications=" + notifications +
+                ", id='" + id + '\'' +
+                '}';
+    }
 }

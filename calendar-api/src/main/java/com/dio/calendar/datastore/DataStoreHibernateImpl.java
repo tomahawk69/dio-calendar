@@ -2,14 +2,11 @@ package com.dio.calendar.datastore;
 
 import com.dio.calendar.Entry;
 import com.dio.calendar.EntryEntity;
-import com.dio.calendar.database.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +16,7 @@ import java.util.UUID;
 public class DataStoreHibernateImpl implements DataStore {
     private final SessionFactory sessionFactory;
 
-    private static Logger logger = Logger.getLogger(LoadEntryHibernateImpl.class);
+    private static Logger logger = Logger.getLogger(LoadEntryImpl.class);
 
     public DataStoreHibernateImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -189,6 +186,6 @@ public class DataStoreHibernateImpl implements DataStore {
 
     @Override
     public LoadEntry createLoader(CalendarDataStore calendarDataStore, UUID id) {
-        return new LoadEntryHibernateImpl(this, calendarDataStore, id);
+        return new LoadEntryImpl(this, calendarDataStore, id);
     }
 }
