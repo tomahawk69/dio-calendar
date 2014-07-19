@@ -221,6 +221,13 @@
             <artifactId>spring-jdbc</artifactId>
             <version>1.2.6</version>
         </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.31</version>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>org.javassist</groupId>-->
             <!--<artifactId>javassist</artifactId>-->
@@ -252,7 +259,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jettyVersion}</version>
                 <configuration>
-                    <!--<jettyXml>jetty-http.xml</jettyXml>-->
+                    <!--<jettyXml>jetty.xml</jettyXml>-->
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
