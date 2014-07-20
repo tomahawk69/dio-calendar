@@ -85,15 +85,19 @@ public class DataStoreHibernateImpl implements DataStore {
         Boolean result = false;
         Session session = sessionFactory.openSession();
         try {
-            Criteria cr = session.createCriteria(EntryEntity.class);
-            cr.add(Restrictions.eq("id", id));
-            EntryEntity wrapper = (EntryEntity) cr.uniqueResult();
-            if (wrapper != null) {
-                Transaction tx = session.beginTransaction();
-                session.delete(wrapper);
-                tx.commit();
-                result = true;
-            }
+//            Criteria cr = session.createCriteria(EntryEntity.class);
+//            cr.add(Restrictions.eq("id", id.toString()));
+//            EntryEntity wrapper = (EntryEntity) cr.uniqueResult();
+//            if (wrapper != null) {
+//                Transaction tx = session.beginTransaction();
+//                System.out.println(wrapper.getId());
+//                session.delete(wrapper);
+//                tx.commit();
+//                result = true;
+//            }
+            Query query = session.createQuery("delete EntryEntity where id = :id");
+            query.setParameter("id", id.toString());
+            result = query.executeUpdate() > 0;
         }
         finally {
             if (session.isOpen()) {
@@ -110,7 +114,7 @@ public class DataStoreHibernateImpl implements DataStore {
         try {
             logger.debug("Read entry: " + id);
             Criteria cr = session.createCriteria(EntryEntity.class);
-            cr.add(Restrictions.eq("id", id));
+            cr.add(Restrictions.eq("id", id.toString()));
             EntryEntity wrapper = (EntryEntity) cr.uniqueResult();
             logger.debug("wrapper is: " + wrapper);
             if (wrapper != null) {
@@ -169,11 +173,11 @@ public class DataStoreHibernateImpl implements DataStore {
         try {
             List<EntryEntity> wrapper = session.createCriteria(EntryEntity.class).list();
             for (Object entryEntity : wrapper) {
-                System.out.println(((EntryEntity) entryEntity).getId());
-                System.out.println(session.createCriteria(EntryEntity.class).
-                        add(Restrictions.eq("id", ((EntryEntity) entryEntity).getId())).list());
+//                System.out.println(((EntryEntity) entryEntity).getId());
+//                System.out.println(session.createCriteria(EntryEntity.class).
+//                        add(Restrictions.eq("id", ((EntryEntity) entryEntity).getId())).list());
 //                ids.add(UUID.fromString(((EntryEntity) entryEntity).getId()));
-                ids.add(((EntryEntity) entryEntity).getId());
+                ids.add(UUID.fromString(((EntryEntity) entryEntity).getId()));
             }
         }
         finally {

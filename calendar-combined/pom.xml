@@ -19,26 +19,11 @@
     </parent>
 
 
-    <!--<modules>-->
-        <!--<module>../calendar-api</module>-->
-        <!--<module>../calendar-service</module>-->
-        <!--<module>../calendar-webclient</module>-->
-    <!--</modules>-->
-
-    <dependencies>
-        <dependency>
-            <groupId>com.dio.calendar</groupId>
-            <artifactId>dio-calendar-service</artifactId>
-            <version>1.0</version>
-            <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>com.dio.calendar</groupId>
-            <artifactId>dio-calendar-webclient</artifactId>
-            <version>1.0</version>
-            <type>war</type>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>../calendar-api</module>
+        <module>../calendar-service</module>
+        <module>../calendar-webclient</module>
+    </modules>
 
     <build>
         <plugins>

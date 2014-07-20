@@ -35,7 +35,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Produces(MediaType.APPLICATION_JSON)
     @Override
     public EntryRestWrapper getEntry( @PathParam("id") String id)  {
-        System.out.println("get uuid " + id);
+        logger.debug("get uuid " + id);
         Entry entry = data.getEntry(UUID.fromString(id));
         if (entry == null) {
             throw new NotFoundException(String.format("Entry %s not found", id));
@@ -44,13 +44,13 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     }
 
     public Entry getEntry(UUID id)  {
-        System.out.println("get entry by id " + id);
+        logger.debug("get entry by id " + id);
         return data.getEntry(id);
     }
 
 
     public List<Entry> getEntriesBySubject(String subject) {
-        logger.info("getEntriesBySubject " + subject);
+        logger.debug("getEntriesBySubject " + subject);
         return data.getEntryBySubject(subject);
     }
 
@@ -59,7 +59,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @GET
     @Produces("application/json")
     public List<EntryRestWrapper> getEntries() {
-        logger.info("Get entries execute");
+        logger.debug("Get entries execute");
         List<Entry> entries = data.getEntries();
 
         List<EntryRestWrapper> entriesWrapper = new LinkedList<>();
@@ -75,7 +75,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Consumes(MediaType.APPLICATION_JSON)
     @POST
     public void clearData() throws DataStoreFSException, IOException {
-        logger.info("Clear data executed");
+        logger.warn("Clear data temporarily switched off");
         //data.clearData();
     }
 
@@ -85,7 +85,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response editSubjectRest(@RequestParam List<String> token) {
-        logger.info(String.format("Update subject to %s for entry entry with id %s", token.get(1), token.get(0)));
+        logger.debug(String.format("Update subject to %s for entry entry with id %s", token.get(1), token.get(0)));
         Entry entry = getEntry(UUID.fromString(token.get(0)));
         if (entry == null) {
             throw new NotFoundException(String.format("Entry with id %s is not found", token.get(0)));
@@ -144,7 +144,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
 //    @DELETE
 //    @Consumes(MediaType.APPLICATION_JSON)
     public void removeEntry(EntryRestWrapper entryWrapper) throws DataStoreFSException {
-        logger.info("Removing entry: " + entryWrapper);
+        logger.debug("Removing entry: " + entryWrapper);
         Entry entry = entryWrapper.createEntry();
         if (data.removeEntry(entry.getId()) == null)
             throw new NotFoundException("Entry not found");
@@ -160,7 +160,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
 
     public Entry updateEntry(Entry newEntry, Entry oldEntry) throws CalendarEntryBadAttribute, DataStoreFSException {
         validateDateRange(newEntry.getStartDate(), newEntry.getEndDate());
-        logger.info("Updated entry. Old value: " + oldEntry + "; new value: " + newEntry);
+        logger.debug("Updated entry. Old value: " + oldEntry + "; new value: " + newEntry);
         data.updateEntry(newEntry, oldEntry);
         return data.getEntry(newEntry.getId());
     }
@@ -170,7 +170,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public EntryRestWrapper updateEntry(@RequestParam List<EntryRestWrapper> token) throws CalendarEntryBadAttribute, DataStoreFSException {
-        logger.info("Smart entry update: " + token);
+        logger.debug("Smart entry update: " + token);
         Entry newEntry = token.get(0).createEntry();
         Entry oldEntry = token.get(1).createEntry();
         Entry resultEntry = data.updateEntry(newEntry, oldEntry);
@@ -186,7 +186,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public EntryRestWrapper updateEntry(@RequestParam EntryRestWrapper entryWrapper) throws CalendarEntryBadAttribute, DataStoreFSException {
-        logger.info("Dire update entry: " + entryWrapper);
+        logger.debug("Dire update entry: " + entryWrapper);
         Entry entry = entryWrapper.createEntry();
         validateDateRange(entry.getStartDate(), entry.getEndDate());
         Entry resultEntry = data.updateEntry(entry, null);
@@ -235,7 +235,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public EntryRestWrapper addEntry(@RequestParam EntryRestWrapper entryWrapper) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException {
-        logger.info("Adding entry: " + entryWrapper);
+        logger.debug("Adding entry: " + entryWrapper);
         Entry entry = entryWrapper.createEntry();
         validateDateRange(entry.getStartDate(), entry.getEndDate());
         Entry resultEntry = data.addEntry(entry);

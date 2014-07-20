@@ -1,5 +1,6 @@
 package com.dio.calendar;
 
+import org.hibernate.annotations.Proxy;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -13,6 +14,7 @@ import java.util.UUID;
  */
 
 @Entity
+@Proxy(lazy=false)
 @Table(name="entries")
 public class EntryEntity implements Serializable{
     private String subject;
@@ -21,7 +23,9 @@ public class EntryEntity implements Serializable{
     private Date endDate;
     private List<String> attenders;
     private List<NotificationEntity> notifications;
-    private UUID id;
+
+    private String id;
+//    private UUID id;
 
 
     public EntryEntity() {
@@ -34,17 +38,31 @@ public class EntryEntity implements Serializable{
         this.endDate = entry.getEndDate();
         this.attenders = entry.getAttenders();
         //this.notifications = entry.getNotifications();
-        this.id = entry.getId();
+        this.id = entry.getId().toString();
     }
+
+//    @Override
+//    public String toString() {
+//        return "EntryEntity{" +
+//                "subject='" + subject + '\'' +
+//                ", description='" + description + '\'' +
+//                ", startDate=" + startDate +
+//                ", endDate=" + endDate +
+//                ", attenders=" + attenders +
+//                ", notifications=" + notifications +
+//                ", id=" + id +
+//                '}';
+//    }
+//
 
     @Id
     @Column(name="f_entry_id", unique = true, nullable = false)
-    @Type(type="uuid-char")
-    public UUID getId() {
+//    @Type(type="uuid-char")
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -113,7 +131,7 @@ public class EntryEntity implements Serializable{
                 attenders(attenders).
 //                notifications(notifications).
 //                id(UUID.fromString(id)).
-                id(id).
+                id(UUID.fromString(id)).
                 build();
     }
 

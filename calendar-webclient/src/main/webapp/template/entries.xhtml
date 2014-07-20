@@ -26,7 +26,7 @@
 
     <h:form id="formEntries" rendered="#{!editEntry.showForm}" >
 
-    <p:dataTable id="entries" var="entry" value="#{calendarServiceWrapper.entriesWrapper}" rows="20" paginator="true">
+    <p:dataTable id="entries" var="entry" value="#{clientWebWrapper.entriesWrapper}" rows="20" paginator="true">
 
         <p:column headerText="Subject">
             <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}">
@@ -55,7 +55,7 @@
         </p:column>
 
         <p:column headerText="#" width="100">
-            <p:commandButton actionListener="#{calendarServiceWrapper.removeEntryById(entry.id)}"
+            <p:commandButton actionListener="#{clientWebWrapper.removeEntryById(entry.id)}"
                              icon="ui-icon-closethick" update="entries" title="Remove entry" ajax="true">
                 <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert"/>
                 <!--<h:outputText value="Remove"/>-->

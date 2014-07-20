@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +17,7 @@ import java.util.UUID;
 /**
  * Created by yur on 11.07.2014.
  */
-public class ClientWebWrapper {
+public class ClientWebWrapper implements Serializable {
     private final ClientRemoteWrapperImpl wrapperService;
     private final Logger logger = Logger.getLogger(ClientWrapperImpl.class);
 

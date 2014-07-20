@@ -11,7 +11,7 @@
 </h:head>
 <h:body>
     <ui:composition template="/template/template.xhtml">
-        <ui:param name="entries" value="#{calendarServiceWrapper.entriesBySubject}" />
+        <ui:param name="entries" value="#{clientWebWrapper.entriesBySubject}" />
         <ui:param name="searchRender" value="#{true}" />
         <ui:define name="title">
             Search entries by subject
