@@ -12,9 +12,10 @@ public interface DataStore {
     Boolean write(Entry entry) throws DataStoreFSException;
     Boolean delete(UUID id) throws DataStoreFSException;
     Entry read(UUID id) throws DataStoreFSException;
-    void clear() throws DataStoreFSException;
-    List<Entry> getEntries() throws DataStoreFSException;
 
+    void clear() throws DataStoreFSException;
+
+    List<Entry> getEntries() throws DataStoreFSException;
     List<UUID> getListEntries();
 
     LoadEntry createLoader(CalendarDataStore calendarDataStore, UUID id);

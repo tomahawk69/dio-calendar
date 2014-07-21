@@ -217,9 +217,9 @@
 
 
         <dependency>
-            <groupId>springframework</groupId>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
-            <version>1.2.6</version>
+            <version>${springVersion}</version>
         </dependency>
 
         <dependency>
@@ -263,6 +263,9 @@
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <webApp>
+                        <extraClasspath>C:\Sybase\SybaseIQ\IQ-15_4\Java\jodbc4.jar</extraClasspath>
+                    </webApp>
                 </configuration>
             </plugin>
 

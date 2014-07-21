@@ -34,21 +34,21 @@ public class CalendarServer {
 
     public static void main(String[] args) {
 
-        try {
-            DriverManager.registerDriver((Driver)
-                            Class.forName(
-                                    // "com.sybase.jdbc3.jdbc.SybDriver").newInstance()
-                                    "ianywhere.ml.jdbcodbc.IDriver").newInstance()
-            );
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            DriverManager.registerDriver((Driver)
+//                            Class.forName(
+//                                    // "com.sybase.jdbc3.jdbc.SybDriver").newInstance()
+//                                    "ianywhere.ml.jdbcodbc.IDriver").newInstance()
+//            );
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (InstantiationException e) {
+//            e.printStackTrace();
+//        } catch (IllegalAccessException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
 //        try {
 //            Connection con = DriverManager.getConnection(

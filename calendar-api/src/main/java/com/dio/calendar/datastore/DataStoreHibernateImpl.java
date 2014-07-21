@@ -5,6 +5,8 @@ import com.dio.calendar.EntryEntity;
 import org.apache.log4j.Logger;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.UUID;
  * Created by yur on 03.07.2014.
  */
 public class DataStoreHibernateImpl implements DataStore {
+
     private final SessionFactory sessionFactory;
 
     private static Logger logger = Logger.getLogger(LoadEntryImpl.class);
@@ -63,24 +66,22 @@ public class DataStoreHibernateImpl implements DataStore {
 
     @Override
     public Boolean write(Entry entry) throws DataStoreFSException {
-        logger.info("Write entry " + entry);
-        Boolean result = false;
+        logger.debug("Write entry " + entry);
         Session session = sessionFactory.openSession();
         try {
             Transaction tx = session.beginTransaction();
             session.save(new EntryEntity(entry));
             tx.commit();
-            result = true;
         }
         finally {
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.close();
         }
-        return result;
+        return true;
+
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public Boolean delete(UUID id) throws DataStoreFSException {
         Boolean result = false;
         Session session = sessionFactory.openSession();
@@ -106,6 +107,7 @@ public class DataStoreHibernateImpl implements DataStore {
         }
         return result;
     }
+
 
     @Override
     public Entry read(UUID id) throws DataStoreFSException {

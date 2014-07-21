@@ -3,11 +3,11 @@
         "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="com.dio.calendar.EntryWrapper" table="entries">
-        <id column="f_id" name="id" type="uuid-char" />
-        <property column="f_subject" name="subject" type="java.lang.String"/>
-        <property column="f_description" name="description" type="java.lang.String"/>
-        <property column="f_dateFrom" name="startDate" type="java.sql.Date"/>
-        <property column="f_dateTo" name="endDate" type="java.sql.Date"/>
-    </class>
+    <!--<class name="com.dio.calendar.EntryWrapper" table="entries">-->
+        <!--<id column="f_id" name="id" />-->
+        <!--<property column="f_subject" name="subject" type="java.lang.String"/>-->
+        <!--<property column="f_description" name="description" type="java.lang.String"/>-->
+        <!--<property column="f_dateFrom" name="startDate" type="java.sql.Date"/>-->
+        <!--<property column="f_dateTo" name="endDate" type="java.sql.Date"/>-->
+    <!--</class>-->
 </hibernate-mapping>

@@ -22,17 +22,19 @@
         <constructor-arg ref="dataStore" />
     </bean>
 
-    <!--TODO: spring JDBC-->
-
     <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init">
         <constructor-arg ref="dataStoreJdbc"/>
     </bean>
 
 
-    <bean id="dataStoreJdbc" class="com.dio.calendar.datastore.DataStoreJDBCImpl" lazy-init="true">
-        <property name="dataSource" ref="dataSource" />
+    <!-- JDBCtemplate -->
+    <bean id="dataStoreJdbc" class="com.dio.calendar.datastore.DataStoreJDBCImpl">
+        <constructor-arg name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
 
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
     <bean id="dataStoreDB" class="com.dio.calendar.datastore.DataStoreHibernateImpl" lazy-init="true">
         <constructor-arg ref="sessionFactory"/>
@@ -50,9 +52,10 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" lazy-init="true">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <!--<property name="driverClassName" value="${jdbc.driverClassName}"/>-->
         <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+        <!--<property name="driverClassName" value="com.sybase.jdbc4.jdbc.SybDriver" />-->
         <!--<property name="url" value="jdbc:mysql://localhost:3306/test" />-->
         <!--<property name="username" value="root" />-->
         <!--<property name="password" value="" />-->

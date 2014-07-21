@@ -29,9 +29,12 @@
         <appender-ref ref="R" />
     </logger>
 
-
     <logger name="com.dio.calendar.EntriesMessageBodyWriter">
         <level value="debug"/>
+    </logger>
+
+    <logger name="org.springframework.jdbc.core.JdbcTemplate">
+        <level value="trace"/>
     </logger>
 
     <!--<logger name="org.hibernate.type">-->

@@ -1,6 +1,8 @@
 package com.dio.calendar.datastore;
 
 import com.dio.calendar.Entry;
+import com.dio.calendar.EntryEntity;
+import com.dio.calendar.EntryRowMapper;
 import com.dio.calendar.EntryWrapper;
 import org.apache.log4j.Logger;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
@@ -8,41 +10,57 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 
 import java.util.*;
 
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 /**
  * Created by yur on 19.07.2014.
  */
-public class DataStoreJDBCImpl extends JdbcDaoSupport implements DataStore {
+public class DataStoreJDBCImpl implements DataStore {
 
-    private final String sqlRead = "select * from entries where f_entry_id = ?";
+    public static final String sqlRead = "select * from entries where f_entry_id = ?";
+    public static final String sqlWrite = "INSERT INTO entries " +
+            "(f_entry_id, f_subject, f_description, f_dateFrom, f_dateTo) VALUES (?, ?, ?, ?, ?)";
 
+    private final JdbcTemplate jdbcTemplate;
     private static Logger logger = Logger.getLogger(DataStoreDSImpl.class);
+
+    public DataStoreJDBCImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
 
     @Override
     public Boolean write(Entry entry) throws DataStoreFSException {
-        String sql = "INSERT INTO entries " +
-                "(f_entry_id, f_subject, f_description, f_dateFrom, f_dateTo) VALUES (?, ?, ?, ?, ?)";
+        logger.debug("Write entry " + entry);
 
-        getJdbcTemplate().update(sql, new Object[] { entry.getId().toString(),
-                entry.getSubject(), entry.getDescription(), entry.getStartDate(), entry.getEndDate()
-        });
+        jdbcTemplate.update(sqlWrite,
+                entry.getId().toString(),
+                entry.getSubject(),
+                entry.getDescription(),
+                entry.getStartDate(),
+                entry.getEndDate()
+        );
+
         return true;
     }
 
     @Override
     public Boolean delete(UUID id) throws DataStoreFSException {
         String sql = "delete from entries where f_entry_id = ?";
-        getJdbcTemplate().update(sql, new Object[] { id.toString() });
+
+        jdbcTemplate.update(sql, new Object[] { id.toString() });
+
         return true;
     }
 
     @Override
     public Entry read(UUID id) throws DataStoreFSException {
-        return (Entry) getJdbcTemplate().queryForObject(
-                sqlRead, new Object[] { id },
-                new BeanPropertyRowMapper(Entry.class));
+        logger.debug("get entry " + id);
+
+        return (Entry) jdbcTemplate.queryForObject(
+                sqlRead, new Object[] { id.toString() },
+                new EntryRowMapper());
     }
 
     @Override
@@ -52,11 +70,13 @@ public class DataStoreJDBCImpl extends JdbcDaoSupport implements DataStore {
 
     @Override
     public List<Entry> getEntries() throws DataStoreFSException {
+        logger.debug("get entries");
+
         String sql = "select * from entries";
 
         List<Entry> entries = new ArrayList<>();
 
-        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
         for (Map row : rows) {
             EntryWrapper wrapper = new EntryWrapper();
             wrapper.setId(UUID.fromString((String)row.get("f_entry_id")));
@@ -72,14 +92,16 @@ public class DataStoreJDBCImpl extends JdbcDaoSupport implements DataStore {
 
     @Override
     public List<UUID> getListEntries() {
+        logger.debug("get list of entries id");
+
         String sql = "select f_entry_id from entries";
 
         List<UUID> ids = new ArrayList<>();
 
-        System.out.println(getJdbcTemplate());
-        List<Map<String, Object>> rows = getJdbcTemplate().queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+
         for (Map row : rows) {
-            ids.add(UUID.fromString((String) row.get(1)));
+            ids.add(UUID.fromString((String) row.get("f_entry_id")));
         }
 
         return ids;
@@ -87,7 +109,6 @@ public class DataStoreJDBCImpl extends JdbcDaoSupport implements DataStore {
 
     @Override
     public LoadEntry createLoader(CalendarDataStore calendarDataStore, UUID id) {
-        logger.debug("createLoader");
         return new LoadEntryImpl(this, calendarDataStore, id);
     }
 }
