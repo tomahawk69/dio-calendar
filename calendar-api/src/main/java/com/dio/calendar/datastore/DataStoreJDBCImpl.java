@@ -21,6 +21,11 @@ public class DataStoreJDBCImpl implements DataStore {
     public static final String sqlRead = "select * from entries where f_entry_id = ?";
     public static final String sqlWrite = "INSERT INTO entries " +
             "(f_entry_id, f_subject, f_description, f_dateFrom, f_dateTo) VALUES (?, ?, ?, ?, ?)";
+    public static final String sqlDelete = "delete from entries where f_entry_id = ?";
+    public static final String sqlDeleteAll = "delete from entries";
+    public static final String sqlReadEntries = "select * from entries";
+    public static final String sqlReadEntriesList = "select f_entry_id from entries";
+
 
     private final JdbcTemplate jdbcTemplate;
     private static Logger logger = Logger.getLogger(DataStoreDSImpl.class);
@@ -47,9 +52,8 @@ public class DataStoreJDBCImpl implements DataStore {
 
     @Override
     public Boolean delete(UUID id) throws DataStoreFSException {
-        String sql = "delete from entries where f_entry_id = ?";
 
-        jdbcTemplate.update(sql, new Object[] { id.toString() });
+        jdbcTemplate.update(sqlDelete, id.toString());
 
         return true;
     }
@@ -66,17 +70,17 @@ public class DataStoreJDBCImpl implements DataStore {
     @Override
     public void clear() throws DataStoreFSException {
 
+        jdbcTemplate.update(sqlDeleteAll);
+
     }
 
     @Override
     public List<Entry> getEntries() throws DataStoreFSException {
         logger.debug("get entries");
 
-        String sql = "select * from entries";
-
         List<Entry> entries = new ArrayList<>();
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlReadEntries);
         for (Map row : rows) {
             EntryWrapper wrapper = new EntryWrapper();
             wrapper.setId(UUID.fromString((String)row.get("f_entry_id")));
@@ -94,11 +98,9 @@ public class DataStoreJDBCImpl implements DataStore {
     public List<UUID> getListEntries() {
         logger.debug("get list of entries id");
 
-        String sql = "select f_entry_id from entries";
-
         List<UUID> ids = new ArrayList<>();
 
-        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sql);
+        List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlReadEntriesList);
 
         for (Map row : rows) {
             ids.add(UUID.fromString((String) row.get("f_entry_id")));

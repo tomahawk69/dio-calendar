@@ -111,14 +111,14 @@ public class DataStoreHibernateImpl implements DataStore {
 
     @Override
     public Entry read(UUID id) throws DataStoreFSException {
+        logger.debug("Read entry: " + id);
+
         Entry result = null;
         Session session = sessionFactory.openSession();
         try {
-            logger.debug("Read entry: " + id);
             Criteria cr = session.createCriteria(EntryEntity.class);
             cr.add(Restrictions.eq("id", id.toString()));
             EntryEntity wrapper = (EntryEntity) cr.uniqueResult();
-            logger.debug("wrapper is: " + wrapper);
             if (wrapper != null) {
                 result = wrapper.createEntry();
             }
@@ -127,9 +127,7 @@ public class DataStoreHibernateImpl implements DataStore {
             logger.error(e);
         }
         finally {
-            if (session.isOpen()) {
-                session.close();
-            }
+            session.close();
         }
         return result;
     }
