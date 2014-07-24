@@ -1,10 +1,15 @@
 package com.dio.calendar;
 
+import java.util.List;
+import java.util.UUID;
+
 /**
  * Created by iovchynnikov on 7/11/14.
  */
 public interface CalendarRemoteService {
 
-    public EntryRestWrapper getEntry(String id);
+    EntryRemoteWrapper getEntry(String id);
+    Entry getEntry(UUID id);
+    List<EntryRemoteWrapper> getEntries();
 
 }

@@ -1,14 +1,9 @@
 package com.dio.calendar;
 
-import org.apache.log4j.Logger;
-
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,7 +12,7 @@ import java.util.UUID;
  */
 
 @XmlRootElement
-public class EntryRestWrapper implements Serializable {
+public class EntryRemoteWrapper implements Serializable {
     private String subject;
     private String description;
     private String startDate;
@@ -29,10 +24,10 @@ public class EntryRestWrapper implements Serializable {
 //    private static Logger logger = Logger.getLogger(EntryRestWrapper.class);
 
 
-    public EntryRestWrapper() {
+    public EntryRemoteWrapper() {
     }
 
-    public EntryRestWrapper(Entry entry) {
+    public EntryRemoteWrapper(Entry entry) {
         this.subject = entry.getSubject();
         this.description = entry.getDescription();
 
@@ -124,7 +119,7 @@ public class EntryRestWrapper implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        EntryRestWrapper that = (EntryRestWrapper) o;
+        EntryRemoteWrapper that = (EntryRemoteWrapper) o;
 
         if (attenders != null ? !attenders.equals(that.attenders) : that.attenders != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;

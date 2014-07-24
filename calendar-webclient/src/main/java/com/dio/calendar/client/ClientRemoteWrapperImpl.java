@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
-import java.io.Serializable;
 import java.util.*;
 
 /**
@@ -49,11 +48,11 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     public Entry editSubject(Entry oldEntry, String subject) {
         logger.debug(String.format("Update subject to %s of entry %s", subject, oldEntry));
         List<String> requestList = Arrays.asList(oldEntry.getId().toString(), subject);
-        EntryRestWrapper entryWrapper = restService.path(servicePath).path(UPDATE_SUBJECT).
+        EntryRemoteWrapper entryWrapper = restService.path(servicePath).path(UPDATE_SUBJECT).
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
                 entity(requestList).
-                post(EntryRestWrapper.class);
+                post(EntryRemoteWrapper.class);
         if (entryWrapper != null) {
             return entryWrapper.createEntry();
         } else {
@@ -97,12 +96,12 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
         List<Object> token = Arrays.asList(subject, description, startDate, endDate, attenders, notifications);
 //        result = remoteService.newEntry(subject, description, startDate, endDate, attenders, notifications);
 
-        EntryRestWrapper entryWrapper = restService.path(servicePath).
+        EntryRemoteWrapper entryWrapper = restService.path(servicePath).
                 path(NEW_ENTRY).
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
                 entity(token).
-                post(EntryRestWrapper.class);
+                post(EntryRemoteWrapper.class);
 
         if (entryWrapper != null) {
             return entryWrapper.createEntry();
@@ -114,10 +113,10 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     @Override
     public Entry addEntry(Entry entry) throws CalendarEntryBadAttribute, CalendarKeyViolation {
         logger.debug("Add entry " + entry);
-        EntryRestWrapper entryWrapper = restService.path(servicePath).path(ADD_ENTRY).
+        EntryRemoteWrapper entryWrapper = restService.path(servicePath).path(ADD_ENTRY).
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
-                post(EntryRestWrapper.class, new EntryRestWrapper(entry));
+                post(EntryRemoteWrapper.class, new EntryRemoteWrapper(entry));
         if (entryWrapper != null) {
             return entryWrapper.createEntry();
         } else {
@@ -140,15 +139,15 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     @Override
     public Entry updateEntry(Entry newEntry, Entry oldEntry) throws CalendarEntryBadAttribute {
         logger.debug(String.format("Smart update entry to %s from %s", newEntry, oldEntry));
-        List<EntryRestWrapper> token =
-                Arrays.asList(new EntryRestWrapper(newEntry),
-                    new EntryRestWrapper(oldEntry));
-        EntryRestWrapper entryWrapper = restService.
+        List<EntryRemoteWrapper> token =
+                Arrays.asList(new EntryRemoteWrapper(newEntry),
+                    new EntryRemoteWrapper(oldEntry));
+        EntryRemoteWrapper entryWrapper = restService.
                 path(servicePath).path(UPDATE_SMART).
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
                 entity(token).
-                post(EntryRestWrapper.class);
+                post(EntryRemoteWrapper.class);
         if (entryWrapper != null) {
             return entryWrapper.createEntry();
         } else {
@@ -160,12 +159,12 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     @Override
     public Entry updateEntry(Entry newEntry) throws CalendarEntryBadAttribute {
         logger.debug(String.format("Update entry %s", newEntry));
-        EntryRestWrapper entryWrapper = restService.
+        EntryRemoteWrapper entryWrapper = restService.
                 path(servicePath).path(UPDATE_ENTRY).
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
-                entity(new EntryRestWrapper(newEntry)).
-                post(EntryRestWrapper.class);
+                entity(new EntryRemoteWrapper(newEntry)).
+                post(EntryRemoteWrapper.class);
         if (entryWrapper != null) {
             return entryWrapper.createEntry();
         } else {
@@ -181,8 +180,8 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
                 path(servicePath).path(DELETE_ENTRY).
                 accept(MediaType.APPLICATION_JSON).
                 type(MediaType.APPLICATION_JSON).
-                entity(new EntryRestWrapper(entry)).
-                delete(EntryRestWrapper.class);
+                entity(new EntryRemoteWrapper(entry)).
+                delete(EntryRemoteWrapper.class);
     }
 
     
@@ -200,9 +199,9 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     @Override
     public Entry getEntry(UUID id) {
         logger.debug("Get entry " + id);
-        EntryRestWrapper entryWrapper =
+        EntryRemoteWrapper entryWrapper =
                 restService.path(servicePath).path(GET_ENTRY).path(id.toString()).
-                        accept(MediaType.APPLICATION_JSON).get(EntryRestWrapper.class);
+                        accept(MediaType.APPLICATION_JSON).get(EntryRemoteWrapper.class);
         if (entryWrapper != null) {
             return entryWrapper.createEntry();
         } else {
@@ -226,16 +225,16 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     @Override
     public List<Entry> getEntries() {
         logger.debug("Get entries");
-        List<EntryRestWrapper> entriesWrapper =
+        List<EntryRemoteWrapper> entriesWrapper =
                 restService.path(servicePath).path(GET_ENTRIES).
                         accept(MediaType.APPLICATION_JSON).
-                        get(new GenericType<List<EntryRestWrapper>>(){});
+                        get(new GenericType<List<EntryRemoteWrapper>>(){});
 
 //        System.out.println(entriesWrapper);
 //        System.out.println(new GenericType<List<EntryRestWrapper>>(){});
         List<Entry> entries = new LinkedList<>();
         if (entriesWrapper != null) {
-            for (EntryRestWrapper entryWrapper : entriesWrapper) {
+            for (EntryRemoteWrapper entryWrapper : entriesWrapper) {
                 entries.add(entryWrapper.createEntry());
             }
         }

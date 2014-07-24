@@ -8,30 +8,18 @@
     <parent>
         <groupId>com.dio.calendar</groupId>
         <artifactId>dio-calendar</artifactId>
-        <!--<version>${parentVersion}</version>-->
         <version>1.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <properties>
         <jacoco.version>0.7.1.201405082137</jacoco.version>
-        <!--<argLine>${argLine}</argLine>-->
         <skipTests/>
     </properties>
 
     <artifactId>dio-calendar-service</artifactId>
-    <!--<version>${parentVersion}</version>-->
     <version>1.0</version>
     <packaging>war</packaging>
-
-    <!--
-        packaging war
-        WEB-INF
-        web.xml
-
-        jetti-plugin
-
-    -->
 
     <dependencies>
 
@@ -39,7 +27,6 @@
             <groupId>com.dio.calendar</groupId>
             <artifactId>dio-calendar-api</artifactId>
             <version>1.0</version>
-            <!--<scope>compile</scope>-->
             <type>jar</type>
         </dependency>
 
@@ -53,34 +40,11 @@
             <artifactId>spring-web</artifactId>
             <version>${springVersion}</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>2.1.7</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.faces</groupId>
-            <artifactId>jsf-impl</artifactId>
-            <version>2.1.7</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>5.0</version>
-        </dependency>
 
         <dependency>
             <groupId>org.jacoco</groupId>
             <artifactId>org.jacoco.core</artifactId>
             <version>${jacoco.version}</version>
-            <!--<classifier>runtime</classifier>-->
             <scope>test</scope>
         </dependency>
 
@@ -97,47 +61,6 @@
             <version>1</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>4.3.5.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-c3p0</artifactId>
-            <version>4.3.5.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-ehcache</artifactId>
-            <version>4.3.5.Final</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>javax.ws.rs</groupId>-->
-            <!--<artifactId>javax.ws.rs-api</artifactId>-->
-            <!--<version>${jerseyVersion}</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>com.owlike</groupId>
-            <artifactId>genson</artifactId>
-            <version>0.99</version>
-        </dependency>
 
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -215,24 +138,17 @@
             <version>1.18.1</version>
         </dependency>
 
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${springVersion}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.31</version>
-        </dependency>
-
         <!-- JAX-WS -->
         <dependency>
             <groupId>com.sun.xml.ws</groupId>
             <artifactId>jaxws-rt</artifactId>
             <version>2.2.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.ws</groupId>
+            <artifactId>spring-ws-core</artifactId>
+            <version>2.2.0.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -259,18 +175,6 @@
             </exclusions>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>org.javassist</groupId>-->
-            <!--<artifactId>javassist</artifactId>-->
-            <!--<version>3.18.2-GA</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apache.tomcat</groupId>-->
-            <!--<artifactId>tomcat-dbcp</artifactId>-->
-            <!--<version>8.0.9</version>-->
-        <!--</dependency>-->
-
-
     </dependencies>
 
 
@@ -294,9 +198,9 @@
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
-                    <webApp>
-                        <extraClasspath>C:\Sybase\SybaseIQ\IQ-15_4\Java\jodbc4.jar</extraClasspath>
-                    </webApp>
+                    <!--<webApp>-->
+                        <!--<extraClasspath>C:\Sybase\SybaseIQ\IQ-15_4\Java\jodbc4.jar</extraClasspath>-->
+                    <!--</webApp>-->
                 </configuration>
             </plugin>
 
@@ -309,11 +213,6 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
-                        <!--<configuration>-->
-                        <!--<destFile>${project.build.directory}/target/jacoco.exec</destFile>-->
-                        <!--<output>file</output>-->
-                        <!--<append>true</append>-->
-                        <!--</configuration>-->
                     </execution>
                     <execution>
                         <id>report</id>
@@ -323,20 +222,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <!--<configuration>-->
-                <!--<rules>-->
-                <!--<rule implementation="org.jacoco.maven.RuleConfiguration">-->
-                <!--<element>BUNDLE</element>-->
-                <!--<limits>-->
-                <!--<limit implementation="org.jacoco.report.check.Limit">-->
-                <!--<counter>COMPLEXITY</counter>-->
-                <!--<value>COVEREDRATIO</value>-->
-                <!--<minimum>0.60</minimum>-->
-                <!--</limit>-->
-                <!--</limits>-->
-                <!--</rule>-->
-                <!--</rules>-->
-                <!--</configuration>-->
             </plugin>
         </plugins>
     </build>

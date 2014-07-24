@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:ws="http://jax-ws.dev.java.net/spring/core"
+       xmlns:wss="http://jax-ws.dev.java.net/spring/servlet"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://jax-ws.dev.java.net/spring/core http://jax-ws.java.net/spring/core.xsd
+       http://jax-ws.dev.java.net/spring/servlet http://jax-ws.java.net/spring/servlet.xsd"
+       >
 <!--
     TestCoverage
     CDI
@@ -22,17 +28,17 @@
         <constructor-arg ref="dataStore" />
     </bean>
 
-    <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init">
-        <constructor-arg ref="dataStoreJdbc"/>
+    <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init"  lazy-init="true">
+        <constructor-arg ref="dataStoreFs"/>
     </bean>
 
 
     <!-- JDBCtemplate -->
-    <bean id="dataStoreJdbc" class="com.dio.calendar.datastore.DataStoreJDBCImpl">
+    <bean id="dataStoreJdbc" class="com.dio.calendar.datastore.DataStoreJDBCImpl" lazy-init="true">
         <constructor-arg name="jdbcTemplate" ref="jdbcTemplate" />
     </bean>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"  lazy-init="true">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
@@ -89,6 +95,14 @@
     <!--<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />-->
 
     <bean id="messageDispatcher" class="org.springframework.ws.soap.server.SoapMessageDispatcher"/>
+
+    <!-- SOAP -->
+
+    <wss:binding url="/soap">
+        <wss:service>
+            <ws:service bean="#calendarServiceWs"/>
+        </wss:service>
+    </wss:binding>
 
     <bean id="calendarServiceWs" class="com.dio.calendar.CalendarRemoteServiceSoapImpl">
         <constructor-arg ref="dataStore" />

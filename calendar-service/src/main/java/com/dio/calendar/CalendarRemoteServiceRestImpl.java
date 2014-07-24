@@ -34,13 +34,13 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Override
-    public EntryRestWrapper getEntry( @PathParam("id") String id)  {
+    public EntryRemoteWrapper getEntry( @PathParam("id") String id)  {
         logger.debug("get uuid " + id);
         Entry entry = data.getEntry(UUID.fromString(id));
         if (entry == null) {
             throw new NotFoundException(String.format("Entry %s not found", id));
         }
-        return new EntryRestWrapper(entry);
+        return new EntryRemoteWrapper(entry);
     }
 
     public Entry getEntry(UUID id)  {
@@ -58,14 +58,14 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Path("entries")
     @GET
     @Produces("application/json")
-    public List<EntryRestWrapper> getEntries() {
+    public List<EntryRemoteWrapper> getEntries() {
         logger.debug("Get entries execute");
         List<Entry> entries = data.getEntries();
 
-        List<EntryRestWrapper> entriesWrapper = new LinkedList<>();
+        List<EntryRemoteWrapper> entriesWrapper = new LinkedList<>();
         if (entries != null) {
             for (Entry entry : entries) {
-                entriesWrapper.add(new EntryRestWrapper(entry));
+                entriesWrapper.add(new EntryRemoteWrapper(entry));
             }
         }
         return entriesWrapper;
@@ -94,7 +94,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         if (entry == null) {
             throw new NotFoundException(String.format("Entry with id %s is not found (2)", token.get(0)));
         }
-        return Response.ok().entity(new EntryRestWrapper(entry)).type(MediaType.APPLICATION_JSON).build();
+        return Response.ok().entity(new EntryRemoteWrapper(entry)).type(MediaType.APPLICATION_JSON).build();
     }
 
     public Entry editSubject(Entry oldEntry, String subject) {
@@ -143,7 +143,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
 //    @Path("delete")
 //    @DELETE
 //    @Consumes(MediaType.APPLICATION_JSON)
-    public void removeEntry(EntryRestWrapper entryWrapper) throws DataStoreFSException {
+    public void removeEntry(EntryRemoteWrapper entryWrapper) throws DataStoreFSException {
         logger.debug("Removing entry: " + entryWrapper);
         Entry entry = entryWrapper.createEntry();
         if (data.removeEntry(entry.getId()) == null)
@@ -169,7 +169,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public EntryRestWrapper updateEntry(@RequestParam List<EntryRestWrapper> token) throws CalendarEntryBadAttribute, DataStoreFSException {
+    public EntryRemoteWrapper updateEntry(@RequestParam List<EntryRemoteWrapper> token) throws CalendarEntryBadAttribute, DataStoreFSException {
         logger.debug("Smart entry update: " + token);
         Entry newEntry = token.get(0).createEntry();
         Entry oldEntry = token.get(1).createEntry();
@@ -177,7 +177,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         if (resultEntry == null) {
             throw new NotFoundException("Entry not found");
         }
-        return new EntryRestWrapper(resultEntry);
+        return new EntryRemoteWrapper(resultEntry);
     }
 
 
@@ -185,7 +185,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public EntryRestWrapper updateEntry(@RequestParam EntryRestWrapper entryWrapper) throws CalendarEntryBadAttribute, DataStoreFSException {
+    public EntryRemoteWrapper updateEntry(@RequestParam EntryRemoteWrapper entryWrapper) throws CalendarEntryBadAttribute, DataStoreFSException {
         logger.debug("Dire update entry: " + entryWrapper);
         Entry entry = entryWrapper.createEntry();
         validateDateRange(entry.getStartDate(), entry.getEndDate());
@@ -193,7 +193,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         if (resultEntry == null) {
             throw new NotFoundException("Entry not found");
         }
-        return new EntryRestWrapper(resultEntry);
+        return new EntryRemoteWrapper(resultEntry);
     }
 
 
@@ -203,14 +203,14 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public EntryRestWrapper newEntry(List<Object> token) {
+    public EntryRemoteWrapper newEntry(List<Object> token) {
         try {
             Entry entry = newEntry((String)token.get(0), (String)token.get(1),
                     EntryApi.stringToDate((String)token.get(2)),
                     EntryApi.stringToDate((String)token.get(3)),
                     (List<String>)token.get(4),
                     null);
-            return new EntryRestWrapper(entry);
+            return new EntryRemoteWrapper(entry);
         } catch (ParseException e) {
             logger.error(e);
             throw new WebApplicationException(e);
@@ -234,7 +234,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public EntryRestWrapper addEntry(@RequestParam EntryRestWrapper entryWrapper) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException {
+    public EntryRemoteWrapper addEntry(@RequestParam EntryRemoteWrapper entryWrapper) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException {
         logger.debug("Adding entry: " + entryWrapper);
         Entry entry = entryWrapper.createEntry();
         validateDateRange(entry.getStartDate(), entry.getEndDate());
@@ -242,7 +242,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
         if (resultEntry == null) {
             throw new NotFoundException("Entry not found");
         }
-        return new EntryRestWrapper(resultEntry);
+        return new EntryRemoteWrapper(resultEntry);
     }
 
     public Entry copyEntry(Entry entry) {

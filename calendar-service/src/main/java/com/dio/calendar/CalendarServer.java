@@ -5,11 +5,6 @@ import com.dio.calendar.datastore.DataStoreFSException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.*;
 
 import static com.dio.calendar.Utils.constructDate;
@@ -26,8 +21,8 @@ import static com.dio.calendar.Utils.constructDate;
  */
 public class CalendarServer {
 
-    private static void printEntries(Iterable<EntryRestWrapper> entries) {
-        for (EntryRestWrapper item : entries) {
+    private static void printEntries(Iterable<EntryRemoteWrapper> entries) {
+        for (EntryRemoteWrapper item : entries) {
             System.out.println(item);
         }
     }
@@ -95,8 +90,8 @@ public class CalendarServer {
             printEntries(service.getEntries());
 
             try {
-                service.addEntry(new EntryRestWrapper(e1));
-                service.addEntry(new EntryRestWrapper(e2));
+                service.addEntry(new EntryRemoteWrapper(e1));
+                service.addEntry(new EntryRemoteWrapper(e2));
             } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
                 calendarEntryBadAttribute.printStackTrace();
             } catch (CalendarKeyViolation calendarKeyViolation) {
@@ -115,7 +110,7 @@ public class CalendarServer {
 
             e1 = service.editSubject(e1, "Subject3");
             try {
-                service.updateEntry(new EntryRestWrapper(e1));
+                service.updateEntry(new EntryRemoteWrapper(e1));
             } catch (CalendarEntryBadAttribute calendarEntryBadAttribute) {
                 calendarEntryBadAttribute.printStackTrace();
             } catch (DataStoreFSException e) {
@@ -124,7 +119,7 @@ public class CalendarServer {
 
             try {
                 service.removeEntryById(e1.getId().toString());
-                service.removeEntry(new EntryRestWrapper(e2));
+                service.removeEntry(new EntryRemoteWrapper(e2));
             } catch (DataStoreFSException e) {
                 e.printStackTrace();
             }
