@@ -17,11 +17,9 @@ import java.util.UUID;
 @WebService(endpointInterface = "com.dio.calendar.CalendarRemoteServiceSoap")
 public class CalendarRemoteServiceSoapImpl implements CalendarRemoteServiceSoap {
 
-    private CalendarDataStoreImpl data;
+    private final CalendarDataStoreImpl data;
 
     private static Logger logger = Logger.getLogger(CalendarRemoteServiceSoapImpl.class);
-
-    public CalendarRemoteServiceSoapImpl() {    }
 
     public CalendarRemoteServiceSoapImpl(CalendarDataStoreImpl data) {
         this.data = data;
