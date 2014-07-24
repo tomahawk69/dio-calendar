@@ -88,5 +88,10 @@
 
     <!--<bean id="calendarWebServiceMemberFilter" class="com.dio.calendar.webservice.CalendarWebServiceMemberFilter" />-->
 
+    <bean id="messageDispatcher" class="org.springframework.ws.soap.server.SoapMessageDispatcher"/>
+
+    <bean id="calendarServiceWs" class="com.dio.calendar.CalendarRemoteServiceSoapImpl">
+        <constructor-arg ref="dataStore" />
+    </bean>
 
 </beans>
