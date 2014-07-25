@@ -111,7 +111,7 @@ public class DataStoreJDBCImplTest {
 
         thrown.expect(NullPointerException.class);
 
-        Entry resultEntry = dataStore.read(id);
+        dataStore.read(id);
     }
 
     @Test
