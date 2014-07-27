@@ -175,6 +175,22 @@
             </exclusions>
         </dependency>
 
+        <dependency>
+            <groupId>com.sybase</groupId>
+            <artifactId>jconnect4</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../repo/jconn4.jar</systemPath>
+        </dependency>
+        <!--mvn deploy:deploy-file -Durl=file:///E:/works/java/dio-calendar-new/repo/ -Dfile=jodbc.jar  -DgroupId=com.sybase -DartifactId=jdbc_asa -Dpackaging=jar -Dversion=1.0-->
+        <dependency>
+            <groupId>com.sybase</groupId>
+            <artifactId>jdbc_asa_9</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../repo/jodbc.jar</systemPath>
+        </dependency>
+
     </dependencies>
 
 

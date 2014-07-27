@@ -10,15 +10,14 @@
 <h:head>
 </h:head>
 <h:body>
-    <h1>Calendar app</h1>
+    <!--<h1>Calendar app</h1>-->
     <p:toolbar>
         <f:facet name="left">
             <h:form>
                 <h:commandLink value="Home" title="Working only from home page" action="#{editEntry.hideForm()}"  update=":panelEntries :panelFormEdit" />
                 &nbsp;
-                <h:commandLink value="New entry" title="Working only from home page" action="#{editEntry.showForm()}" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit"/>
+                <h:commandLink value="New entry" title="Working only from home page" action="#{editEntry.newEntry()}" update="@form @this :panelEntries :panelFormEdit" render=":panelEntries :panelFormEdit"/>
                 &nbsp;
-                <!--<h:link value="New item external" outcome="add" title="Standalone add page"/>-->
             </h:form>
         </f:facet>
 
@@ -28,15 +27,6 @@
                 <p:growl id="growl" life="2000" />
             </h:form>
 
-            <h:form id="formSearch">
-                <p:inputText id="subject" label="Enter one or more words"
-                             value="#{clientWebWrapper.searchSubject}"
-                             rendered="#{editEntry.showSearch}"
-                        />
-                <p:commandButton value="Search" update="@([id$=entries])"
-                                 rendered="#{editEntry.showSearch}" />
-                <h:commandLink value="Search" title="Working only from home page" action="#{editEntry.showSearch()}"  update=":panelEntries :panelFormEdit" rendered="#{!editEntry.showSearch}"/>
-            </h:form>
         </f:facet>
 
     </p:toolbar>

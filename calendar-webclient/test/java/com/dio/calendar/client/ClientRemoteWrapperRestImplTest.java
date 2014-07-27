@@ -1,6 +1,9 @@
-package com.dio.calendar;
+package com.dio.calendar.client;
 
-import com.dio.calendar.client.ClientRemoteWrapperImpl;
+import com.dio.calendar.Entry;
+import com.dio.calendar.EntryRemoteWrapper;
+import com.dio.calendar.Notification;
+import com.dio.calendar.client.ClientRemoteWrapperRestImpl;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import org.junit.Test;
@@ -12,7 +15,7 @@ import java.util.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-public class ClientRemoteWrapperImplTest {
+public class ClientRemoteWrapperRestImplTest {
     private final String servicePath = "rest";
 
     @Test
@@ -29,10 +32,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
         EntryRemoteWrapper entryWrapper = mock(EntryRemoteWrapper.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.UPDATE_SUBJECT)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.UPDATE_SUBJECT)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(requestList)).thenReturn(mockBuilder);
@@ -58,10 +61,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
         EntryRemoteWrapper entryWrapper = mock(EntryRemoteWrapper.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.UPDATE_SUBJECT)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.UPDATE_SUBJECT)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(requestList)).thenReturn(mockBuilder);
@@ -125,10 +128,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
         EntryRemoteWrapper entryWrapper = mock(EntryRemoteWrapper.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.NEW_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.NEW_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(token)).thenReturn(mockBuilder);
@@ -151,10 +154,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
         EntryRemoteWrapper entryWrapper = mock(EntryRemoteWrapper.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.NEW_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.NEW_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(token)).thenReturn(mockBuilder);
@@ -178,10 +181,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.ADD_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.ADD_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.post(EntryRemoteWrapper.class, entryWrapper)).thenReturn(expectedEntryWrapper);
@@ -200,10 +203,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.ADD_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.ADD_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.post(EntryRemoteWrapper.class, entryWrapper)).thenReturn(null);
@@ -220,10 +223,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.DELETE_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.DELETE_ENTRY)).thenReturn(mockService);
         when(mockService.path(id.toString())).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
@@ -248,10 +251,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.UPDATE_SMART)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.UPDATE_SMART)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(token)).thenReturn(mockBuilder);
@@ -276,10 +279,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.UPDATE_SMART)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.UPDATE_SMART)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(token)).thenReturn(mockBuilder);
@@ -301,10 +304,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.UPDATE_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.UPDATE_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(entryWrapper)).thenReturn(mockBuilder);
@@ -324,10 +327,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.UPDATE_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.UPDATE_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(entryWrapper)).thenReturn(mockBuilder);
@@ -346,10 +349,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.DELETE_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.DELETE_ENTRY)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.type(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.entity(entryWrapper)).thenReturn(mockBuilder);
@@ -379,10 +382,10 @@ public class ClientRemoteWrapperImplTest {
 
         EntryRemoteWrapper resultEntryWrapper = new EntryRemoteWrapper(expectedEntry);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.GET_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.GET_ENTRY)).thenReturn(mockService);
         when(mockService.path(id.toString())).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.get(EntryRemoteWrapper.class)).thenReturn(resultEntryWrapper);
@@ -400,10 +403,10 @@ public class ClientRemoteWrapperImplTest {
         WebResource mockService = mock(WebResource.class);
         WebResource.Builder mockBuilder = mock(WebResource.Builder.class);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.GET_ENTRY)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.GET_ENTRY)).thenReturn(mockService);
         when(mockService.path(id.toString())).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
         when(mockBuilder.get(EntryRemoteWrapper.class)).thenReturn(null);
@@ -437,10 +440,10 @@ public class ClientRemoteWrapperImplTest {
         List<EntryRemoteWrapper> resultEntriesWrapper = Arrays.asList(wrapperItem1, wrapperItem2);
         List<Entry> expectedEntries = Arrays.asList(entry1, entry2);
 
-        ClientRemoteWrapperImpl wrapper = new ClientRemoteWrapperImpl(mockService, servicePath);
+        ClientRemoteWrapperRestImpl wrapper = new ClientRemoteWrapperRestImpl(mockService, servicePath);
 
         when(mockService.path(servicePath)).thenReturn(mockService);
-        when(mockService.path(ClientRemoteWrapperImpl.GET_ENTRIES)).thenReturn(mockService);
+        when(mockService.path(ClientRemoteWrapperRestImpl.GET_ENTRIES)).thenReturn(mockService);
         when(mockService.accept(MediaType.APPLICATION_JSON)).thenReturn(mockBuilder);
 //        when(mockBuilder.get(resultEntriesWrapper.getClass())).thenReturn(resultEntriesWrapper);
         when(mockBuilder.get(new GenericType<List<EntryRemoteWrapper>>(){})).thenReturn(resultEntriesWrapper);

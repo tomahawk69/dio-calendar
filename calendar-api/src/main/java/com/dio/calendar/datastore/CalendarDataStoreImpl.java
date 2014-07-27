@@ -390,18 +390,24 @@ public class CalendarDataStoreImpl implements CalendarDataStore {
                 t.endDate(newEntry.getEndDate());
             }
             if (newEntry.getAttenders() == null || oldEntry == null || !newEntry.getAttenders().equals(oldEntry.getAttenders())) {
+                System.out.println(t);
                 t.attenders(newEntry.getAttenders());
+                System.out.println(t);
             }
             if (newEntry.getNotifications() == null || oldEntry == null || !newEntry.getNotifications().equals(oldEntry.getNotifications())) {
                 t.notifications(newEntry.getNotifications());
             }
             result = t.build();
+            System.out.println(result);
         }
         try {
             fileStore.delete(newEntry.getId());
             fileStore.write(newEntry);
             unIndexEntry(currentEntry);
+            entries.remove(id);
+            System.out.println("before: " + entries.get(id));
             addEntryToEntries(result);
+            System.out.println("after: " + entries.get(id));
         } catch (DataStoreFSException e) {
             throw e;
         }

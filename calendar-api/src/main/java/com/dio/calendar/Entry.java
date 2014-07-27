@@ -2,6 +2,8 @@ package com.dio.calendar;
 
 
 
+import org.apache.commons.lang3.StringUtils;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
 import java.util.*;
@@ -53,8 +55,13 @@ public class Entry implements Serializable {
     }
 
     public List<String> getAttenders() {
-        return attenders;
+        return new ArrayList<>(attenders);
     }
+
+    public String getAttendersList() {
+        return StringUtils.join(attenders, ",");
+    }
+
 
     public List<Notification> getNotifications() {
         return notifications;
@@ -200,29 +207,9 @@ public class Entry implements Serializable {
             if (id == null)
                 id = UUID.randomUUID();
 
-            // в отдельный класс валидацию
-
-/*
-            if (startDate == null)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "startDate"));
-            if (endDate == null)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "endDate"));
-            if (subject == null)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "subject"));
-            if (description == null)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "description"));
-            if (attenders == null)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "attenders"));
-            if (notifications == null)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "notifications"));
-            if (endDate.compareTo(startDate) < 0)
-                throw new CalendarEntryBadAttribute(String.format(exceptionMessage, "endDate lesser then startDate"));
-*/
-
             return new Entry(this);
         }
 
     }
 
 }
-

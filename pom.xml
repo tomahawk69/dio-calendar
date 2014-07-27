@@ -10,8 +10,12 @@
             <name>Repository hosting the jee6 artifacts</name>
             <url>http://download.java.net/maven/2</url>
         </repository>
+        <repository>
+            <id>project.local</id>
+            <name>projectRepo</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
     </repositories>
-
     <properties>
         <parentVersion>1.0</parentVersion>
         <springVersion>4.0.4.RELEASE</springVersion>

@@ -1,4 +1,4 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.test;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;

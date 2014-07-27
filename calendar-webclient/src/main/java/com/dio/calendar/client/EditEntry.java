@@ -3,7 +3,9 @@ package com.dio.calendar.client;
 import com.dio.calendar.CalendarEntryBadAttribute;
 import com.dio.calendar.CalendarKeyViolation;
 import com.dio.calendar.Entry;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.faces.application.FacesMessage;
@@ -27,7 +29,9 @@ import java.util.UUID;
 @ManagedBean(name="editEntry")
 @SessionScoped
 public class EditEntry implements Serializable {
-    private ClientRemoteWrapperImpl localService;
+    @Autowired
+//    private ClientRemoteWrapperRestImpl localService;
+    private ClientWebWrapper serviceWrapper;
     private String subject;
 
     private String description;
@@ -37,21 +41,15 @@ public class EditEntry implements Serializable {
     private String attender;
 
     private Entry oldEntry;
+    public boolean showForm = false;
 
     private static Logger logger = Logger.getLogger(EditEntry.class);
-    private boolean showForm = false;
 
-    public boolean isShowSearch() {
-//        return localService.getIsSearch();
-        return false;
-    }
-
-    public EditEntry() {
-    }
+    public EditEntry() {    }
 
     @Autowired
-    public EditEntry(ClientRemoteWrapperImpl localService) {
-        this.localService = localService;
+    public EditEntry(ClientWebWrapper serviceWrapper) {
+        this.serviceWrapper = serviceWrapper;
     }
 
     public String getSubject() {
@@ -95,46 +93,47 @@ public class EditEntry implements Serializable {
     }
 
     public void createEntry(ActionEvent actionEvent) {
-        logger.info("Create entry....");
+        logger.debug("Create entry....");
         try {
-            Entry result = localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
-            setGrowlInfo("Successfully added entry", "Entry was successfully added. New id is " + result.getId());
-//            reset();
-        } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
+            Entry result = serviceWrapper.addEntry(serviceWrapper.newEntry(subject, description, dateFrom, dateTo, attenders, null));
+            serviceWrapper.setGrowlInfo("Successfully added entry", "Entry was successfully added. New id is " + result.getId());
+        } catch (Exception e) {
+//        } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
             logger.error(e);
             throw new RuntimeException(e);
         }
     }
 
     public void updateEntry() {
-        logger.info("Save entry wrapper....");
+        logger.debug("Save entry wrapper....");
         if (oldEntry == null) {
-            logger.info("New entry");
+            logger.debug("New entry");
             try {
-                subject = "insert";
-                localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
+                serviceWrapper.addEntry(serviceWrapper.newEntry(subject, description, dateFrom, dateTo, attenders, null));
+//                localService.addEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null));
                 reset();
                 showForm = false;
-                setGrowlInfo("Entry added", "Entry successfully created");
-            } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
+                serviceWrapper.setGrowlInfo("Entry added", "Entry successfully created");
+//            } catch (CalendarEntryBadAttribute | CalendarKeyViolation e) {
+            } catch (Exception e) {
                 logger.error(e);
-                setGrowlError("Entry update error", e.getMessage());
+                serviceWrapper.setGrowlError("Entry update error", e.getMessage());
             }
         } else {
-            logger.info("Update entry");
+            logger.debug("Update entry");
             try {
-//                subject = "update";
-                localService.updateEntry(localService.newEntry(subject, description, dateFrom, dateTo, attenders, null), oldEntry);
+                Entry newEntry = new Entry.Builder().id(oldEntry.getId()).subject(subject).description(description).
+                        startDate(dateFrom).endDate(dateTo).attenders(attenders).build();
+                serviceWrapper.updateEntry(newEntry, oldEntry);
                 reset();
                 showForm = false;
-                setGrowlInfo("Entry updated", "Entry successfully updated");
+                serviceWrapper.setGrowlInfo("Entry updated", "Entry successfully updated");
             } catch (CalendarEntryBadAttribute e) {
                 logger.error(e);
-                setGrowlError("Entry update error", e.getMessage());
+                serviceWrapper.setGrowlError("Entry update error", e.getMessage());
             }
 
         }
-//        return "index";
     }
 
     public Boolean isEdit() {
@@ -165,7 +164,7 @@ public class EditEntry implements Serializable {
     }
 
     public void resetListener(ActionEvent actionEvent) {
-        logger.info("reset");
+        logger.debug("reset");
         Entry tempEntry = oldEntry;
         reset();
         oldEntry = tempEntry;
@@ -176,31 +175,35 @@ public class EditEntry implements Serializable {
             dateTo = oldEntry.getEndDate();
             attenders = oldEntry.getAttenders();
         }
+        RequestContext context = getCurrentRequestInstance();
+        if (context != null) {
+            context.reset("formEdit");
+        }
+    }
+
+    private RequestContext getCurrentRequestInstance() {
+        return RequestContext.getCurrentInstance();
     }
 
     public void newEntry() {
-        logger.info("newEntry");
+        logger.debug("newEntry");
         reset();
         showForm = true;
-//        localService.setIsSearch(false);
-//        return "add";
     }
 
 
     public void editEntry(Entry entry) {
-        logger.info("editEntry " + entry);
+        logger.debug("editEntry " + entry);
         oldEntry = entry;
         if (oldEntry != null) {
             subject = oldEntry.getSubject();
             description = oldEntry.getDescription();
             dateFrom = oldEntry.getStartDate();
             dateTo = oldEntry.getEndDate();
-            attenders = oldEntry.getAttenders();
+            attenders = new ArrayList<>(oldEntry.getAttenders());
             showForm = true;
-//            return "edit";
         } else {
-            setGrowlError("Entry not found", "Cancelling edit");
-//            return "index";
+            serviceWrapper.setGrowlError("Entry not found", "Cancelling edit");
         }
     }
 
@@ -213,19 +216,9 @@ public class EditEntry implements Serializable {
         this.attender = attender;
     }
 
-    private void setGrowlInfo(String subject, String body) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, subject, body);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
-    private void setGrowlError(String subject, String body) {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, subject, body);
-        FacesContext.getCurrentInstance().addMessage(null, message);
-    }
-
     public void validateDateFrom(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         dateFrom = (Date) value;
-        logger.info("DateFrom validation: " + dateFrom);
+        logger.debug("DateFrom validation: " + dateFrom);
         if (dateFrom == null && dateTo != null) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "DateFrom value required", "DateFrom value required when DateTo value is not null"));
         }
@@ -236,7 +229,7 @@ public class EditEntry implements Serializable {
 
     public void validateDateTo(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         dateTo = (Date) value;
-        logger.info("DateTo validation: " + dateTo);
+        logger.debug("DateTo validation: " + dateTo);
         if (dateFrom == null && dateTo != null) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "DateFrom value required", "DateFrom value required when DateTo value is not null"));
         }
@@ -246,51 +239,41 @@ public class EditEntry implements Serializable {
     }
 
     public void validateEntry(ComponentSystemEvent event) {
-        FacesContext fc = FacesContext.getCurrentInstance();
-        UIComponent components = event.getComponent();
-        //setGrowlError("Validation error", "Test error");
-        FacesMessage msg = new FacesMessage("Test error");
-        msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-        fc.addMessage("test", msg);
-        fc.renderResponse();
-//        logger.info("Subject is " + subject);
+//        UIComponent components = event.getComponent();
+        serviceWrapper.setGrowlError("Validation error", "Test error");
     }
 
-    public void removeAttender(String attender) {
+    public void removeAttender() {
+        System.out.println("Remove attender");
         attenders.remove(attender);
     }
 
-//    public void addAttender(ActionEvent event) {
-    public void addAttender() {
-//        System.out.println((String)event.getComponent().findComponent("attenderEdit").;
+    public void removeAttender(String attender) {
+        System.out.println("Remove attender");
+        this.attender = attender;
+        attenders.remove(attender);
+    }
 
-        if (attender == null || attender.trim() == "") {
-            setGrowlError("Error adding attender", "Attender is empty");
+    public void addAttender() {
+        System.out.println("add attender");
+        if (StringUtils.isBlank(attender)) {
+            serviceWrapper.setGrowlError("Error adding attender", "Attender is empty");
             return;
         }
         if (attenders.indexOf(attender) < 0) {
             attenders.add(attender);
+            attender = null;
         } else {
-            setGrowlError("Error adding attender", String.format("Attender %s already exists", attender));
+            serviceWrapper.setGrowlError("Error adding attender", String.format("Attender %s already exists", attender));
         }
     }
 
-    public void showForm() {
-        showForm = true;
-//        localService.setIsSearch(false);
-//        return "add";
-    }
-
-    public void showSearch() {
-        hideForm();
-        //showForm = false;
-//        localService.setIsSearch(true);
+    public Boolean getShowForm() {
+        return showForm;
     }
 
     public void hideForm() {
         showForm = false;
-//        localService.setIsSearch(false);
-//        return "index";
     }
 
     @Override

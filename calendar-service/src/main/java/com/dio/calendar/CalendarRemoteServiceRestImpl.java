@@ -205,6 +205,7 @@ public class CalendarRemoteServiceRestImpl implements CalendarRemoteService {
     @Produces(MediaType.APPLICATION_JSON)
     public EntryRemoteWrapper newEntry(List<Object> token) {
         try {
+            System.out.println(token);
             Entry entry = newEntry((String)token.get(0), (String)token.get(1),
                     EntryApi.stringToDate((String)token.get(2)),
                     EntryApi.stringToDate((String)token.get(3)),

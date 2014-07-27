@@ -19,11 +19,6 @@
         </layout>
     </appender>
 
-    <!--<logger name="com.dio.calendar.client.Wrapper">-->
-        <!--<level value="debug"/>-->
-        <!--<appender-ref ref="A1" />-->
-    <!--</logger>-->
-
     <root>
         <!-- Set root logger level to DEBUG and its only appender to A1 -->
         <priority value ="info" />

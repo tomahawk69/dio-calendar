@@ -16,10 +16,10 @@ import java.util.*;
 /**
  * Created by iovchynnikov on 7/8/2014.
  */
-public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
+public class ClientRemoteWrapperRestImpl implements ClientRemoteWrapper {
 
     private final WebResource restService;
-    private final Logger logger = Logger.getLogger(ClientRemoteWrapperImpl.class);
+    private final Logger logger = Logger.getLogger(ClientRemoteWrapperRestImpl.class);
     private final String servicePath;
 
     public static final String UPDATE_SUBJECT = "updateSubject";
@@ -31,7 +31,7 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     public static final String GET_ENTRY = "entry";
     public static final String GET_ENTRIES = "entries";
 
-    public ClientRemoteWrapperImpl(String serviceUri, String servicePath) {
+    public ClientRemoteWrapperRestImpl(String serviceUri, String servicePath) {
         ClientConfig config = new DefaultClientConfig();
         config.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client client = Client.create(config);
@@ -39,7 +39,7 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
         this.servicePath = servicePath;
     }
 
-    public ClientRemoteWrapperImpl(WebResource restService, String servicePath) {
+    public ClientRemoteWrapperRestImpl(WebResource restService, String servicePath) {
         this.restService = restService;
         this.servicePath = servicePath;
     }
@@ -93,9 +93,8 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
     @Override
     public Entry newEntry(String subject, String description, Date startDate, Date endDate, List<String> attenders, List<Notification> notifications) {
         logger.debug("New entry");
-        List<Object> token = Arrays.asList(subject, description, startDate, endDate, attenders, notifications);
-//        result = remoteService.newEntry(subject, description, startDate, endDate, attenders, notifications);
-
+        List<Object> token = Arrays.asList(subject, description, EntryApi.dateToString(startDate), EntryApi.dateToString(endDate), attenders, notifications);
+        System.out.println(token);
         EntryRemoteWrapper entryWrapper = restService.path(servicePath).
                 path(NEW_ENTRY).
                 accept(MediaType.APPLICATION_JSON).
@@ -230,8 +229,6 @@ public class ClientRemoteWrapperImpl implements ClientRemoteWrapper {
                         accept(MediaType.APPLICATION_JSON).
                         get(new GenericType<List<EntryRemoteWrapper>>(){});
 
-//        System.out.println(entriesWrapper);
-//        System.out.println(new GenericType<List<EntryRestWrapper>>(){});
         List<Entry> entries = new LinkedList<>();
         if (entriesWrapper != null) {
             for (EntryRemoteWrapper entryWrapper : entriesWrapper) {

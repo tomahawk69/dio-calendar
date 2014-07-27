@@ -12,10 +12,10 @@
 <h:body>
 
     <h:form>
-    <p:confirmDialog global="true" showEffect="fade">
-        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
-        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
-    </p:confirmDialog>
+        <p:confirmDialog global="true" showEffect="fade">
+            <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+        </p:confirmDialog>
     </h:form>
 
     <h:form>
@@ -24,46 +24,84 @@
 
     <h:panelGroup id="panelEntries" autoUpdate="true">
 
-    <h:form id="formEntries" rendered="#{!editEntry.showForm}" >
+        <h:form id="formEntries" rendered="#{!editEntry.isShowForm()}">
 
-    <p:dataTable id="entries" var="entry" value="#{clientWebWrapper.entriesWrapper}" rows="20" paginator="true">
+            <!--rowKey="{entry.id}"-->
+            <!--autoUpdate="true"-->
+            <!--stickyHeader="true"-->
 
-        <p:column headerText="Subject">
-            <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}">
-                <!--<f:ajax render=":panelFormEdit"/>-->
-            </h:commandLink>
-        </p:column>
+            <p:dataTable id="entries" var="entry" value="#{clientWebWrapper.entriesWrapper}"
+                         rows="20"
+                         paginator="true"
+                         paginatorPosition="bottom"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         filterEvent="enter"
+                         filteredValue="#{clientWebWrapper.filteredEntries}"
+                         widgetVar="entriesTable"
+                         emptyMessage="No data"
+                    >
+                <f:facet name="header">
+                    Entries full list<br/>
+                    Supports filtering
+                </f:facet>
 
-        <!--<p:column headerText="Subject" sortBy="#{entry.subject}" filterBy="#{entry.subject}">-->
-        <!--<h:outputText value="#{entry.subject}" />-->
-        <!--</p:column>-->
+                <!--sortBy="{entry.subject}"-->
+                <p:column headerText="Subject"
+                          filterBy="#{entry.subject}"
+                          filterMatchMode="contains"
+                          footerText="contains case sensitive due to PM 5.0 issue"
+                        >
+                    <h:commandLink value="#{entry.subject}" action="#{editEntry.editEntry(entry)}">
+                    </h:commandLink>
+                </p:column>
 
-        <p:column headerText="Description">
-            <h:outputText value="#{entry.description}"/>
-        </p:column>
+                <!--filterBy="#{entry.description}"-->
+                <!--filterFunction="#{clientWebWrapper.filterByDescription}"-->
+                <!--footerText="contains case insensitive custom function"-->
+                <!--sortBy="#{entry.description}"-->
+                <p:column headerText="Description"
+                          filterBy="#{entry.description}"
+                          filterFunction="#{clientWebWrapper.filterByDescription}"
+                          footerText="contains case insensitive custom function"
+                        >
+                    <h:outputText value="#{entry.description}"/>
+                </p:column>
+                <p:column headerText="Attenders"
+                        >
+                    <h:outputText value="#{entry.attendersList}"/>
+                </p:column>
 
-        <p:column headerText="Start Date">
-            <h:outputText value="#{entry.startDate}">
-                <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
-            </h:outputText>
-        </p:column>
+                <!--sortBy="#{entry.startDate}"-->
+                <p:column headerText="Start Date"
+                        >
+                    <h:outputText value="#{entry.startDate}">
+                        <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                    </h:outputText>
+                </p:column>
 
-        <p:column headerText="End Date">
-            <h:outputText value="#{entry.endDate}">
-                <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
-            </h:outputText>
-        </p:column>
+                <!--sortBy="#{entry.endDate}"-->
+                <p:column headerText="End Date"
+                        >
+                    <h:outputText value="#{entry.endDate}">
+                        <f:convertDateTime type="date" pattern="MM/dd/yyyy"/>
+                    </h:outputText>
+                </p:column>
 
-        <p:column headerText="#" width="100">
-            <p:commandButton actionListener="#{clientWebWrapper.removeEntryById(entry.id)}"
-                             icon="ui-icon-closethick" update="entries" title="Remove entry" ajax="true">
-                <p:confirm header="Confirmation" message="Are you sure you want to delete entry?" icon="ui-icon-alert"/>
-                <!--<h:outputText value="Remove"/>-->
-            </p:commandButton>
-        </p:column>
+                <p:column headerText="#" width="50">
+                    <p:commandButton actionListener="#{clientWebWrapper.removeEntryById(entry.id)}"
+                                     icon="ui-icon-closethick"
+                                     update="entries"
+                                     title="Remove entry" ajax="true"
+                            >
+                        <p:confirm header="Confirmation" message="Are you sure you want to delete entry?"
+                                   icon="ui-icon-alert"/>
+                    </p:commandButton>
 
-    </p:dataTable>
-    </h:form>
+                </p:column>
+
+            </p:dataTable>
+
+        </h:form>
     </h:panelGroup>
 
 </h:body>

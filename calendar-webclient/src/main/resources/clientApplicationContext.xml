@@ -20,14 +20,16 @@
         <!--<property name="serviceInterface" value="com.dio.calendar.CalendarService"/>-->
         <!--<property name="refreshStubOnConnectFailure" value="true" />-->
     <!--</bean>-->
+
     <!--<bean id="calendarServiceInterfaceWrapper" class="com.dio.calendar.client.Wrapper">-->
         <!--<constructor-arg name="service" ref="calendarService" />-->
     <!--</bean>-->
+
     <!--<bean id="calendarServiceWrapper" class="com.dio.calendar.client.ClientWrapperImpl" scope="session">-->
         <!--<constructor-arg name="remoteService" ref="calendarService" />-->
     <!--</bean>-->
 
-    <bean id="calendarServiceRestClient" class="com.dio.calendar.client.ClientRemoteWrapperImpl">
+    <bean id="calendarServiceRestClient" class="com.dio.calendar.client.ClientRemoteWrapperRestImpl">
         <constructor-arg name="serviceUri" value="${restServiceUrl}" />
         <constructor-arg name="servicePath" value="${restServiceUri}" />
     </bean>
@@ -36,8 +38,8 @@
         <constructor-arg name="wrapperService" ref="calendarServiceRestClient" />
     </bean>
 
-    <!--<bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="session">-->
-        <!--<constructor-arg name="localService" ref="calendarServiceWrapper" />-->
-    <!--</bean>-->
+    <bean id="editEntry" class="com.dio.calendar.client.EditEntry" scope="session">
+        <constructor-arg name="serviceWrapper" ref="clientWebWrapper" />
+    </bean>
 
 </beans>

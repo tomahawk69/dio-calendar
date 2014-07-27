@@ -1,9 +1,10 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.test;
 
 import com.dio.calendar.CalendarEntryBadAttribute;
 import com.dio.calendar.CalendarKeyViolation;
 import com.dio.calendar.Entry;
 import com.dio.calendar.EntryWrapper;
+import com.dio.calendar.client.ClientRemoteWrapperRestImpl;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -21,7 +22,7 @@ public class ClientMain {
     * */
     public static void main(String[] args) {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:clientApplicationContext.xml");
-        ClientRemoteWrapperImpl calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientRemoteWrapperImpl.class);
+        ClientRemoteWrapperRestImpl calendarServiceWrapper = context.getBean("calendarServiceRestClient", ClientRemoteWrapperRestImpl.class);
         Entry entry = null;
 
         System.out.println("Read all entries");

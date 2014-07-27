@@ -1,4 +1,4 @@
-package com.dio.calendar.client;
+package com.dio.calendar.client.test;
 
 import com.dio.calendar.CalendarRemoteServiceSoap;
 import com.dio.calendar.EntryRemoteWrapper;
