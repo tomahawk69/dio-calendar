@@ -28,6 +28,13 @@
         <constructor-arg ref="dataStore" />
     </bean>
 
+
+    <!--INFO: ref can be:-->
+    <!--JDBCtemplate - dataStoreJdbc-->
+    <!--Hibernate - dataStoreDB-->
+    <!--PreparedStatement - dataStoreDS-->
+    <!--JAXB - datastoreFs -->
+
     <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init"  lazy-init="true">
         <constructor-arg ref="dataStoreJdbc"/>
     </bean>
