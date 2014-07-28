@@ -32,7 +32,7 @@ public class EntryMessageBodyReader implements MessageBodyReader<Entry> {
     @Override
     public boolean isReadable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
-        logger.info("is readable EntryMessageBodyReader " + type);
+//        logger.info("is readable EntryMessageBodyReader " + type);
         return type == Entry.class;
     }
 
@@ -44,11 +44,10 @@ public class EntryMessageBodyReader implements MessageBodyReader<Entry> {
                           InputStream entityStream)
             throws IOException, WebApplicationException {
 
-        logger.info("readFrom EntryMessageBodyReader");
+//        logger.info("readFrom EntryMessageBodyReader");
         try {
             ObjectMapper mapper = new ObjectMapper();
             EntryWrapper entryWrapper = mapper.readValue(entityStream, EntryWrapper.class);
-            System.out.println(entryWrapper);
             return entryWrapper.createEntry();
         } catch (Exception e) {
             logger.error("Error de-serializing an entry. " + e);

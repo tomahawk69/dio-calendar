@@ -38,9 +38,8 @@ public class EntriesMessageBodyReader implements MessageBodyReader<List<Entry>> 
     @Override
     public boolean isReadable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
-        logger.info(String.format("is readable EntriesMessageBodyReader type %s genericType %s", type, Arrays.toString(genericType.getClass().getGenericInterfaces())));
+//        logger.info(String.format("is readable EntriesMessageBodyReader type %s genericType %s", type, Arrays.toString(genericType.getClass().getGenericInterfaces())));
         List<Entry> typeClass = new ArrayList<>();
-        System.out.println(typeClass.getClass());
 //        if(genericType.getClass().getClasses()getName().equals(Entry.class.getName())){
 //
 //        }
@@ -56,7 +55,7 @@ public class EntriesMessageBodyReader implements MessageBodyReader<List<Entry>> 
                                 InputStream entityStream)
             throws IOException, WebApplicationException {
 
-        logger.info("readFrom EntriesMessageBodyReader");
+//        logger.info("readFrom EntriesMessageBodyReader");
         try {
             ObjectMapper mapper = new ObjectMapper();
             List<Entry> entries = mapper.readValue(entityStream, new TypeReference<List<Entry>>() {});

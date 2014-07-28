@@ -29,7 +29,7 @@
     </bean>
 
     <bean id="dataStore" class="com.dio.calendar.datastore.CalendarDataStoreImpl" init-method="init"  lazy-init="true">
-        <constructor-arg ref="dataStoreFs"/>
+        <constructor-arg ref="dataStoreJdbc"/>
     </bean>
 
 

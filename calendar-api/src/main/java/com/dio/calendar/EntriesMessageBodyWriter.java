@@ -32,7 +32,7 @@ public class EntriesMessageBodyWriter implements MessageBodyWriter<List<Entry>> 
     @Override
     public boolean isWriteable(Class<?> type, Type genericType,
                               Annotation[] annotations, MediaType mediaType) {
-        logger.info(String.format("is readable EntriesMessageBodyWriter type %s, genericType %s", type, genericType));
+//        logger.info(String.format("is readable EntriesMessageBodyWriter type %s, genericType %s", type, genericType));
 //        System.out.println(new TypeReference<List<Entry>>() {});
 //        System.out.println(genericType);
 //        if (genericType == Entry.class) {

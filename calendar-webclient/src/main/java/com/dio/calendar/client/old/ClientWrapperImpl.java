@@ -109,9 +109,9 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
 
     public String addEntry() {
         Entry result;
-        logger.info("add entry");
+        logger.debug("add entry");
         Map<String,String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        logger.info(params);
+        logger.debug(params);
         String subject = params.get("addForm:subject");
         String description = params.get("addForm:description");
 
@@ -160,7 +160,7 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
 
     @Override
     public void removeEntryById(UUID id) {
-        logger.info("remove entry by UUID " + id);
+        logger.debug("remove entry by UUID " + id);
         try {
             remoteService.removeEntryById(id);
             // FIXME: setGrowlInfo in tests
@@ -236,7 +236,7 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
 
     @Override
     public Entry getEntry(UUID id) {
-        logger.info("Get entry by id: " + id);
+        logger.debug("Get entry by id: " + id);
         Entry result = null;
         try {
             result = remoteService.getEntry(id);
@@ -247,12 +247,12 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
     }
 
     public Entry getEntry(String id) {
-        logger.info("Get entry: " + id);
+        logger.debug("Get entry: " + id);
         return getEntry(UUID.fromString(id));
     }
 
     public Entry getEntry() {
-        logger.info("Get entry");
+        logger.debug("Get entry");
         return null;
     }
 
@@ -306,7 +306,7 @@ public class ClientWrapperImpl implements ClientWrapper, Serializable {
     }
 
     public void showEditForm() {
-        logger.info("showEditForm");
+        logger.debug("showEditForm");
     }
 
 }

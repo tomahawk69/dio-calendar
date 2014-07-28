@@ -212,7 +212,6 @@ public class EditEntry implements Serializable {
     }
 
     public void setAttender(String attender) {
-        System.out.println("Set attender: " + attender);
         this.attender = attender;
     }
 
@@ -244,18 +243,15 @@ public class EditEntry implements Serializable {
     }
 
     public void removeAttender() {
-        System.out.println("Remove attender");
         attenders.remove(attender);
     }
 
     public void removeAttender(String attender) {
-        System.out.println("Remove attender");
         this.attender = attender;
         attenders.remove(attender);
     }
 
     public void addAttender() {
-        System.out.println("add attender");
         if (StringUtils.isBlank(attender)) {
             serviceWrapper.setGrowlError("Error adding attender", "Attender is empty");
             return;

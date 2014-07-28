@@ -21,9 +21,9 @@
         </layout>
     </appender>
 
-    <logger name="org.springframework.jdbc.core.JdbcTemplate">
-        <level value="trace"/>
-    </logger>
+    <!--<logger name="org.springframework.jdbc.core.JdbcTemplate">-->
+        <!--<level value="trace"/>-->
+    <!--</logger>-->
 
     <!--<logger name="org.hibernate.type">-->
     <!--<level value="trace"/>-->

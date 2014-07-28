@@ -37,7 +37,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
 
     @Override
     public List<Entry> getEntriesBySubject(String subject) {
-        logger.info("getEntriesBySubject " + subject);
+        logger.debug("getEntriesBySubject " + subject);
         return data.getEntryBySubject(subject);
     }
 
@@ -116,7 +116,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
 
     @Override
     public void removeEntry(Entry entry) throws DataStoreFSException {
-        logger.info("Removing entry: " + entry);
+        logger.debug("Removing entry: " + entry);
         data.removeEntry(entry.getId());
     }
 
@@ -129,7 +129,7 @@ public class CalendarServiceRemoteImpl implements CalendarService {
     @Override
     public Entry updateEntry(Entry newEntry, Entry oldEntry) throws CalendarEntryBadAttribute, DataStoreFSException {
         validateDateRange(newEntry.getStartDate(), newEntry.getEndDate());
-        logger.info("Updated entry. Old value: " + oldEntry + "; new value: " + newEntry);
+        logger.debug("Updated entry. Old value: " + oldEntry + "; new value: " + newEntry);
         data.updateEntry(newEntry, oldEntry);
         return data.getEntry(newEntry.getId());
     }
@@ -137,13 +137,13 @@ public class CalendarServiceRemoteImpl implements CalendarService {
     @Override
     public Entry updateEntry(Entry newEntry) throws CalendarEntryBadAttribute, DataStoreFSException {
         validateDateRange(newEntry.getStartDate(), newEntry.getEndDate());
-        logger.info("Full update entry: " + newEntry);
+        logger.debug("Full update entry: " + newEntry);
         return data.updateEntry(newEntry, null);
     }
 
     @Override
     public Entry addEntry(Entry entry) throws CalendarEntryBadAttribute, CalendarKeyViolation, DataStoreFSException {
-        logger.info("Adding entry: " + entry);
+        logger.debug("Adding entry: " + entry);
         validateDateRange(entry.getStartDate(), entry.getEndDate());
         return data.addEntry(entry);
     }

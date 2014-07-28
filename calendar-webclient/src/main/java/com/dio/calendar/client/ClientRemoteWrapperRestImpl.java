@@ -94,7 +94,6 @@ public class ClientRemoteWrapperRestImpl implements ClientRemoteWrapper {
     public Entry newEntry(String subject, String description, Date startDate, Date endDate, List<String> attenders, List<Notification> notifications) {
         logger.debug("New entry");
         List<Object> token = Arrays.asList(subject, description, EntryApi.dateToString(startDate), EntryApi.dateToString(endDate), attenders, notifications);
-        System.out.println(token);
         EntryRemoteWrapper entryWrapper = restService.path(servicePath).
                 path(NEW_ENTRY).
                 accept(MediaType.APPLICATION_JSON).

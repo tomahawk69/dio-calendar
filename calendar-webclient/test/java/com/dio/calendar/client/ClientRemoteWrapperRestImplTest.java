@@ -451,9 +451,6 @@ public class ClientRemoteWrapperRestImplTest {
         List<Entry> resultEntries = wrapper.getEntries();
 
         GenericType type = new GenericType<List<EntryRemoteWrapper>>(){};
-        System.out.println(type.getClass());
-//        type = (GenericType) type.getType();
-//        System.out.println(type.getType());
 
 
         verify(mockService).accept(MediaType.APPLICATION_JSON);
